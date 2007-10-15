@@ -1,0 +1,146 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>
+    </DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Qaryan.Core</RootNamespace>
+    <AssemblyName>Qaryan</AssemblyName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}</ProjectGuid>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>QaryanEngine.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AudioBufferInfo.cs" />
+    <Compile Include="AudioTarget.cs" />
+    <Compile Include="FileBindings.cs" />
+    <Compile Include="ParserElements.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Segments.cs" />
+    <Compile Include="MBROLAClasses.cs" />
+    <Compile Include="MbrolaListener.cs" />
+    <Compile Include="Sapi4AudioTarget.cs" />
+    <Compile Include="DSoundAudioTarget.cs" />
+    <Compile Include="FujisakiModel.cs" />
+    <Compile Include="FujisakiProcessor.cs" />
+    <Compile Include="Mbrola.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Hebrew.cs" />
+    <Compile Include="MBROLATranslator.cs" />
+    <Compile Include="MBROLASynthesizer.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Phonetizer.cs" />
+    <Compile Include="PlotSource.cs" />
+    <Compile Include="ProducerConsumer.cs" />
+    <Compile Include="Sapi4Engine.cs" />
+    <Compile Include="Segmenter.cs" />
+    <Compile Include="SILPR.cs" />
+    <Compile Include="SoundPlayer.cs" />
+    <Compile Include="StressHeuristics.cs" />
+    <Compile Include="StringCharProducer.cs" />
+    <Compile Include="Synthesizer.cs" />
+    <Compile Include="Tokenizer.cs" />
+    <Compile Include="TranslitListener.cs" />
+    <Compile Include="WaveFileAudioTarget.cs" />
+    <Compile Include="WaveFileWriter.cs" />
+    <Content Include="StressHeuristics.xml" />
+    <Content Include="Voices\ee1.xml" />
+    <Content Include="Voices\es1.xml" />
+    <Content Include="Voices\hb1.xml" />
+    <Content Include="Voices\hb2.xml" />
+    <Content Include="Voices\la1.xml" />
+    <None Include="voice_dirty.reg">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Misc\DirectTextToSpeech\DirectTextToSpeech.csproj">
+      <Project>{080DFAF4-E137-454C-BEE2-F8D66C57D881}</Project>
+      <Name>DirectTextToSpeech</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Voices\ar1.xml" />
+    <Content Include="Voices\ar2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MbrolaVoice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MbrolaVoice.xsx">
+      <DependentUpon>MbrolaVoice.xsd</DependentUpon>
+    </None>
+    <Content Include="Voices\cr1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Content Include="Start.txt" />
+    <Content Include="Voices\hb1_license.txt" />
+    <Content Include="Voices\hb2_license.txt" />
+    <Content Include="Voices\ir1.xml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Voices\hb1" />
+    <Content Include="Voices\hb2" />
+    <None Include="Voices\voice.xml.template" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem regedit /s "$(ProjectDir)voice_dirty.reg" &amp;&amp; "$(FrameworkDir)\regasm.exe" "$(TargetPath)" &amp;&amp; "$(FrameworkSDKDir)\bin\gacutil.exe" /i "$(TargetPath)"</PostBuildEvent>
+    <PreBuildEvent>rem if exist  "$(TargetPath)". $(FrameworkDir)\regasm.exe /unregister "$(TargetPath)"</PreBuildEvent>
+  </PropertyGroup>
+</Project>
