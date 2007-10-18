@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+-    This file is part of Qaryan.
+-
+-    Qaryan is free software: you can redistribute it and/or modify
+-    it under the terms of the GNU General Public License as published by
+-    the Free Software Foundation, either version 3 of the License, or
+-    (at your option) any later version.
+-
+-    Qaryan is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU General Public License for more details.
+-
+-    You should have received a copy of the GNU General Public License
+-    along with Qaryan.  If not, see <http:-www.gnu.org/licenses/>.
+-->
+<StressHeuristics>
+  <Pattern Result="Milra">
+    <Syllable Nucleus="AnyHirik|AnyTzere|AnySegol|Shuruk|Kubutz|AnyHolam" End="a‘" />
+  </Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Patah" Coda="Closed" />
+		<Syllable Nucleus="AnyTzere" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Patah" Coda="Open" />
+		<Syllable Nucleus="AnyKamatzA" Coda="Open" />
+	</Pattern>
+  <Pattern Result="Milra" Anchor="Whole" Description="ata">
+    <Syllable Nucleus="Patah" End="t" Onset="Simple" Coda="Closed"/>
+    <Syllable Start="t" Nucleus="KamatzMale" Onset="Simple" Coda="Open" />
+  </Pattern>
+  <Pattern Result="Milel">
+		<Syllable Nucleus="Patah" Coda="Closed" />
+		<Syllable Nucleus="AnyKamatzA" Coda="Open" />
+	</Pattern>
+	<Pattern Result="None" Anchor="End">
+		<Syllable Nucleus="KamatzIndeterminate" Start="bĕḳ" End="l" />
+	</Pattern>
+	<Pattern Result="None" Anchor="End">
+		<Syllable Nucleus="KamatzIndeterminate" Start="vĕḳ" End="l" />
+	</Pattern>
+	<Pattern Result="None" Anchor="End">
+		<Syllable Nucleus="KamatzIndeterminate" Start="lĕḳ" End="l" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Any" Coda="Open" />
+		<Syllable Nucleus="Any" Coda="Closed" Onset="Compound" />
+	</Pattern>
+	<!--
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Patah" Coda="Open" />
+		<Syllable Nucleus="AnyPatah" Coda="Any" />
+	</Pattern>-->
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Patah" Coda="Open" />
+		<Syllable Nucleus="AnyPatah" Coda="Any" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Segol" Coda="Any" />
+		<Syllable Nucleus="AnySegol" Coda="Any" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Segol" Coda="Any" />
+		<Syllable Nucleus="AnyPatah" Coda="Any" />
+	</Pattern>
+	<!--<Pattern Result="Milel">
+		<Syllable Nucleus="AnyKamatzA" Coda="Open" />
+		<Syllable Nucleus="AnyKamatzA" Coda="Any" />
+	</Pattern>-->
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Any" Coda="Any" />
+		<Syllable Nucleus="KamatzMale" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="HolamHaser" Coda="Open" />
+		<Syllable Nucleus="AnySegol" Coda="Any" />
+	</Pattern>
+	<Pattern Result="Milel" Description="mayim">
+		<Syllable Nucleus="Patah|AnyKamatz" Coda="Open" />
+		<Syllable Nucleus="AnyHirik" Coda="Any" Start="y" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="KamatzGadol" Coda="Open" />
+		<Syllable Nucleus="HirikHaser" Coda="Closed" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="AnyKamatzA" Coda="Open" />
+		<Syllable Nucleus="AnySegol" Coda="Closed" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="VeryLong" Coda="Open" Onset="Compound" />
+		<Syllable Nucleus="VeryLong" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Shuruk" Coda="Open" />
+		<Syllable Nucleus="HolamMale" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="HirikHaser" Coda="Any" />
+		<Syllable Nucleus="Any" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="TzereMale" Coda="Any" />
+		<Syllable Nucleus="SegolMale" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milra">
+		<Syllable Nucleus="Any" Coda="Closed" />
+		<Syllable Nucleus="AnyHolam" Coda="Open" />
+	</Pattern>
+	<!--<Pattern Result="Milel">
+		<Syllable Nucleus="Any" Coda="Closed" />
+		<Syllable Nucleus="Any" Coda="Open" Onset="Simple" />
+	</Pattern>-->
+	
+	<!--	<Pattern Result="Milel">
+		<Syllable Nucleus="VeryLong" Coda="Open" />
+		<Syllable Nucleus="VeryLong" Coda="Open" />
+	</Pattern>-->
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Tzere|TzereMale" />
+		<Syllable Nucleus="Shuruk" Start="n" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="Tzere|TzereMale" />
+		<Syllable Nucleus="Segol|SegolMale" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="HirikMale" Coda="Open" />
+		<Syllable Nucleus="Shuruk" Coda="Open" />
+	</Pattern>	
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Disposition="Optional" Start="k" Coda="Open" />
+		<Syllable Nucleus="KamatzIndeterminate" Start="k" End="l" />
+	</Pattern>
+	
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="HirikMale" Start="k" />
+	</Pattern>
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="KamatzIndeterminate" Start="ḳ" End="l" />
+	</Pattern>
+	
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="Segol|Tzere" Start="’" End="t" />
+	</Pattern>
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="Segol|Tzere" Start="wĕ’" End="t" />
+	</Pattern>
+	
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="Segol" Start="’" End="l" />
+	</Pattern>
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Nucleus="Patah" Start="‘" End="l" />
+	</Pattern>
+	<Pattern Result="None" Anchor="Whole">
+		<Syllable Start="’ăš" Nucleus="Segol" End="r" />
+	</Pattern>
+	<Pattern Result="Milel" Anchor="Whole">
+		<Syllable Start="w" Nucleus="Patah" />
+		<Syllable Start="y" Nucleus="HolamMale" />
+		<Syllable Start="m" Nucleus="Segol" End="r" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="AnyTzere|AnySegol" Coda="Open" />
+		<Syllable Start="h" End="a" Onset="Simple" Coda="Open" />
+	</Pattern>
+	<Pattern Result="Milel">
+		<Syllable Nucleus="AnyKamatz" Coda="Closed" />
+		<Syllable Nucleus="AnyKamatz" Coda="Open" />
+	</Pattern>
+</StressHeuristics>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" xmlns="http://tempuri.org/MbrolaVoice.xsd" targetNamespace="http://tempuri.org/MbrolaVoice.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MbrolaVoice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SilprMap">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Phone">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="Silpr" type="xs:string" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UnifyMap">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="UnifyRule">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="Symbol1" type="xs:string" use="required" />
+                      <xs:attribute name="Symbol2" type="xs:string" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="BufferMap">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="InsertBufferRule">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="Symbol1" type="xs:string" use="required" />
+                      <xs:attribute name="Symbol2" type="xs:string" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" use="required" />
+      <xs:attribute name="DisplayName" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
