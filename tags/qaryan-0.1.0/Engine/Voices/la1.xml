@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+-    This file is part of Qaryan.
+-
+-    Qaryan is free software: you can redistribute it and/or modify
+-    it under the terms of the GNU General Public License as published by
+-    the Free Software Foundation, either version 3 of the License, or
+-    (at your option) any later version.
+-
+-    Qaryan is distributed in the hope that it will be useful,
+-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-    GNU General Public License for more details.
+-
+-    You should have received a copy of the GNU General Public License
+-    along with Qaryan.  If not, see <http:-www.gnu.org/licenses/>.
+-->
+<MbrolaVoice Name="la1" DisplayName="Latin 1">
+	<SilprMap>
+		<Phone Silpr="_">_</Phone>
+		<Phone Silpr="’">?</Phone>
+		<Phone Silpr="b">b</Phone>
+		<Phone Silpr="v">b</Phone>
+		<Phone Silpr="g">g</Phone>
+		<Phone Silpr="ğ">dZ</Phone>
+		<Phone Silpr="d">d</Phone>
+		<Phone Silpr="h">h</Phone>
+		<Phone Silpr="w">b</Phone>
+		<Phone Silpr="W">w</Phone>		
+		<Phone Silpr="z">s</Phone>
+		<Phone Silpr="ž">Z</Phone>
+		<Phone Silpr="ḥ">k</Phone>
+		<Phone Silpr="ṭ">t</Phone>
+		<Phone Silpr="y">j</Phone>
+		<Phone Silpr="ḳ">k</Phone>
+		<Phone Silpr="k">k</Phone>
+		<Phone Silpr="l">l</Phone>
+		<Phone Silpr="m">m</Phone>
+		<Phone Silpr="n">n</Phone>
+		<Phone Silpr="s">s</Phone>
+		<Phone Silpr="‘">?</Phone>
+		<Phone Silpr="p">p</Phone>
+		<Phone Silpr="f">f</Phone>
+		<Phone Silpr="č">tS</Phone>
+		<Phone Silpr="ẕ">t;s</Phone>
+		<Phone Silpr="q">k</Phone>
+		<Phone Silpr="r">r</Phone>
+		<Phone Silpr="ś">s</Phone>
+		<Phone Silpr="š">s:</Phone>
+		<Phone Silpr="t">t</Phone>
+		<Phone Silpr="a">a</Phone>
+		<Phone Silpr="e">E</Phone>
+		<Phone Silpr="i">I</Phone>
+		<Phone Silpr="o">O</Phone>
+		<Phone Silpr="u">U</Phone>
+		<Phone Silpr="ă">a</Phone>
+		<Phone Silpr="ĕ">E</Phone>
+		<Phone Silpr="ŏ">O</Phone>
+		<Phone Silpr="é">E</Phone>
+	</SilprMap>
+	<UnifyMap>
+		<UnifyRule Symbol1="a" Symbol2="a">a</UnifyRule>		
+		<UnifyRule Symbol1="i" Symbol2="i">i</UnifyRule>		
+		<UnifyRule Symbol1="e" Symbol2="e">e</UnifyRule>		
+		<UnifyRule Symbol1="_" Symbol2="?">_</UnifyRule>
+		<UnifyRule Symbol1="b" Symbol2="b">b</UnifyRule>		
+		<UnifyRule Symbol1="f" Symbol2="b">b</UnifyRule>		
+		<UnifyRule Symbol1="m" Symbol2="m">m</UnifyRule>		
+		<UnifyRule Symbol1="I" Symbol2="h">j</UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="ALL"></UnifyRule>
+		<!--<UnifyRule Symbol1="?" Symbol2="?"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="b"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="v"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="w"></UnifyRule>		
+		<UnifyRule Symbol1="?" Symbol2="g"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="dZ"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="d"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="h"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="z"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="Z"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="X"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="j"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="k"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="l"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="m"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="n"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="s"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="p"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="f"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="Ts"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="tS"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="k"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="R"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="S"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="s"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="t"></UnifyRule>-->
+		<!--<UnifyRule Symbol1="j" Symbol2="j">j</UnifyRule>-->
+	</UnifyMap>
+	<BufferMap>
+		
+	</BufferMap>
+</MbrolaVoice>
