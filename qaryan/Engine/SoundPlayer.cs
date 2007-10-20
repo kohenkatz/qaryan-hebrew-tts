@@ -87,10 +87,10 @@ namespace Qaryan.Audio
             BufferPositionNotify[] posNotify = new BufferPositionNotify[2];
             posNotify[0] = new BufferPositionNotify();
             posNotify[0].Offset = bufferDesc.BufferBytes / 2 - 1;
-            posNotify[0].EventNotifyHandle = fillEvent[0].Handle;
+            posNotify[0].EventNotifyHandle = fillEvent[0].SafeWaitHandle.DangerousGetHandle();
             posNotify[1] = new BufferPositionNotify();
             posNotify[1].Offset = bufferDesc.BufferBytes - 1;
-            posNotify[1].EventNotifyHandle = fillEvent[1].Handle;
+            posNotify[1].EventNotifyHandle = fillEvent[1].SafeWaitHandle.DangerousGetHandle();
 
             notify.SetNotificationPositions(posNotify);
 

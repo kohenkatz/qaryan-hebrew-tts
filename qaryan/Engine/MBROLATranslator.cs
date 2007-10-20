@@ -34,6 +34,14 @@ namespace Qaryan.Synths.MBROLA
 	/// Translates <c>Qaryan.Core.Phone</c>s to <c>MBROLAElement</c>s according to the capabilities of a chosen <c>MBROLAVoice</c>.
 	/// </summary>
 	public class MBROLATranslator : LookaheadConsumerProducer<Phone,MBROLAElement> {
+        public override string Name
+        {
+            get
+            {
+                return "Translator";
+            }
+        }
+
 		MBROLAVoice voice;
 		MBROLAElement curElement=null,last_e=null;
 		public MBROLAVoice Voice {
@@ -45,7 +53,7 @@ namespace Qaryan.Synths.MBROLA
 
 		protected override void BeforeConsumption()
 		{
-			Console.WriteLine("translator started");
+			Log(LogLevel.Info,"Started");
 			base.BeforeConsumption();
 			curElement=null;
 			last_e=null;
@@ -56,7 +64,7 @@ namespace Qaryan.Synths.MBROLA
 			AddElement(null);
             base.AfterConsumption();
             _DoneProducing();
-			Console.WriteLine("translator finished");
+            Log(LogLevel.Info,"Finished");
 		}
 		
 		void AddElement(MBROLAElement e) {
@@ -65,16 +73,16 @@ namespace Qaryan.Synths.MBROLA
 				if (e!=null)
 					mbre=voice.Unify(curElement,e);
 				if (mbre!=null) {
-                    Console.Write("translator:\t/{0}{1}/", curElement.Symbol, e.Symbol);
+                    Log("/{0}{1}/", curElement.Symbol, e.Symbol);
 					if (mbre.Symbol=="") {
 						curElement=e;
 						e=null;
-						Console.WriteLine("->/{0}/",curElement.Symbol);
+                        Log("\t\\->/{0}/", curElement.Symbol);
 					}
 					else {
 						curElement=mbre;
 						e=null;
-						Console.WriteLine("->/{0}/",curElement.Symbol);
+                        Log("\t\\->/{0}/", curElement.Symbol);
 					}
 				}
 				else {

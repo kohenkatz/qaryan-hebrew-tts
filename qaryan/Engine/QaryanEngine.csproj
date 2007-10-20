@@ -62,7 +62,11 @@
   <ItemGroup>
     <Compile Include="AudioBufferInfo.cs" />
     <Compile Include="AudioTarget.cs" />
+    <Compile Include="MbrolaExtended.cs" />
+    <Compile Include="StreamAudioTarget.cs" />
     <Compile Include="FileBindings.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="MBROLAProcessSynthesizer.cs" />
     <Compile Include="ParserElements.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -96,6 +100,7 @@
     <Compile Include="TranslitListener.cs" />
     <Compile Include="WaveFileAudioTarget.cs" />
     <Compile Include="WaveFileWriter.cs" />
+    <Compile Include="WaveStreamWriter.cs" />
     <Content Include="StressHeuristics.xml" />
     <Content Include="Voices\ee1.xml" />
     <Content Include="Voices\es1.xml" />

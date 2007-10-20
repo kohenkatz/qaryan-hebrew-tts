@@ -20,25 +20,30 @@ using System.IO;
 
 namespace Qaryan.Audio
 {
-    public class WaveFileAudioTarget: AudioTarget
+    public class WaveFileAudioTarget : AudioTarget
     {
         public string Filename;
 
         WaveFileWriter writer;
+        public bool WriteHeader=true;
 
         protected override void Open(WaveFormat format)
         {
-             writer = new WaveFileWriter(File.Create(Filename), format.Channels, format.SamplesPerSecond, format.AverageBytesPerSecond, format.BlockAlign, format.BitsPerSample);
+            writer = new WaveFileWriter(File.Create(Filename), format.Channels, format.SamplesPerSecond, format.AverageBytesPerSecond, format.BlockAlign, format.BitsPerSample,WriteHeader);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)
         {
-            writer.WriteData(buffer.Data,0,buffer.Data.Length);
+            writer.WriteData(buffer.Data, 0, buffer.Data.Length);
         }
 
         protected override void Close()
         {
-            writer.Close();
+            if (writer != null)
+            {
+                writer.Flush();
+                writer.Close();
+            }
         }
 
         public void PlaySync()
@@ -49,7 +54,7 @@ namespace Qaryan.Audio
 
         public override void Stop()
         {
-//            throw new Exception("The method or operation is not implemented.");
+            //            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

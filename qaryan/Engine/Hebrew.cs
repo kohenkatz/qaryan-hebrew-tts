@@ -194,7 +194,7 @@ namespace Qaryan.Core
 			return "בגדכפת".IndexOf(c)>-1;
 		}
 		public static bool IsPunctuation(char c) {
-			return "-?!.,:;׃׀".IndexOf(c)>-1;
+			return "?!.,:;׃׀".IndexOf(c)>-1;
 		}
 		public static bool IsGuttural(char c) {
 			return "האחרע".IndexOf(c)>-1;

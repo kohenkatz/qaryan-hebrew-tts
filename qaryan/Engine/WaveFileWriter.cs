@@ -28,10 +28,14 @@ namespace Qaryan.Audio
 		private const uint WAVESIZE = 4;
 		private const short FORMAT = 1;
 
-		public WaveFileWriter(Stream stream,ushort channels,uint samplesPerSecond,uint averageBytesPerSecond,ushort blockAlign,ushort bitsPerSample)
+        bool WriteHeader = true;
+
+		public WaveFileWriter(Stream stream,ushort channels,uint samplesPerSecond,uint averageBytesPerSecond,ushort blockAlign,ushort bitsPerSample,bool writeHeader)
 		{
 			_stream = stream;
 			_binaryWriter = new BinaryWriter(stream,System.Text.Encoding.ASCII);
+            
+            WriteHeader = writeHeader;
 
 			WriteRiffHeader();
 			WriteFormatHeader(channels,samplesPerSecond,averageBytesPerSecond,blockAlign,bitsPerSample);
@@ -39,6 +43,8 @@ namespace Qaryan.Audio
 
 		private void WriteRiffHeader()
 		{
+            if (!WriteHeader)
+                return;
 			_binaryWriter.Seek(0,SeekOrigin.Begin);
 			_binaryWriter.Write(0x46464952);//RIFF
 			_binaryWriter.Write(WAVESIZE + HEADERSIZE + FORMATDATASIZE + HEADERSIZE + _dataSize);
@@ -47,6 +53,8 @@ namespace Qaryan.Audio
 
 		private void WriteFormatHeader(ushort channels,uint samplesPerSecond,uint averageBytesPerSecond,ushort blockAlign,ushort bitsPerSample)
 		{
+            if (!WriteHeader)
+                return;
 			_binaryWriter.Seek(12,SeekOrigin.Begin);
 			_binaryWriter.Write(0x20746D66);//fmt 4
 			_binaryWriter.Write(FORMATDATASIZE);
@@ -60,11 +68,13 @@ namespace Qaryan.Audio
 
 		public void WriteData(byte[] data,int index, int count)
 		{
-			_dataSize+=(uint)count;
+            if (WriteHeader)
+            {
+                _dataSize += (uint)count;
 
-			WriteRiffHeader();	
-			WriteDataHeader();
-
+                WriteRiffHeader();
+                WriteDataHeader();
+            }
 			_binaryWriter.Seek(0,SeekOrigin.End);
 			_binaryWriter.Write(data,index,count);
 			
@@ -72,6 +82,8 @@ namespace Qaryan.Audio
 
 		private void WriteDataHeader()
 		{
+            if (!WriteHeader)
+                return;
 			_binaryWriter.Seek(38,SeekOrigin.Begin);
 			_binaryWriter.Write(0x61746164);//data
 			_binaryWriter.Write(_dataSize);			

@@ -17,6 +17,7 @@ using Qaryan.Synths.MBROLA;
 using Qaryan.Core;
 using Qaryan.Audio;
 using System.Reflection;
+using MotiZilberman;
 
 namespace Qaryan.GUI
 {

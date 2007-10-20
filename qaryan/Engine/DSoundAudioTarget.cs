@@ -28,9 +28,6 @@ namespace Qaryan.Audio
         Queue<byte[]> Buffers;
         int bufPos = 0;
 
-        int silence = 0;
-        bool dirty = false;
-
         void PullAudio(byte[] buffer, int length)
         {
             if (!IsRunning)
@@ -64,9 +61,7 @@ namespace Qaryan.Audio
 
         protected override void Open(WaveFormat format)
         {
-            dirty = false;
             bufPos = 0;
-            silence = 0;
             Buffers = new Queue<byte[]>();
             Player = new SoundPlayer(owner, PullAudio, format);
             Player.Resume();
@@ -82,12 +77,10 @@ namespace Qaryan.Audio
 
         protected override void Close()
         {
-            dirty = true;
         }
 
         public override void Stop()
         {
-            dirty = true;
             if (Player != null)
                 Player.Dispose();
             Buffers.Clear();

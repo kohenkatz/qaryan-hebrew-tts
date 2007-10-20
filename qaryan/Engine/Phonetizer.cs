@@ -52,13 +52,13 @@ namespace Qaryan.Core
 		
 		protected override void BeforeConsumption()
 		{
-			Console.WriteLine("phonetizer started");
+            Log(LogLevel.Info,"Started");
 			base.BeforeConsumption();
 		firstStressInClause=true;
 
 			Phone phn=new Phone("_",1);
 			Emit(phn);
-			Console.WriteLine("phonetizer: {0}",phn);
+            Log("{0}", phn);
 		}
 		
 		protected override void Consume(Queue<Segment> InQueue)
@@ -76,7 +76,7 @@ namespace Qaryan.Core
 					if (phn==null)
 						phn=new Phone("_",1);
 					Emit(phn);
-					Console.WriteLine("phonetizer: {0}",phn);
+                    Log("{0}", phn);
 
 				}
 				firstStressInClause=true;
@@ -173,7 +173,7 @@ namespace Qaryan.Core
 						}
 
 							Emit(phone);
-							Console.WriteLine("phonetizer: {0}",phone);
+                            Log("{0}", phone);
 
 						
 
@@ -205,7 +205,7 @@ namespace Qaryan.Core
 						}
 						Phone phone;
 						Emit(phone=new Phone("_",len));
-						Console.WriteLine("phonetizer: {0}",phone);
+                        Log("{0}", phone);
 					}
 
 					
@@ -220,9 +220,9 @@ namespace Qaryan.Core
 			base.AfterConsumption();
 			Phone phn=new Phone("_",1);
 			Emit(phn);
-			Console.WriteLine("phonetizer: {0}",phn);
+            Log("{0}", phn);
             _DoneProducing();
-			Console.WriteLine("phonetizer finished");
+            Log("finished");
 		}
 		
 		public override void Run(Producer<Segment> producer)

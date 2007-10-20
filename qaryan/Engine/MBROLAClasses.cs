@@ -66,6 +66,30 @@ namespace Qaryan.Synths.MBROLA
             }
         }
 
+        private string _MBROLAVoicePath = FileBindings.VoicePath;
+        
+        internal string MBROLAVoicePath
+        {
+            get
+            {
+                return _MBROLAVoicePath;
+            }
+            set
+            {
+                _MBROLAVoicePath = value;
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                string VoiceFilename = Path.Combine(MBROLAVoicePath, Name);
+                if (Directory.Exists(VoiceFilename))
+                    VoiceFilename = Path.Combine(VoiceFilename, Name);
+                return VoiceFilename;
+            }
+        }
         private string displayName;
         public string DisplayName
         {
@@ -83,7 +107,10 @@ namespace Qaryan.Synths.MBROLA
         {
             get
             {
-                return (uint)MbrPlay.GetDefaultFreq();
+                if (Mbrola.Binding == MbrolaBinding.Library)
+                    return (uint)MbrPlay.GetDefaultFreq();
+                else
+                    return DiphoneDB.WaveFormatFromFile(FileName).SamplesPerSecond;
             }
         }
 
@@ -310,15 +337,19 @@ namespace Qaryan.Synths.MBROLA
 
         bool Register()
         {
-            if (!MbrPlay.DatabaseExist(this.name)) {
-                string localPath=Path.Combine(FileBindings.VoicePath,this.name);
-                if (File.Exists(localPath))
+            if (Mbrola.Binding == MbrolaBinding.Library)
+            {
+                if (!MbrPlay.DatabaseExist(this.name))
                 {
-                    System.Text.StringBuilder sb = new System.Text.StringBuilder(260);
-                    return MbrPlay.RegisterDatabase(this.name, localPath, this.name, false, sb, 260);
+                    string localPath = Path.Combine(FileBindings.VoicePath, this.name);
+                    if (File.Exists(localPath))
+                    {
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder(260);
+                        return MbrPlay.RegisterDatabase(this.name, localPath, this.name, false, sb, 260);
+                    }
+                    else
+                        return false;
                 }
-                else
-                    return false;
             }
             return true;
 
@@ -328,9 +359,12 @@ namespace Qaryan.Synths.MBROLA
         {
             if (Register())
             {
-                Mbrola.Init(MbrPlay.RegGetDatabasePath(Name));
-                MbrPlay.SetDatabase(Name);
-                MbrPlay.Play("_ 1\n_ 1\n", (int)MbrFlags.Wait | (int)MbrOut.Disabled, null, null);
+                if (Mbrola.Binding == MbrolaBinding.Library)
+                {
+                    Mbrola.Init(MbrPlay.RegGetDatabasePath(Name));
+                    MbrPlay.SetDatabase(Name);
+                    MbrPlay.Play("_ 1\n_ 1\n", (int)MbrFlags.Wait | (int)MbrOut.Disabled, null, null);
+                }
                 return true;
             }
             else
@@ -425,9 +459,9 @@ namespace Qaryan.Synths.MBROLA
 
         public static MBROLAElement CreateUnify(MBROLAElement e1, MBROLAElement e2, string symbol)
         {
-//            HebrewParser.Log.Synthesizer.WriteLine("Unifying: ");
-//            HebrewParser.Log.Synthesizer.WriteLine("\t" + e1.ToString());
-//            HebrewParser.Log.Synthesizer.WriteLine("\t" + e2.ToString());
+            //            HebrewParser.Log.Synthesizer.WriteLine("Unifying: ");
+            //            HebrewParser.Log.Synthesizer.WriteLine("\t" + e1.ToString());
+            //            HebrewParser.Log.Synthesizer.WriteLine("\t" + e2.ToString());
             for (int i = 0; i < e1.Pitch.Count; i++)
             {
                 MBROLAPitchPoint p = e1.Pitch[i];
@@ -441,8 +475,8 @@ namespace Qaryan.Synths.MBROLA
                 e1.Pitch.Add(p);
             }
             MBROLAElement e = new MBROLAElement(symbol, e1.Duration + e2.Duration, e1.Pitch);
-//            HebrewParser.Log.Synthesizer.WriteLine("Result: ");
-//            HebrewParser.Log.Synthesizer.WriteLine("\t" + e.ToString());
+            //            HebrewParser.Log.Synthesizer.WriteLine("Result: ");
+            //            HebrewParser.Log.Synthesizer.WriteLine("\t" + e.ToString());
             //			e1.Pitch.AddRange(e2.Pitch);
             return e;
         }

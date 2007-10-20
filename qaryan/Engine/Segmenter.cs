@@ -213,7 +213,7 @@ namespace Qaryan.Core
 
 		protected override void BeforeConsumption()
 		{
-			Console.WriteLine("segmenter started");			
+            Log(LogLevel.Info,"Started");			
 			base.BeforeConsumption();
 			curElementIndex=-1;
 			curSegment=curWord=null;
@@ -226,7 +226,7 @@ namespace Qaryan.Core
 				w.Syllables.Add(curSyl);
 				curSyl=null;
 			}
-			Console.WriteLine("segmenter: /{0}/",w.TranslitSyllables);
+            Log("/{0}/", w.TranslitSyllables);
 			w.PlaceStress(StressHeuristics,DefaultStress);
 			foreach (Syllable syl in w.Syllables) {
 				bool stressed=syl.IsStressed;
@@ -283,7 +283,7 @@ namespace Qaryan.Core
 		{
 			SpeechElement curElement=InQueue.Dequeue();
             _ItemConsumed(curElement);
-			Console.WriteLine("segmenter: Current element is a {0} ({1})",curElement.GetType(),curElement.Latin);
+            Log("Current element is a {0} ({1})", curElement.GetType(), curElement.Latin);
 			SpeechElement nextElement=null;
 			if (InQueue.Count>0)
 				nextElement=InQueue.Peek();
@@ -314,7 +314,7 @@ namespace Qaryan.Core
 						if ((nextElement!=null) && (nextElement is Vowel) && (nextElement as Vowel).IsVowelIn(Vowels.Inaudible)) {
 							curSyl.End++;
 							nextElement=InQueue.Dequeue();
-							Console.WriteLine("segmenter: About to chomp a {0} ({1})",nextElement.GetType(),nextElement.Latin);
+                            Log("About to chomp a {0} ({1})", nextElement.GetType(), nextElement.Latin);
 						}
 						else if ((nextElement==null) || (nextElement is Separator)) {
 							curSyl.End++;
@@ -361,12 +361,12 @@ namespace Qaryan.Core
 						curSegment=new SeparatorSegment(curElement as Separator);
 					}
 					Emit(curSegment);
-					Console.WriteLine("segmenter: Added separator segment");
+                    Log("Added separator segment");
 					curSegment=null;
 				}
 				else {
 					Emit(curSegment=new SeparatorSegment(curElement as Separator));
-					Console.WriteLine("segmenter: Added separator segment");
+                    Log("Added separator segment");
 					curSegment=null;
 				}
 			}
@@ -383,7 +383,7 @@ namespace Qaryan.Core
 				curSegment=null;
 			}
             _DoneProducing();
-			Console.WriteLine("segmenter finished");
+            Log(LogLevel.Info,"Finished");
 		}
 		
 		public override void Run(Producer<SpeechElement> producer)

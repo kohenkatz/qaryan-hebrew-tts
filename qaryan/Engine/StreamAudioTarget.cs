@@ -20,15 +20,29 @@ using System.IO;
 
 namespace Qaryan.Audio
 {
-    public class WaveFileAudioTarget: AudioTarget
+    public class StreamAudioTarget: AudioTarget
     {
-        public string Filename;
+        Stream stream;
 
-        WaveFileWriter writer;
+        public Stream Stream
+        {
+            get
+            {
+                return stream;
+            }
+            set
+            {
+                stream = value;
+            }
+        }
+
+        public bool WriteHeader = true;
+
+        WaveStreamWriter writer;
 
         protected override void Open(WaveFormat format)
         {
-             writer = new WaveFileWriter(File.Create(Filename), format.Channels, format.SamplesPerSecond, format.AverageBytesPerSecond, format.BlockAlign, format.BitsPerSample);
+             writer = new WaveStreamWriter(Stream, format.Channels, format.SamplesPerSecond, format.AverageBytesPerSecond, format.BlockAlign, format.BitsPerSample, WriteHeader);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)
@@ -48,7 +62,6 @@ namespace Qaryan.Audio
         public void PlaySync()
         {
             this.Join();
-            new System.Media.SoundPlayer(Filename).PlaySync();
         }
 
         public override void Stop()

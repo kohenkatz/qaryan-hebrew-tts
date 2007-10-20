@@ -22,18 +22,6 @@ using Qaryan.Audio;
 
 namespace Qaryan.Core
 {
-    public delegate void SimpleNotify();
-
-    public interface AudioProvider:Producer<AudioBufferInfo>
-    {
-        WaveFormat AudioFormat
-        {
-            get;
-            set;
-        }
-        event SimpleNotify AudioFinished;
-    }
-
     public abstract class Synthesizer<T> : LookaheadConsumerProducer<T,AudioBufferInfo>,AudioProvider
     {
         WaveFormat fmt=new WaveFormat();

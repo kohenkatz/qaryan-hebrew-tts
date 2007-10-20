@@ -90,7 +90,7 @@
     <Compile Include="Resources.he-IL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.he-IL.resx</DependentUpon>
+      <DependentUpon>Resources.en.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
@@ -149,7 +149,6 @@
     <EmbeddedResource Include="Resources.he-IL.resx">
       <LastGenOutput>Resources.he-IL.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

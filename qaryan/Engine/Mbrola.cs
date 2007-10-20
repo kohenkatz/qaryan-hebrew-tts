@@ -183,8 +183,37 @@ namespace MBROLA
         }
     }
 
-    public class Mbrola
+    public enum MbrolaBinding
     {
+        Library, Standalone
+    }
+
+    public sealed class Mbrola
+    {
+        static MbrolaBinding? binding;
+
+        public static MbrolaBinding Binding
+        {
+            get
+            {
+                if (binding.HasValue)
+                    return binding.Value;
+                try
+                {
+                    int i = Mbrola.LastError_MBR();
+                    return MbrolaBinding.Library;
+                }
+                catch
+                {
+                    return MbrolaBinding.Standalone;
+                }
+            }
+            set
+            {
+                binding = value;
+            }
+        }
+
         [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "init_MBR", CharSet = CharSet.Ansi)]
         private static extern int Init_MBR(string dbaname);
 

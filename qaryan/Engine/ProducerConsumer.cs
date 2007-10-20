@@ -28,6 +28,8 @@ using System.Collections.Generic;
 
 namespace MotiZilberman
 {
+    public delegate void StringEventHandler(object sender, string value);
+
     public class QQueue<T> : Queue<T>
     {
 
@@ -139,8 +141,8 @@ namespace MotiZilberman
 
         protected void _DoneConsuming()
         {
-            if (DoneConsuming!=null)
-                DoneConsuming(this,new EventArgs());
+            if (DoneConsuming != null)
+                DoneConsuming(this, new EventArgs());
         }
 
         protected void _ItemConsumed(T item)
@@ -163,7 +165,7 @@ namespace MotiZilberman
         }
     }
 
-    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, Producer<T2>
+    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, Producer<T2>, ILogSource
     {
         Queue<T2> producedQueue;
         bool isRunning;
@@ -222,6 +224,48 @@ namespace MotiZilberman
             //			base.Consume(queue);
         }
 
+        public event LogLineHandler LogLine;
+
+        protected void Log(LogLevel visibility, string s)
+        {
+            if (LogLine != null)
+                LogLine(this, s, visibility);
+        }
+
+        protected void Log(LogLevel visibility, object o)
+        {
+            if (LogLine != null)
+                LogLine(this, o.ToString(), visibility);
+        }
+
+        protected void Log(LogLevel visibility, string s, params object[] objs)
+        {
+            Log(visibility, String.Format(s, objs));
+        }
+
+        protected void Log(string s)
+        {
+            Log(LogLevel.Debug, s);
+        }
+
+        protected void Log(object o)
+        {
+            Log(LogLevel.Debug, o.ToString());
+        }
+
+
+        protected internal void Log(string s, params object[] objs)
+        {
+            Log(String.Format(s, objs));
+        }
+
+        public virtual string Name
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
     }
 
     public abstract class LookaheadConsumerProducer<T1, T2> : ConsumerProducer<T1, T2>
@@ -249,4 +293,6 @@ namespace MotiZilberman
                 _ItemConsumed(InQueue.Dequeue());
         }
     }
+
+    public delegate void SimpleNotify();
 }

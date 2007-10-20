@@ -21,6 +21,16 @@ using Qaryan.Core;
 
 namespace Qaryan.Audio
 {
+    public interface AudioProvider : Producer<AudioBufferInfo>
+    {
+        WaveFormat AudioFormat
+        {
+            get;
+            set;
+        }
+        event SimpleNotify AudioFinished;
+    }
+
     public abstract class AudioTarget: LookaheadConsumer<AudioBufferInfo>
     {
         public event SimpleNotify AudioFinished;
@@ -52,6 +62,8 @@ namespace Qaryan.Audio
             while (InQueue.Count > 0)
             {
                 AudioBufferInfo abi=InQueue.Dequeue();
+                if (Eof)
+                    continue;
                 PlayBuffer(abi);
                 _ItemConsumed(abi);
             }
@@ -66,6 +78,7 @@ namespace Qaryan.Audio
         protected void OnAudioFinished()
         {
             Eof = true;
+
             Close();
             if (AudioFinished != null)
                 AudioFinished();

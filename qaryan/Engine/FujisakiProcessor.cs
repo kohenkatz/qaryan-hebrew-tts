@@ -38,6 +38,13 @@ namespace Qaryan.Core
 	/// </summary>
 	public class FujisakiProcessor:LookaheadConsumerProducer<Phone,Phone>
 	{
+        public override string Name
+        {
+            get
+            {
+                return "Fujisaki";
+            }
+        }
 		FujisakiModel Fujisaki=new FujisakiModel();
         public FujisakiModel Model
         {
@@ -70,7 +77,7 @@ namespace Qaryan.Core
 		
 		protected override void BeforeConsumption()
 		{
-			Console.WriteLine("fujisaki started");
+			Log(LogLevel.Info,"Started");
 			base.BeforeConsumption();
 			MidQueue=new Queue<Phone>();
 			UtteranceTime=0;
@@ -115,7 +122,7 @@ namespace Qaryan.Core
                 NoMoreData();
 			base.AfterConsumption();
             _DoneProducing();
-			Console.WriteLine("fujisaki finished");
+			Log(LogLevel.Info,"Finished");
 		}
 
 

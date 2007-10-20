@@ -20,7 +20,7 @@ using MotiZilberman;
 
 namespace Qaryan.Core
 {
-    public delegate void StringEventHandler(object sender, string value);
+    
 
     public class TranslitListener
     {

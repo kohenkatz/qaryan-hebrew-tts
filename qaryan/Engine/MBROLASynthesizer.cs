@@ -38,7 +38,7 @@ namespace Qaryan.Synths.MBROLA
 {
  
     /// <summary>
-    /// Description of MBROLASynthesizer.
+    /// An interface to the MBROLA synthesizer implemented on top of MbrPlay.dll.
     /// </summary>
     public class MBROLASynthesizer : Synthesizer<MBROLAElement>
     {
@@ -88,7 +88,7 @@ namespace Qaryan.Synths.MBROLA
         {
             base.BeforeConsumption();
             pho = new StringBuilder();
-            Console.WriteLine("synthesizer started");
+            Log(LogLevel.Info,"Started");
             IsDoneConsuming = false;
 //            Mbrola.Init("C:\\Documents and Settings\\Moti Z\\My Documents\\SharpDevelop Projects\\Qaryan.Core refactor\\Voices\\" + Voice.Name);
             MbrPlay.SetDatabase(voice.Name);
@@ -132,7 +132,7 @@ namespace Qaryan.Synths.MBROLA
 
             base.AfterConsumption();
             IsDoneConsuming = true;
-            Console.WriteLine("nuevo synthesizer finished");
+            Log(LogLevel.Info,"Finished");
         }
 
 //        bool isRunning = false;
@@ -151,15 +151,15 @@ namespace Qaryan.Synths.MBROLA
                 switch (msg)
                 {
                     case MbrMessage.Init:
-                        Console.WriteLine("WM_MBR_INIT");
+                        Synth.Log("WM_MBR_INIT");
 //                        fout.Seek(0, SeekOrigin.End);
                         break;
                     case MbrMessage.Read:
                         //                    fwrite((short*)wParam, sizeof(short), lParam, fout);
-                        Console.WriteLine("WM_MBR_READ wParam={0}, lParam={1}", wParam.ToInt32().ToString("X"), lParam);
+                        Synth.Log("WM_MBR_READ wParam={0}, lParam={1}", wParam.ToInt32().ToString("X"), lParam);
                         break;
                     case MbrMessage.Write:
-                        Console.WriteLine("WM_MBR_WRITE {0} samples", lParam);
+                        Synth.Log("WM_MBR_WRITE {0} samples", lParam);
                         byte[] buf = new byte[lParam * sizeof(short)];
                         Marshal.Copy(wParam, buf, 0, lParam * sizeof(short));
 //                        AudioBufferInfo abuf = new AudioBufferInfo();
@@ -170,11 +170,11 @@ namespace Qaryan.Synths.MBROLA
                         break;
                     case MbrMessage.End:
                         Finished = true;
-                        Console.WriteLine("WM_MBR_END");
+                        Synth.Log("WM_MBR_END");
 //                        fout.Close();
                         break;
                     default:
-                        Console.WriteLine("MbrMessage " + msg);
+                        Synth.Log("MbrMessage " + msg);
                         break;
                 }
                 return 0;
@@ -215,7 +215,7 @@ namespace Qaryan.Synths.MBROLA
                         }
                         else
                         {
-                            Console.WriteLine("mbrola thread: " + fragment);
+                            Synth.Log("MBROLA Thread: " + fragment);
                             
                             MbrPlay.Play(fragment, (int)MbrFlags.Queued | (int)MbrFlags.Wait | (int)MbrFlags.MsgInit | (int)MbrFlags.MsgWrite | (int)MbrFlags.MsgEnd | (int)MbrFlags.Callback | (int)MbrOut.Disabled, null, callback);
                             
