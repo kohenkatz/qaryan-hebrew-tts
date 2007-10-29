@@ -669,6 +669,7 @@ namespace Qaryan.GUI
             this.toolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.ShortcutKeyDisplayString = null;
+            this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // הגייתמכפלToolStripMenuItem
             // 
@@ -681,6 +682,7 @@ namespace Qaryan.GUI
             this.הגייתמכפלToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.הגייתמכפלToolStripMenuItem.Name = "הגייתמכפלToolStripMenuItem";
             this.הגייתמכפלToolStripMenuItem.ShortcutKeyDisplayString = null;
+            this.הגייתמכפלToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // הגייהיומיומיתToolStripMenuItem
             // 
@@ -692,6 +694,7 @@ namespace Qaryan.GUI
             this.הגייהיומיומיתToolStripMenuItem.CheckOnClick = true;
             this.הגייהיומיומיתToolStripMenuItem.Name = "הגייהיומיומיתToolStripMenuItem";
             this.הגייהיומיומיתToolStripMenuItem.ShortcutKeyDisplayString = null;
+            this.הגייהיומיומיתToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // הגייהמלעיליתToolStripMenuItem
             // 
@@ -703,6 +706,7 @@ namespace Qaryan.GUI
             this.הגייהמלעיליתToolStripMenuItem.CheckOnClick = true;
             this.הגייהמלעיליתToolStripMenuItem.Name = "הגייהמלעיליתToolStripMenuItem";
             this.הגייהמלעיליתToolStripMenuItem.ShortcutKeyDisplayString = null;
+            this.הגייהמלעיליתToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // akanyeIkanyeToolStripMenuItem
             // 
@@ -714,6 +718,7 @@ namespace Qaryan.GUI
             this.akanyeIkanyeToolStripMenuItem.CheckOnClick = true;
             this.akanyeIkanyeToolStripMenuItem.Name = "akanyeIkanyeToolStripMenuItem";
             this.akanyeIkanyeToolStripMenuItem.ShortcutKeyDisplayString = null;
+            this.akanyeIkanyeToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // תצוגהToolStripMenuItem
             // 

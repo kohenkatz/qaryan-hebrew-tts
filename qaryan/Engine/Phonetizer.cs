@@ -30,208 +30,230 @@ using MotiZilberman;
 
 namespace Qaryan.Core
 {
-	/// <summary>
-	/// Description of Phonetizer.
-	/// </summary>
-	public class Phonetizer: LookaheadConsumerProducer<Segment,Phone>
-	{
-//		int bpm;
-		bool firstStressInClause=true;
-		
-		public struct ContextOptions {
-			public bool Akanye,Ikanye,DistinguishStrongDagesh,SingCantillation;
-		}
-		
-		public ContextOptions Options=new ContextOptions();
-		
-		/*double MidiNotePitch(byte note) {
-			double n=note-69;
-			double p= 440 * Math.Pow((double)2,n/12);
-			return p;
-		}*/
-		
-		protected override void BeforeConsumption()
-		{
-            Log(LogLevel.Info,"Started");
-			base.BeforeConsumption();
-		firstStressInClause=true;
+    /// <summary>
+    /// Description of Phonetizer.
+    /// </summary>
+    public class Phonetizer : LookaheadConsumerProducer<Segment, Phone>
+    {
+        //		int bpm;
+        bool firstStressInClause = true;
 
-			Phone phn=new Phone("_",1);
-			Emit(phn);
+        public struct ContextOptions
+        {
+            public bool Akanye, Ikanye, DistinguishStrongDagesh, SingCantillation;
+        }
+
+        public ContextOptions Options = new ContextOptions();
+
+        /*double MidiNotePitch(byte note) {
+            double n=note-69;
+            double p= 440 * Math.Pow((double)2,n/12);
+            return p;
+        }*/
+
+        protected override void BeforeConsumption()
+        {
+            Log(LogLevel.Info, "Started");
+            base.BeforeConsumption();
+            firstStressInClause = true;
+
+            Phone phn = new Phone("_", 1);
+            Emit(phn);
             Log("{0}", phn);
-		}
-		
-		protected override void Consume(Queue<Segment> InQueue)
-		{
-			if (InQueue.Count==0)
-				return;
-			Segment seg=InQueue.Dequeue();
+        }
+
+        protected override void Consume(Queue<Segment> InQueue)
+        {
+            if (InQueue.Count == 0)
+                return;
+            Segment seg = InQueue.Dequeue();
             _ItemConsumed(seg);
-			Segment nextSeg=null;
-			if (InQueue.Count>0)
-				nextSeg=InQueue.Peek();
-			if (seg is SeparatorSegment) {
-				if (HebrewChar.IsPunctuation((seg[0] as Separator).Latin[0])) {
-					Phone phn=Phone.Create(seg[0]);
-					if (phn==null)
-						phn=new Phone("_",1);
-					Emit(phn);
+            Segment nextSeg = null;
+            if (InQueue.Count > 0)
+                nextSeg = InQueue.Peek();
+            if (seg is SeparatorSegment)
+            {
+                if (HebrewChar.IsPunctuation((seg[0] as Separator).Latin[0]))
+                {
+                    Phone phn = Phone.Create(seg[0]);
+                    if (phn == null)
+                        phn = new Phone("_", 1);
+                    Emit(phn);
                     Log("{0}", phn);
 
-				}
-				firstStressInClause=true;
-			}
-			else if (seg is Word) {
-				Word w=(Word)seg;
+                }
+                firstStressInClause = true;
+            }
+            else if (seg is Word)
+            {
+                Word w = (Word)seg;
 
-				bool beforeStress=true;
-				SpeechElement HintStrongDagesh=null;
-				foreach (Syllable syl in w.Syllables) {
-					
-					bool stressed=syl.IsStressed;
-					if (beforeStress&&stressed)
-						beforeStress=false;
-					bool beforeNucleus=true;
-					
-//					bool sylStart=true;
-					foreach (SpeechElement e in	w.Phonemes.GetRange(syl.Start,syl.End-syl.Start+1)) {
-						Phone phone=null;
-						bool sylEnd=(syl.Phonemes.IndexOf(e)==syl.Phonemes.Count-1);
-						if ((e is Consonant) && ((((Consonant)e).Flags&ConsonantFlags.StrongDagesh)!=0) && (e==HintStrongDagesh)) {
-							continue;
-						}
-						
-						phone=Phone.Create(e);
-						if (phone==null)
-							continue;
-						phone.Context.IsNucleus=(syl.Nucleus==e);
-						phone.Context.IsAccented=stressed;
+                bool beforeStress = true;
+                SpeechElement HintStrongDagesh = null;
+                for (int sylIndex = 0; sylIndex < w.Syllables.Count; sylIndex++)
+                {
+                    Syllable syl = w.Syllables[sylIndex];
+
+                    bool stressed = syl.IsStressed;
+                    if (beforeStress && stressed)
+                        beforeStress = false;
+                    bool beforeNucleus = true;
+
+                    //					bool sylStart=true;
+                    //foreach (SpeechElement e in	w.Phonemes.GetRange(syl.Start,syl.End-syl.Start+1)) {
+                    for (int elemIndex = 0; elemIndex < syl.Phonemes.Count; elemIndex++)
+                    {
+                        SpeechElement e = syl.Phonemes[elemIndex];
+                        Phone phone = null;
+                        bool sylEnd = (elemIndex == syl.Phonemes.Count - 1);
+                        if ((e is Consonant) && ((((Consonant)e).Flags & ConsonantFlags.StrongDagesh) != 0) && (e == HintStrongDagesh))
+                        {
+                            continue;
+                        }
+
+                        phone = Phone.Create(e);
+                        if (phone == null)
+                            continue;
+                        phone.Context.IsNucleus = (syl.Nucleus == e);
+                        phone.Context.IsAccented = stressed;
                         if (nextSeg is SeparatorSegment)
                         {
                             phone.Context.NextSeparator = (nextSeg as SeparatorSegment)[0].Latin;
                         }
-						if (!stressed) {
-							if (Options.Akanye)
-								if (phone.Symbol=="o")
-								phone.Symbol="a";
-							if (Options.Ikanye)
-								if (phone.Symbol=="e")
-								phone.Symbol="i";
-						}
-						else
-							phone.Context.AccentStrength=1;
-						if (phone.PitchCurve.Count>0)
-							phone.PitchCurve.Clear();
-											
-						phone.Duration=80;
-						if (e is Vowel) {
-							Vowel v=(Vowel)e;
-							if (v.IsVowelIn(Vowels.VeryShort))
-								phone.Duration=28; //38
-							else if (v.IsVowelIn(Vowels.Short))
-								phone.Duration=90;
-							else if (v.IsVowelIn(Vowels.Long))
-								phone.Duration=94;
-							else if (v.IsVowelIn(Vowels.VeryLong))
-								phone.Duration=97;
-							if (v.IsVowelIn(Vowels.HighVowels))
-								phone.Duration+=25;
-							else
-								phone.Duration+=30;
-						}
-						else if (e is Consonant)
-							phone.Duration=(((Consonant)e).Sonority)*2.6+60;
-						else
-							phone.Duration=100;
-						
-						if (stressed) {
-							if (firstStressInClause) {
-								firstStressInClause=false;
-							}
-							if (e==syl.Nucleus)
-								beforeNucleus=false;
-							phone.Duration*=1;
-							if (beforeNucleus && (e is Consonant) && ((Consonant)e).IsLiquid)
-								phone.Duration*=1.2;
-							
-						}
-						else {
-							if (e is Vowel) {
-								if (beforeStress)
-									
-									phone.Duration*=0.5;
-								else
-									phone.Duration*=0.6;
-							}
-						}
-						if ((e is Consonant) && ((((Consonant)e).Flags&ConsonantFlags.StrongDagesh)!=0)) {
-							HintStrongDagesh=e;
-							if (Options.DistinguishStrongDagesh)
-								phone.Duration*=1.4;
-							else
-								phone.Duration*=1.1F;
-						}
+                        if (!stressed)
+                        {
+                            if (Options.Akanye)
+                                if (phone.Symbol == "o")
+                                    phone.Symbol = "a";
+                            if (Options.Ikanye)
+                                if (phone.Symbol == "e")
+                                    phone.Symbol = "i";
+                        }
+                        else
+                            phone.Context.AccentStrength = 1;
+                        if (phone.PitchCurve.Count > 0)
+                            phone.PitchCurve.Clear();
 
-							Emit(phone);
-                            Log("{0}", phone);
+                        phone.Duration = 80;
+                        if (e is Vowel)
+                        {
+                            Vowel v = (Vowel)e;
+                            if (v.IsVowelIn(Vowels.VeryShort))
+                                phone.Duration = 28; //38
+                            else if (v.IsVowelIn(Vowels.Short))
+                                phone.Duration = 90;
+                            else if (v.IsVowelIn(Vowels.Long))
+                                phone.Duration = 94;
+                            else if (v.IsVowelIn(Vowels.VeryLong))
+                                phone.Duration = 97;
+                            if (v.IsVowelIn(Vowels.HighVowels))
+                                phone.Duration += 25;
+                            else
+                                phone.Duration += 30;
+                        }
+                        else if (e is Consonant)
+                            phone.Duration = (((Consonant)e).Sonority) * 2.6 + 60;
+                        else
+                            phone.Duration = 100;
 
-						
+                        if (stressed)
+                        {
+                            if (firstStressInClause)
+                            {
+                                firstStressInClause = false;
+                            }
+                            if (e == syl.Nucleus)
+                                beforeNucleus = false;
+                            phone.Duration *= 1;
+                            if (beforeNucleus && (e is Consonant) && ((Consonant)e).IsLiquid)
+                                phone.Duration *= 1.2;
 
-						
-//						sylStart=false;
-					}
-				}
-				/*					if (w.CantillationMarks.Contains('֑'))
-						silpr.Phones.Add(new Phone("_",200));*/
-				#region cantillation stuff
-				if (Options.SingCantillation)
-					foreach (char ch in w.CantillationMarks) {
-					int i=HebrewChar.DisjunctiveRank(ch),len=0;
-					
-					if (i<5) {
-						switch (i) {
-							case 1:
-								len=230;
-								break;
-							case 2:
-								len=165;
-								break;
-							case 3:
-								len=60;
-								break;
-							case 4:
-								len=30;
-								break;
-						}
-						Phone phone;
-						Emit(phone=new Phone("_",len));
+                        }
+                        else
+                        {
+                            if (e is Vowel)
+                            {
+                                if (beforeStress)
+
+                                    phone.Duration *= 0.5;
+                                else
+                                    phone.Duration *= 0.6;
+                            }
+                        }
+                        if ((e is Consonant) && ((((Consonant)e).Flags & ConsonantFlags.StrongDagesh) != 0))
+                        {
+                            HintStrongDagesh = e;
+                            if (Options.DistinguishStrongDagesh)
+                                phone.Duration *= 1.4;
+                            else
+                                phone.Duration *= 1.1F;
+                        }
+
+//                        if ((nextSeg is SeparatorSegment) && (sylIndex == w.Syllables.Count - 1))
+//                            phone.Duration *= 1.6;
+                        Emit(phone);
                         Log("{0}", phone);
-					}
 
-					
-				}
-				#endregion
-			}
-			
-		}
-		
-		protected override void AfterConsumption()
-		{
-			base.AfterConsumption();
-			Phone phn=new Phone("_",1);
-			Emit(phn);
+
+
+
+                        //						sylStart=false;
+                    }
+                }
+                /*					if (w.CantillationMarks.Contains('֑'))
+                        silpr.Phones.Add(new Phone("_",200));*/
+                #region cantillation stuff
+                if (Options.SingCantillation)
+                    foreach (char ch in w.CantillationMarks)
+                    {
+                        int i = HebrewChar.DisjunctiveRank(ch), len = 0;
+
+                        if (i < 5)
+                        {
+                            switch (i)
+                            {
+                                case 1:
+                                    len = 230;
+                                    break;
+                                case 2:
+                                    len = 165;
+                                    break;
+                                case 3:
+                                    len = 60;
+                                    break;
+                                case 4:
+                                    len = 30;
+                                    break;
+                            }
+                            Phone phone;
+                            Emit(phone = new Phone("_", len));
+                            Log("{0}", phone);
+                        }
+
+
+                    }
+                #endregion
+            }
+
+        }
+
+        protected override void AfterConsumption()
+        {
+            base.AfterConsumption();
+            Phone phn = new Phone("_", 1);
+            Emit(phn);
             Log("{0}", phn);
             _DoneProducing();
             Log("finished");
-		}
-		
-		public override void Run(Producer<Segment> producer)
-		{
-			base.Run(producer,2);
-		}
-		
-		public Phonetizer()
-		{
-		}
-	}
+        }
+
+        public override void Run(Producer<Segment> producer)
+        {
+            base.Run(producer, 2);
+        }
+
+        public Phonetizer()
+        {
+        }
+    }
 }

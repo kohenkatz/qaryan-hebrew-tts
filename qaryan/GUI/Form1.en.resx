@@ -218,28 +218,34 @@
     <value>Settings</value>
   </data>
   <data name="גרףהנגנהToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="גרףהנגנהToolStripMenuItem.Text" xml:space="preserve">
     <value>Fujisaki Graph</value>
   </data>
   <data name="תעתיקToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="תעתיקToolStripMenuItem.Text" xml:space="preserve">
     <value>Transliteration</value>
   </data>
   <data name="mBROLAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>152, 22</value>
+  </data>
+  <data name="אנגליתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="אנגליתToolStripMenuItem.Text" xml:space="preserve">
     <value>English</value>
+  </data>
+  <data name="עבריתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="עבריתToolStripMenuItem.Text" xml:space="preserve">
     <value>Hebrew</value>
   </data>
   <data name="שפתממשקמשתמשToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="שפתממשקמשתמשToolStripMenuItem.Text" xml:space="preserve">
     <value>UI Language</value>
@@ -336,6 +342,10 @@
   </data>
   <data name="printToolStripButton.Text" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="printToolStripButton.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="cutToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

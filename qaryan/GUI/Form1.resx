@@ -591,9 +591,6 @@
   <data name="&gt;&gt;tabPage6.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
   <data name="textBoxIPA.Font" type="System.Drawing.Font, System.Drawing">
     <value>Gentium, 14pt</value>
   </data>
@@ -735,9 +732,6 @@
   <data name="עבריתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 22</value>
   </data>
-  <data name="דברלקובץToolStripMenuItem.Text" xml:space="preserve">
-    <value>דבר לקובץ...</value>
-  </data>
   <data name="&gt;&gt;akanyeIkanyeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -866,6 +860,9 @@
   </data>
   <data name="&gt;&gt;textBoxSynthesizer.Parent" xml:space="preserve">
     <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
   </data>
   <data name="&gt;&gt;גופןToolStripMenuItem.Name" xml:space="preserve">
     <value>גופןToolStripMenuItem</value>
@@ -1287,6 +1284,9 @@
   <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
     <value>tabPage2</value>
   </data>
+  <data name="textBoxParser.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
   <data name="toolStripStatusLabel5.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 23</value>
   </data>
@@ -1454,8 +1454,8 @@
   <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="mBROLAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
@@ -1546,8 +1546,8 @@
   <data name="&gt;&gt;fontDialog1.Type" xml:space="preserve">
     <value>System.Windows.Forms.FontDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="textBoxParser.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="דברלקובץToolStripMenuItem.Text" xml:space="preserve">
+    <value>דבר לקובץ...</value>
   </data>
   <data name="textBoxAnalyzer.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1741,7 +1741,7 @@
     <value>335, 17</value>
   </metadata>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>0, 361</value>
+    <value>0, 408</value>
   </metadata>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>English</value>

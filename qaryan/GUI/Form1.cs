@@ -81,6 +81,21 @@ namespace Qaryan.GUI
                 setFileName(null);
             }
 
+            toolStripMenuItem1.Checked =
+                Settings.Default.RelaxAudibleSchwa;
+
+            äâééúîëôìToolStripMenuItem.Checked =
+                Settings.Default.DistinguishStrongDagesh;
+
+            äâééäéåîéåîéúToolStripMenuItem.Checked =
+                Settings.Default.EverydayRegister;
+
+            äâééäîìòéìéúToolStripMenuItem.Checked =
+                Settings.Default.Milel;
+
+            akanyeIkanyeToolStripMenuItem.Checked =
+                Settings.Default.AkanyeIkanye;
+
             LoadVoices();
             Form1.CheckForIllegalCrossThreadCalls = false;
             fujisaki.PhraseCommand += OnPhraseCommand;
@@ -143,7 +158,7 @@ namespace Qaryan.GUI
             nikudHelp.Visible = Settings.Default.NikudHelpVisible;
             if (nikudHelp.Visible)
                 nikudHelp.BringToFront();
-            textBox1.UseNikudMethod=nikudAssistanceToolStripMenuItem.Checked = Settings.Default.UseNikudMethod;
+            textBox1.UseNikudMethod = nikudAssistanceToolStripMenuItem.Checked = Settings.Default.UseNikudMethod;
             this.Activate();
         }
 
@@ -388,7 +403,7 @@ namespace Qaryan.GUI
 
         private void äùú÷ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (target!=null)
+            if (target != null)
                 target.Stop();
         }
 
@@ -602,7 +617,7 @@ namespace Qaryan.GUI
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            if (WindowState!=FormWindowState.Maximized)
+            if (WindowState != FormWindowState.Maximized)
                 Settings.Default.Form1Size = Size;
         }
 
@@ -619,6 +634,30 @@ namespace Qaryan.GUI
         private void nikudAssistanceToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             textBox1.UseNikudMethod = nikudAssistanceToolStripMenuItem.Checked;
+        }
+
+        private void toolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            ToolStripMenuItem senderItem = (sender as ToolStripMenuItem);
+            switch (senderItem.Name)
+            {
+                case "toolStripMenuItem1":
+                    Settings.Default.RelaxAudibleSchwa = senderItem.Checked;
+                    break;
+                case "äâééúîëôìToolStripMenuItem":
+                    Settings.Default.DistinguishStrongDagesh = senderItem.Checked;
+                    break;
+                case "äâééäéåîéåîéúToolStripMenuItem":
+                    Settings.Default.EverydayRegister = senderItem.Checked;
+                    break;
+                case "äâééäîìòéìéúToolStripMenuItem":
+                    Settings.Default.Milel = senderItem.Checked;
+                    break;
+                case "akanyeIkanyeToolStripMenuItem":
+                    Settings.Default.AkanyeIkanye = senderItem.Checked;
+                    break;
+            }
+            Settings.Default.Save();
         }
 
     }

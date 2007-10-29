@@ -76,7 +76,6 @@
     <Compile Include="Segments.cs" />
     <Compile Include="MBROLAClasses.cs" />
     <Compile Include="MbrolaListener.cs" />
-    <Compile Include="Sapi4AudioTarget.cs" />
     <Compile Include="DSoundAudioTarget.cs" />
     <Compile Include="FujisakiModel.cs" />
     <Compile Include="FujisakiProcessor.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="Phonetizer.cs" />
     <Compile Include="PlotSource.cs" />
     <Compile Include="ProducerConsumer.cs" />
-    <Compile Include="Sapi4Engine.cs" />
     <Compile Include="Segmenter.cs" />
     <Compile Include="SILPR.cs" />
     <Compile Include="SoundPlayer.cs" />
@@ -107,14 +105,6 @@
     <Content Include="Voices\hb1.xml" />
     <Content Include="Voices\hb2.xml" />
     <Content Include="Voices\la1.xml" />
-    <None Include="voice_dirty.reg">
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Misc\DirectTextToSpeech\DirectTextToSpeech.csproj">
-      <Project>{080DFAF4-E137-454C-BEE2-F8D66C57D881}</Project>
-      <Name>DirectTextToSpeech</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Voices\ar1.xml" />
