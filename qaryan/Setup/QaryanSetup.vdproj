@@ -16,13 +16,19 @@
         "Entry"
         {
         "MsmKey" = "8:_291E9271596F4DE03D7AC10A2BA62F0A"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
+        "OwnerKey" = "8:_6C1F52326902175181E988609DC0B15D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_291E9271596F4DE03D7AC10A2BA62F0A"
-        "OwnerKey" = "8:_E1C17342FD34AF05230CA244FFED0A9D"
+        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2CF8E1FE203F0A77B7E497566F1669E6"
+        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,14 +39,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_6C1F52326902175181E988609DC0B15D"
+        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7E791CBF3C1AE50E48E2920D68605E54"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
+        "MsmKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,24 +69,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DDBB24DFA54A37F11447E1A3425200DF"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DDBB24DFA54A37F11447E1A3425200DF"
-        "OwnerKey" = "8:_E1C17342FD34AF05230CA244FFED0A9D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1C17342FD34AF05230CA244FFED0A9D"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EBA6FBC44AB04A39833698D4B190358C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -94,19 +82,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DDBB24DFA54A37F11447E1A3425200DF"
+        "OwnerKey" = "8:_2CF8E1FE203F0A77B7E497566F1669E6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E1C17342FD34AF05230CA244FFED0A9D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7E791CBF3C1AE50E48E2920D68605E54"
+        "OwnerKey" = "8:_6C1F52326902175181E988609DC0B15D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -257,6 +239,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CF8E1FE203F0A77B7E497566F1669E6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ZedGraph, Version=5.1.1.428, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2CF8E1FE203F0A77B7E497566F1669E6"
+                    {
+                    "Name" = "8:ZedGraph.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ZedGraph.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_65685F1867BF4ADBB32E72ADCBB7AF45"
             {
             "SourcePath" = "8:..\\COPYING"
@@ -277,20 +290,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E791CBF3C1AE50E48E2920D68605E54"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6C1F52326902175181E988609DC0B15D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ZedGraph, Version=5.1.1.428, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.2858.32464, Culture=neutral, PublicKeyToken=4f93e6b580bb7ede, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7E791CBF3C1AE50E48E2920D68605E54"
+                    "_6C1F52326902175181E988609DC0B15D"
                     {
-                    "Name" = "8:ZedGraph.dll"
+                    "Name" = "8:Qaryan.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ZedGraph.dll"
+            "SourcePath" = "8:Qaryan.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
@@ -322,68 +335,6 @@
                     }
                 }
             "SourcePath" = "8:Microsoft.DirectX.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DDBB24DFA54A37F11447E1A3425200DF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:DirectTextToSpeech, Version=1.0.2842.5959, Culture=neutral, PublicKeyToken=0ac976f6a34f0370, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_DDBB24DFA54A37F11447E1A3425200DF"
-                    {
-                    "Name" = "8:DirectTextToSpeech.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DirectTextToSpeech.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E1C17342FD34AF05230CA244FFED0A9D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.2842.5960, Culture=neutral, PublicKeyToken=4f93e6b580bb7ede, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E1C17342FD34AF05230CA244FFED0A9D"
-                    {
-                    "Name" = "8:Qaryan.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Qaryan.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
@@ -503,14 +454,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Qaryan"
-        "ProductCode" = "8:{9CCD0832-7CED-4BD0-B8F4-1D3487831288}"
-        "PackageCode" = "8:{22F8C732-2DED-43DE-8BF9-FF60CBCD4DCB}"
+        "ProductCode" = "8:{6842BC80-342D-4697-A9A6-47112C519F02}"
+        "PackageCode" = "8:{687DF61E-3D11-4552-B060-D0BE28F31348}"
         "UpgradeCode" = "8:{F999157C-1C2B-4C33-9EBB-ED6DB774F8D2}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.0"
+        "ProductVersion" = "8:0.1.1"
         "Manufacturer" = "8:HebTTS"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
