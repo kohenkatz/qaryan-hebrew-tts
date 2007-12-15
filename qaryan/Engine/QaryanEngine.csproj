@@ -63,6 +63,11 @@
     <Compile Include="AudioBufferInfo.cs" />
     <Compile Include="AudioTarget.cs" />
     <Compile Include="MbrolaExtended.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StreamAudioTarget.cs" />
     <Compile Include="FileBindings.cs" />
     <Compile Include="Log.cs" />
@@ -117,21 +122,37 @@
     <None Include="MbrolaVoice.xsx">
       <DependentUpon>MbrolaVoice.xsd</DependentUpon>
     </None>
-    <Content Include="Voices\cr1.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Content Include="Logs\log1.xml" />
+    <EmbeddedResource Include="Logs\QaryanLog.xslt" />
     <Content Include="Start.txt" />
+    <Content Include="Voices\cz1.xml" />
     <Content Include="Voices\hb1_license.txt" />
     <Content Include="Voices\hb2_license.txt" />
     <Content Include="Voices\ir1.xml" />
+    <None Include="LogFile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LogFile.xsx">
+      <DependentUpon>LogFile.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Voices\hb1" />
     <Content Include="Voices\hb2" />
+    <Content Include="Voices\lt2.xml" />
     <None Include="Voices\voice.xml.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup>

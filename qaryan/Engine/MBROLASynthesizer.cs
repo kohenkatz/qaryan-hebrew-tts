@@ -88,10 +88,11 @@ namespace Qaryan.Synths.MBROLA
         {
             base.BeforeConsumption();
             pho = new StringBuilder();
-            Log(LogLevel.Info,"Started");
+            Log(LogLevel.MajorInfo,"Started");
             IsDoneConsuming = false;
 //            Mbrola.Init("C:\\Documents and Settings\\Moti Z\\My Documents\\SharpDevelop Projects\\Qaryan.Core refactor\\Voices\\" + Voice.Name);
             MbrPlay.SetDatabase(voice.Name);
+            MbrPlay.SetVolumeRatio(voice.VolumeRatio);
             myMbrThread = new MbrThread();
             myMbrThread.Error += delegate(object sender, string error)
             {
@@ -132,7 +133,7 @@ namespace Qaryan.Synths.MBROLA
 
             base.AfterConsumption();
             IsDoneConsuming = true;
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
         }
 
 //        bool isRunning = false;
@@ -151,15 +152,15 @@ namespace Qaryan.Synths.MBROLA
                 switch (msg)
                 {
                     case MbrMessage.Init:
-                        Synth.Log("WM_MBR_INIT");
+                        Synth.Log("Synth initialized");
 //                        fout.Seek(0, SeekOrigin.End);
                         break;
-                    case MbrMessage.Read:
+//                    case MbrMessage.Read:
                         //                    fwrite((short*)wParam, sizeof(short), lParam, fout);
-                        Synth.Log("WM_MBR_READ wParam={0}, lParam={1}", wParam.ToInt32().ToString("X"), lParam);
-                        break;
+//                        Synth.Log("WM_MBR_READ wParam={0}, lParam={1}", wParam.ToInt32().ToString("X"), lParam);
+//                        break;
                     case MbrMessage.Write:
-                        Synth.Log("WM_MBR_WRITE {0} samples", lParam);
+                        Synth.Log("{0} samples received from synth", lParam);
                         byte[] buf = new byte[lParam * sizeof(short)];
                         Marshal.Copy(wParam, buf, 0, lParam * sizeof(short));
 //                        AudioBufferInfo abuf = new AudioBufferInfo();
@@ -170,7 +171,7 @@ namespace Qaryan.Synths.MBROLA
                         break;
                     case MbrMessage.End:
                         Finished = true;
-                        Synth.Log("WM_MBR_END");
+                        Synth.Log("Synth terminated");
 //                        fout.Close();
                         break;
                     default:
@@ -215,7 +216,7 @@ namespace Qaryan.Synths.MBROLA
                         }
                         else
                         {
-                            Synth.Log("MBROLA Thread: " + fragment);
+                            Synth.Log("Sent {0} characters to synth",fragment.Length);
                             
                             MbrPlay.Play(fragment, (int)MbrFlags.Queued | (int)MbrFlags.Wait | (int)MbrFlags.MsgInit | (int)MbrFlags.MsgWrite | (int)MbrFlags.MsgEnd | (int)MbrFlags.Callback | (int)MbrOut.Disabled, null, callback);
                             
@@ -227,6 +228,7 @@ namespace Qaryan.Synths.MBROLA
                     }
                 });
                 t.Name = "MbrThread";
+                t.SetApartmentState(ApartmentState.STA);
                 t.Start();
             }
 

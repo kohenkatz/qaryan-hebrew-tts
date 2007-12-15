@@ -53,7 +53,7 @@ namespace Qaryan.Synths.MBROLA
 
 		protected override void BeforeConsumption()
 		{
-			Log(LogLevel.Info,"Started");
+			Log(LogLevel.MajorInfo,"Started");
 			base.BeforeConsumption();
 			curElement=null;
 			last_e=null;
@@ -64,7 +64,7 @@ namespace Qaryan.Synths.MBROLA
 			AddElement(null);
             base.AfterConsumption();
             _DoneProducing();
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
 		}
 		
 		void AddElement(MBROLAElement e) {
@@ -73,16 +73,16 @@ namespace Qaryan.Synths.MBROLA
 				if (e!=null)
 					mbre=voice.Unify(curElement,e);
 				if (mbre!=null) {
-                    Log("/{0}{1}/", curElement.Symbol, e.Symbol);
+                    string pair=String.Format("/{0}{1}/", curElement.Symbol, e.Symbol);
 					if (mbre.Symbol=="") {
 						curElement=e;
 						e=null;
-                        Log("\t\\->/{0}/", curElement.Symbol);
+                        Log("{1} -> /{0}/", curElement.Symbol, pair);
 					}
 					else {
 						curElement=mbre;
 						e=null;
-                        Log("\t\\->/{0}/", curElement.Symbol);
+                        Log("{1} -> /{0}/", curElement.Symbol, pair);
 					}
 				}
 				else {

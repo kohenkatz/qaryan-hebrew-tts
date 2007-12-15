@@ -124,12 +124,13 @@ namespace MotiZilberman
                 }
                 AfterConsumption();
             });
+            thread.SetApartmentState(ApartmentState.STA);
             thread.Name = this.GetType().Name;
             thread.Start();
 
         }
 
-        public void Join()
+        public virtual void Join()
         {
             thread.Join();
         }
@@ -152,8 +153,16 @@ namespace MotiZilberman
         }
     }
 
-    public abstract class LookaheadConsumer<T> : ThreadedConsumer<T>
+    public abstract class LookaheadConsumer<T> : ThreadedConsumer<T>, ILogSource
     {
+        public virtual string Name
+        {
+            get
+            {
+                return this.GetType().Name;
+            }
+        }
+
         protected void Run(Producer<T> producer, int windowSize)
         {
             base.Run(producer, delegate { return (producer.OutQueue.Count < windowSize); }, delegate { return (producer.OutQueue.Count <= 0); });
@@ -162,6 +171,41 @@ namespace MotiZilberman
         public override void Run(Producer<T> producer)
         {
             Run(producer, 1);
+        }
+
+        public event LogLineHandler LogLine;
+
+        protected void Log(LogLevel visibility, string s)
+        {
+            if (LogLine != null)
+                LogLine(this, s, visibility);
+        }
+
+        protected void Log(LogLevel visibility, object o)
+        {
+            if (LogLine != null)
+                LogLine(this, o.ToString(), visibility);
+        }
+
+        protected void Log(LogLevel visibility, string s, params object[] objs)
+        {
+            Log(visibility, String.Format(s, objs));
+        }
+
+        protected void Log(string s)
+        {
+            Log(LogLevel.Debug, s);
+        }
+
+        protected void Log(object o)
+        {
+            Log(LogLevel.Debug, o.ToString());
+        }
+
+
+        protected internal void Log(string s, params object[] objs)
+        {
+            Log(String.Format(s, objs));
         }
     }
 

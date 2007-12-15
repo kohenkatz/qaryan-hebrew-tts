@@ -218,34 +218,28 @@
     <value>Settings</value>
   </data>
   <data name="גרףהנגנהToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="גרףהנגנהToolStripMenuItem.Text" xml:space="preserve">
     <value>Fujisaki Graph</value>
   </data>
   <data name="תעתיקToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="תעתיקToolStripMenuItem.Text" xml:space="preserve">
     <value>Transliteration</value>
   </data>
   <data name="mBROLAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="אנגליתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="אנגליתToolStripMenuItem.Text" xml:space="preserve">
     <value>English</value>
-  </data>
-  <data name="עבריתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
   </data>
   <data name="עבריתToolStripMenuItem.Text" xml:space="preserve">
     <value>Hebrew</value>
   </data>
   <data name="שפתממשקמשתמשToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="שפתממשקמשתמשToolStripMenuItem.Text" xml:space="preserve">
     <value>UI Language</value>

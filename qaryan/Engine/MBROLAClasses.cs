@@ -133,6 +133,15 @@ namespace Qaryan.Synths.MBROLA
             get { return silprMap; }
         }
 
+        private float volumeRatio = 1.00f;
+        public float VolumeRatio
+        {
+            get
+            {
+                return volumeRatio;
+            }
+        }
+        
         public void LoadFromXml(string filename)
         {
             symbols = new List<string>();
@@ -147,6 +156,9 @@ namespace Qaryan.Synths.MBROLA
             r.ReadToFollowing("MbrolaVoice");
             name = r.GetAttribute("Name");
             displayName = r.GetAttribute("DisplayName");
+            string volume = r.GetAttribute("VolumeRatio");
+            if (volume != null)
+                volumeRatio = float.Parse(volume);
             r.ReadToDescendant("SilprMap");
             if (r.ReadToDescendant("Phone"))
                 do

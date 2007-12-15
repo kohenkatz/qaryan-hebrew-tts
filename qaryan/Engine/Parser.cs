@@ -52,7 +52,7 @@ namespace Qaryan.Core
 		public ContextOptions Options=new ContextOptions();
 		
 		void AddElement(SpeechElement eElement) {
-            Log("Current element is a {0} ({1})", eElement.GetType(), (eElement is Vowel) ? (eElement as Vowel).vowel.ToString() : eElement.Latin);
+            Log("Producing {0} {1}", eElement.GetType().Name, (eElement is Vowel) ? (eElement as Vowel).vowel.ToString() : eElement.Latin);
 			this.Emit(eElement);
 			prevElement=eElement;
 			prevVowel=prevElement as Vowel;
@@ -62,7 +62,7 @@ namespace Qaryan.Core
 		protected override void BeforeConsumption()
 		{
 			base.BeforeConsumption();
-            Log(LogLevel.Info,"Started");
+            Log(LogLevel.MajorInfo,"Started");
 			t=null;
 			newElement=null;
 			lastTag=null;
@@ -528,7 +528,7 @@ namespace Qaryan.Core
 		{
 			base.AfterConsumption();
             _DoneProducing();
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
 		}
 		
 		public override void Run(Producer<Token> producer)

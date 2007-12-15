@@ -15,7 +15,7 @@
 -    You should have received a copy of the GNU General Public License
 -    along with Qaryan.  If not, see <http:-www.gnu.org/licenses/>.
 -->
-<MbrolaVoice Name="ar1" DisplayName="Arabic 1" xmlns="http://tempuri.org/MbrolaVoice.xsd">
+<MbrolaVoice Name="ar1" DisplayName="Arabic 1" VolumeRatio="1.80">
   <SilprMap>
     <Phone Silpr="_">_</Phone>
     <Phone Silpr="’">?</Phone>

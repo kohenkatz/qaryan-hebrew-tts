@@ -139,6 +139,10 @@ namespace Qaryan.CLI
                 return;
             }
 
+            string qaryanpath = System.Environment.GetEnvironmentVariable("QARYAN_ROOT");
+            if (qaryanpath != null)
+                FileBindings.EnginePath = qaryanpath;
+
             MBROLA.Mbrola.Binding = MBROLA.MbrolaBinding.Standalone;
             Console.InputEncoding = Encoding.UTF8;
             TextReaderCharProducer prod = new TextReaderCharProducer();
@@ -151,9 +155,6 @@ namespace Qaryan.CLI
             MBROLATranslator tra = new MBROLATranslator();
             MBROLAProcessSynthesizer mbr = null;
 
-            string qaryanpath = System.Environment.GetEnvironmentVariable("QARYAN_ROOT");
-            if (qaryanpath != null)
-                FileBindings.EnginePath = qaryanpath;
 
             TextReader textSrc = Console.In;
             foreach (string argument in arguments)
@@ -232,7 +233,7 @@ namespace Qaryan.CLI
                     StreamWriter sw = File.CreateText(opts["pho"].Value as string);
                     tra.ItemProduced += delegate(Producer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
                     {
-                        sw.Write(e);
+                        sw.Write(e.Item);
                     };
                     tra.DoneProducing += delegate(object sender, EventArgs e)
                     {

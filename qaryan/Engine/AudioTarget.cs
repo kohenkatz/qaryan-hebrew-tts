@@ -33,6 +33,14 @@ namespace Qaryan.Audio
 
     public abstract class AudioTarget: LookaheadConsumer<AudioBufferInfo>
     {
+        public override string Name
+        {
+            get
+            {
+                return "Audio";
+            }
+        }
+
         public event SimpleNotify AudioFinished;
 
         AudioProvider Provider;
@@ -46,14 +54,24 @@ namespace Qaryan.Audio
             AudioFinished();
         }
 
-        private bool Eof = false;
+        private bool eof = false;
+
+        protected bool Eof
+        {
+            get
+            {
+                return eof;
+            }
+        }
+
         private bool isConsuming = false;
 
         protected override void BeforeConsumption()
         {
+            Log(LogLevel.MajorInfo, "Buffering");
             base.BeforeConsumption();
             isConsuming = true;
-            Eof = false;
+            eof = false;
             Open(Provider.AudioFormat);
         }
 
@@ -62,10 +80,17 @@ namespace Qaryan.Audio
             while (InQueue.Count > 0)
             {
                 AudioBufferInfo abi=InQueue.Dequeue();
-                if (Eof)
+                /*if (eof)
+                {
+                    Log(LogLevel.Debug, "Skip buffer, {0} bytes (eof)", abi.Data.Length);
                     continue;
-                PlayBuffer(abi);
-                _ItemConsumed(abi);
+                }
+                else
+                {*/
+                    Log(LogLevel.Debug, "Play buffer, {0} bytes", abi.Data.Length);
+                    PlayBuffer(abi);
+                    _ItemConsumed(abi);
+            //    }
             }
         }
 
@@ -73,33 +98,43 @@ namespace Qaryan.Audio
         {
             base.AfterConsumption();
             isConsuming = false;
+            Log(LogLevel.MajorInfo, "Finished buffering");
         }
 
         protected void OnAudioFinished()
         {
-            Eof = true;
+            Log(LogLevel.Debug, "End of audio at source");
 
-            Close();
-            if (AudioFinished != null)
-                AudioFinished();
             _DoneConsuming();
+            eof = true;
         }
 
         public virtual bool IsRunning
         {
             get
             {
-                return isConsuming || !Eof;
+                return isConsuming || !eof;
             }
         }
 
         public override void Run(Producer<AudioBufferInfo> producer)
         {
             if (!(producer is AudioProvider))
+            {
+                Log(LogLevel.Error, "Attempted run on non-AudioTarget ({0})", producer.GetType().FullName);
                 throw new ArgumentException("AudioTarget can only be run on an AudioProvider");
+            }
             Provider = producer as AudioProvider;
             Provider.AudioFinished += OnAudioFinished;
             base.Run(producer);
+        }
+
+        protected void _AudioFinished()
+        {
+            Close();
+            Log(LogLevel.Info, "Audio playback finished");
+            if (AudioFinished != null)
+                AudioFinished();
         }
     }
 }

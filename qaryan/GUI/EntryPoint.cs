@@ -5,6 +5,7 @@ namespace Qaryan.GUI
 {
     class EntryPoint
     {
+        [STAThread]
         public static void Main(string[] args)
         {
             /*MbrPlay.SetDatabase("hb2");

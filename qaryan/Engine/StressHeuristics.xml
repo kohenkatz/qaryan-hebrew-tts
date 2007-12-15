@@ -59,7 +59,7 @@
 	</Pattern>
 	<Pattern Result="Milel">
 		<Syllable Nucleus="Segol" Coda="Any" />
-		<Syllable Nucleus="AnySegol" Coda="Any" />
+		<Syllable Nucleus="AnySegol|AnyHirik" Coda="Any" />
 	</Pattern>
 	<Pattern Result="Milel">
 		<Syllable Nucleus="Segol" Coda="Any" />

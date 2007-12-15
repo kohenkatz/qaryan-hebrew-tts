@@ -15,7 +15,7 @@
 -    You should have received a copy of the GNU General Public License
 -    along with Qaryan.  If not, see <http:-www.gnu.org/licenses/>.
 -->
-<MbrolaVoice Name="hb2" DisplayName="Esther">
+<MbrolaVoice Name="hb2" DisplayName="Esther" VolumeRatio="1.25">
 	<SilprMap>
 		<Phone Silpr="_">_</Phone>
 		<Phone Silpr="’">?</Phone>

@@ -106,7 +106,7 @@ namespace Qaryan.Synths.MBROLA
                 throw new FileNotFoundException(String.Format("The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set to a correct value.", Voice.Name), Voice.FileName);
             }
             base.BeforeConsumption();
-            Log(LogLevel.Info,"Started");
+            Log(LogLevel.MajorInfo,"Started");
             samplesBalance = 0;
             isDoneConsuming = isDoneSynth = false;
             mbrola = new System.Diagnostics.Process();
@@ -213,7 +213,7 @@ namespace Qaryan.Synths.MBROLA
             Log("reading from mbrola to end");
             Log("Waiting for mbrola to exit");
             mbrola.WaitForExit();
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
         }
 
         protected override void Consume(Queue<MBROLAElement> InQueue)

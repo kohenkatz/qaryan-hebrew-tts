@@ -77,7 +77,7 @@ namespace Qaryan.Core
 		
 		protected override void BeforeConsumption()
 		{
-			Log(LogLevel.Info,"Started");
+			Log(LogLevel.MajorInfo,"Started");
 			base.BeforeConsumption();
 			MidQueue=new Queue<Phone>();
 			UtteranceTime=0;
@@ -122,7 +122,7 @@ namespace Qaryan.Core
                 NoMoreData();
 			base.AfterConsumption();
             _DoneProducing();
-			Log(LogLevel.Info,"Finished");
+			Log(LogLevel.MajorInfo,"Finished");
 		}
 
 

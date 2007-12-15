@@ -95,6 +95,7 @@ namespace Qaryan.Core
 
         public void LoadStressHeuristics(string Filename)
         {
+            Log("Loading " + Filename);
             StressHeuristics = LoadStressHeuristicsFromXml(Filename);
         }
 
@@ -213,7 +214,7 @@ namespace Qaryan.Core
 
 		protected override void BeforeConsumption()
 		{
-            Log(LogLevel.Info,"Started");			
+            Log(LogLevel.MajorInfo,"Started");			
 			base.BeforeConsumption();
 			curElementIndex=-1;
 			curSegment=curWord=null;
@@ -226,16 +227,19 @@ namespace Qaryan.Core
 				w.Syllables.Add(curSyl);
 				curSyl=null;
 			}
-            Log("/{0}/", w.TranslitSyllables);
+            Log(LogLevel.Info,"/{0}/", w.TranslitSyllables);
 			w.PlaceStress(StressHeuristics,DefaultStress);
+            bool beforeStress = true;
 			foreach (Syllable syl in w.Syllables) {
 				bool stressed=syl.IsStressed;
+                if (stressed)
+                    beforeStress = false;
 				for (int i=0;i<syl.Phonemes.Count;i++) {
 					SpeechElement e=syl.Phonemes[i];
 					if (e is Vowel) {
 						Vowel v=(Vowel)e;
 						if (v.vowel==Vowels.KamatzIndeterminate) {
-							if ((syl.Coda== SyllableCoda.Closed) && (syl.Phonemes[syl.Phonemes.Count-1] is Consonant) /*&& ((w.Tag&TagTypes.Origin)!=TagTypes.Foreign)*/ && !stressed)
+							if (beforeStress && (syl.Coda== SyllableCoda.Closed) && (syl.Phonemes[syl.Phonemes.Count-1] is Consonant) /*&& ((w.Tag&TagTypes.Origin)!=TagTypes.Foreign)*/ && !stressed)
 								v.vowel=Vowels.KamatzKatan;
 							else
 								v.vowel=Vowels.KamatzGadol;
@@ -283,7 +287,7 @@ namespace Qaryan.Core
 		{
 			SpeechElement curElement=InQueue.Dequeue();
             _ItemConsumed(curElement);
-            Log("Current element is a {0} ({1})", curElement.GetType(), curElement.Latin);
+            Log("Consuming {0} ({1})", curElement.GetType().Name, curElement.Latin);
 			SpeechElement nextElement=null;
 			if (InQueue.Count>0)
 				nextElement=InQueue.Peek();
@@ -314,7 +318,7 @@ namespace Qaryan.Core
 						if ((nextElement!=null) && (nextElement is Vowel) && (nextElement as Vowel).IsVowelIn(Vowels.Inaudible)) {
 							curSyl.End++;
 							nextElement=InQueue.Dequeue();
-                            Log("About to chomp a {0} ({1})", nextElement.GetType(), nextElement.Latin);
+                            Log("Assimilating a {1}", nextElement.GetType().Name, (nextElement as Vowel).vowel);
 						}
 						else if ((nextElement==null) || (nextElement is Separator)) {
 							curSyl.End++;
@@ -383,7 +387,7 @@ namespace Qaryan.Core
 				curSegment=null;
 			}
             _DoneProducing();
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
 		}
 		
 		public override void Run(Producer<SpeechElement> producer)

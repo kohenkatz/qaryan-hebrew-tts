@@ -15,10 +15,10 @@
 -    You should have received a copy of the GNU General Public License
 -    along with Qaryan.  If not, see <http:-www.gnu.org/licenses/>.
 -->
-<MbrolaVoice Name="hb1" DisplayName="Yoram" VolumeRatio="3.00">
+<MbrolaVoice Name="lt2" DisplayName="Lithuanian 2" VolumeRatio="1.00">
 	<SilprMap>
 		<Phone Silpr="_">_</Phone>
-		<Phone Silpr="’">^</Phone>
+		<Phone Silpr="’">?</Phone>
 		<Phone Silpr="b">b</Phone>
 		<Phone Silpr="v">v</Phone>
 		<Phone Silpr="g">g</Phone>
@@ -28,7 +28,7 @@
 		<Phone Silpr="w">v</Phone>
 		<Phone Silpr="W">w</Phone>		
 		<Phone Silpr="z">z</Phone>
-		<Phone Silpr="ž">J</Phone>
+		<Phone Silpr="ž">Z</Phone>
 		<Phone Silpr="ḥ">x</Phone>
 		<Phone Silpr="ṭ">t</Phone>
 		<Phone Silpr="y">j</Phone>
@@ -38,68 +38,73 @@
 		<Phone Silpr="m">m</Phone>
 		<Phone Silpr="n">n</Phone>
 		<Phone Silpr="s">s</Phone>
-		<Phone Silpr="‘">^</Phone>
+		<Phone Silpr="‘">?</Phone>
 		<Phone Silpr="p">p</Phone>
 		<Phone Silpr="f">f</Phone>
-		<Phone Silpr="č">TS</Phone>
-		<Phone Silpr="ẕ">Ts</Phone>
+		<Phone Silpr="č">tS</Phone>
+		<Phone Silpr="ẕ">ts</Phone>
 		<Phone Silpr="q">k</Phone>
-		<Phone Silpr="r">r</Phone>
+		<Phone Silpr="r">R</Phone>
 		<Phone Silpr="ś">s</Phone>
 		<Phone Silpr="š">S</Phone>
 		<Phone Silpr="t">t</Phone>
-		<Phone Silpr="a">a</Phone>
-		<Phone Silpr="e">e</Phone>
-		<Phone Silpr="i">i</Phone>
+		<Phone Silpr="a">A</Phone>
+		<Phone Silpr="e">E</Phone>
+		<Phone Silpr="i">ee</Phone>
 		<Phone Silpr="o">o</Phone>
-		<Phone Silpr="u">u</Phone>
-		<Phone Silpr="ă">a</Phone>
-		<Phone Silpr="ĕ">e</Phone>
-		<Phone Silpr="ŏ">o</Phone>
-		<Phone Silpr="é">e</Phone>
+		<Phone Silpr="u">U</Phone>
+		<Phone Silpr="ă">A</Phone>
+		<Phone Silpr="ĕ">E</Phone>
+		<Phone Silpr="ŏ">O</Phone>
+		<Phone Silpr="é">E</Phone>
 	</SilprMap>
 	<UnifyMap>
-		<UnifyRule Symbol1="a" Symbol2="a">a</UnifyRule>		
-		<UnifyRule Symbol1="i" Symbol2="i">i</UnifyRule>		
-		<UnifyRule Symbol1="e" Symbol2="e">e</UnifyRule>		
-		<UnifyRule Symbol1="^" Symbol2="ALL;!a;!u;!i;!e;!o"></UnifyRule>
-		<!--<UnifyRule Symbol1="^" Symbol2="^"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="b"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="v"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="w"></UnifyRule>		
-		<UnifyRule Symbol1="^" Symbol2="g"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="dZ"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="d"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="h"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="z"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="Z"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="X"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="j"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="k"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="l"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="m"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="n"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="s"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="p"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="f"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="Ts"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="tS"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="k"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="R"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="S"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="s"></UnifyRule>
-		<UnifyRule Symbol1="^" Symbol2="t"></UnifyRule>-->
+		<UnifyRule Symbol1="t" Symbol2="t">t</UnifyRule>
+		<UnifyRule Symbol1="A" Symbol2="A">A</UnifyRule>		
+		<UnifyRule Symbol1="ee" Symbol2="ee">ee</UnifyRule>		
+		<UnifyRule Symbol1="E" Symbol2="E">E</UnifyRule>		
+		<UnifyRule Symbol1="?" Symbol2="ALL"></UnifyRule>
+		<UnifyRule Symbol1="o" Symbol2="o">o</UnifyRule>
+    <UnifyRule Symbol1="U" Symbol2="U">U</UnifyRule>
+    <UnifyRule Symbol1="O" Symbol2="U">O</UnifyRule>
+		<!--<UnifyRule Symbol1="?" Symbol2="?"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="b"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="v"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="w"></UnifyRule>		
+		<UnifyRule Symbol1="?" Symbol2="g"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="dZ"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="d"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="h"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="z"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="Z"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="X"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="j"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="k"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="l"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="m"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="n"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="s"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="p"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="f"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="Ts"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="tS"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="k"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="R"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="S"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="s"></UnifyRule>
+		<UnifyRule Symbol1="?" Symbol2="t"></UnifyRule>-->
 		<!--<UnifyRule Symbol1="j" Symbol2="j">j</UnifyRule>-->
 	</UnifyMap>
 	<BufferMap>
 
 		<!--<InsertBufferRule Symbol1="a" Symbol2="a">h</InsertBufferRule>-->
 		<!--<InsertBufferRule Symbol1="_" Symbol2="u">w</InsertBufferRule>			-->
-		<InsertBufferRule Symbol1="o" Symbol2="u">w</InsertBufferRule>
-		<InsertBufferRule Symbol1="j" Symbol2="ALL;!a;!e;!i;!u;!o">i</InsertBufferRule>
+		<InsertBufferRule Symbol1="_" Symbol2="U">?</InsertBufferRule>
+		<InsertBufferRule Symbol1="o;O" Symbol2="U">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="j" Symbol2="ALL;!ee;!o;!O;!U;!E;!A">ee</InsertBufferRule>
 <!--		<InsertBufferRule Symbol1="j" Symbol2="_">i</InsertBufferRule>
 		<InsertBufferRule Symbol1="j" Symbol2="j">i</InsertBufferRule>		
-		<InsertBufferRule Symbol1="j" Symbol2="^">i</InsertBufferRule>
+		<InsertBufferRule Symbol1="j" Symbol2="?">i</InsertBufferRule>
 		<InsertBufferRule Symbol1="j" Symbol2="b">i</InsertBufferRule>
 		<InsertBufferRule Symbol1="j" Symbol2="v">i</InsertBufferRule>
 		<InsertBufferRule Symbol1="j" Symbol2="w">i</InsertBufferRule>
@@ -125,30 +130,35 @@
 		<InsertBufferRule Symbol1="j" Symbol2="s">i</InsertBufferRule>
 		<InsertBufferRule Symbol1="j" Symbol2="t">i</InsertBufferRule>-->
 		
-		<InsertBufferRule Symbol1="u" Symbol2="a">w</InsertBufferRule>
-		<InsertBufferRule Symbol1="u" Symbol2="e">w</InsertBufferRule>
-		<InsertBufferRule Symbol1="u" Symbol2="i">w</InsertBufferRule>
-		<InsertBufferRule Symbol1="u" Symbol2="o">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="U" Symbol2="A">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="U" Symbol2="E">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="U" Symbol2="ee">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="U" Symbol2="O;o">w</InsertBufferRule>
 
-		<InsertBufferRule Symbol1="o" Symbol2="a">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="o;O" Symbol2="A">w</InsertBufferRule>
 <!--		<InsertBufferRule Symbol1="o" Symbol2="e">w</InsertBufferRule>
 		<InsertBufferRule Symbol1="o" Symbol2="i">w</InsertBufferRule>
 		<InsertBufferRule Symbol1="o" Symbol2="u">w</InsertBufferRule>-->
 		
-		<InsertBufferRule Symbol1="i" Symbol2="a">j</InsertBufferRule>
-		<InsertBufferRule Symbol1="i" Symbol2="e">j</InsertBufferRule>
-		<InsertBufferRule Symbol1="i" Symbol2="u">j</InsertBufferRule>
-		<InsertBufferRule Symbol1="i" Symbol2="o">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="ee" Symbol2="A">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="ee" Symbol2="E">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="ee" Symbol2="U">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="ee" Symbol2="o;O">j</InsertBufferRule>
 <!--		<InsertBufferRule Symbol1="i" Symbol2="i">j</InsertBufferRule>
 -->
 	
-		<InsertBufferRule Symbol1="e" Symbol2="a">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="e;E" Symbol2="a">j</InsertBufferRule>
 	
-		<InsertBufferRule Symbol1="w" Symbol2="ALL;!a;!e;!i;!u;!o">u</InsertBufferRule>
-		<InsertBufferRule Symbol1="ALL;!a;!e;!i;!u;!o;!w" Symbol2="w">u</InsertBufferRule>
+		<InsertBufferRule Symbol1="w" Symbol2="ALL;!A;!E;!ee;!U;!O;!o">U</InsertBufferRule>
+		<InsertBufferRule Symbol1="ALL;!A;!E;!ee;!U;!O;!o;!w" Symbol2="w">U</InsertBufferRule>
+		
+		<InsertBufferRule Symbol1="A;E" Symbol2="ee">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="E" Symbol2="U">w</InsertBufferRule>
+		<InsertBufferRule Symbol1="A" Symbol2="E">j</InsertBufferRule>
+		<InsertBufferRule Symbol1="o;O" Symbol2="E">?</InsertBufferRule>
 		
 		<!--
-		<InsertBufferRule Symbol1="w" Symbol2="^">u</InsertBufferRule>
+		<InsertBufferRule Symbol1="w" Symbol2="?">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="w" Symbol2="b">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="w" Symbol2="v">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="w" Symbol2="w">u</InsertBufferRule>		
@@ -177,7 +187,7 @@
 
 
 		<!--
-		<InsertBufferRule Symbol1="^" Symbol2="w">u</InsertBufferRule>
+		<InsertBufferRule Symbol1="?" Symbol2="w">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="b" Symbol2="w">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="v" Symbol2="w">u</InsertBufferRule>
 		<InsertBufferRule Symbol1="w" Symbol2="w">u</InsertBufferRule>		

@@ -155,7 +155,7 @@ namespace Qaryan.Core
 		
 		protected override void BeforeConsumption()
 		{
-            Log("started");
+            Log(LogLevel.MajorInfo,"Started");
 			base.BeforeConsumption();
 			state=TokenState.Neutral;
 			sb=new StringBuilder();
@@ -175,7 +175,7 @@ namespace Qaryan.Core
 				else {
 					LetterToken lt=new LetterToken(letter,sb.ToString());
 					this.Emit(lt);
-                    Log("Ate letter " + lt.Value);
+                    Log("Producing letter " + lt.Value);
 					sb.Length=0;
 					state=TokenState.Neutral;
 				}
@@ -187,7 +187,7 @@ namespace Qaryan.Core
 						state=TokenState.Neutral;
 						TagToken tt=new TagToken(sb.ToString());
 						this.Emit(tt);
-                        Log("Ate tag " + tt.Type);
+                        Log("Producing tag " + tt.Type);
 						sb.Length=0;
 					}
 					else
@@ -198,7 +198,7 @@ namespace Qaryan.Core
 						if (sb.Length>0) {
 							Token t=new Token(sb.ToString());
 							this.Emit(t);
-                            Log("Ate neutral token " + t.Value);
+                            Log("Producing neutral token " + t.Value);
 						}
 						if (c=='/')
 							state=TokenState.Tag;
@@ -211,12 +211,12 @@ namespace Qaryan.Core
 					else if (HebrewChar.IsCantillation(c)) {
 						CantillationToken ct=new CantillationToken(c.ToString());
 						this.Emit(ct);
-                        Log("Ate cantillation mark " + ct.Value);
+                        Log("Producing cantillation mark " + ct.Value);
 					}
 					else if (HebrewChar.IsPunctuation(c)) {
 						PunctuationToken pt=new PunctuationToken(c.ToString());
 						this.Emit(pt);
-                        Log("Ate punctuation " + pt.Value);
+                        Log("Producing punctuation " + pt.Value);
 					}
 					else
 						sb.Append(c);
@@ -232,21 +232,21 @@ namespace Qaryan.Core
 					if (sb.Length>0) {
 						Token t=new Token(sb.ToString());
 						this.Emit(new Token(sb.ToString()));
-                        Log("Ate neutral token " + t.Value);
+                        Log("Producing neutral token " + t.Value);
 					}
 					break;
 				case TokenState.Letter:
 					LetterToken lt=new LetterToken(letter,sb.ToString());
 					this.Emit(lt);
-                    Log("Ate letter " + lt.Value);
+                    Log("Producing letter " + lt.Value);
 					break;
 			}
             _DoneProducing();
-            Log(LogLevel.Info,"Finished");
+            Log(LogLevel.MajorInfo,"Finished");
 		}
 
 		public void Run(string s) {
-            Log("------ creating StringCharProducer ------");
+            Log("Creating producer object from string");
 			StringCharProducer producer=new StringCharProducer(s);
 			Run(producer,1);
 		}

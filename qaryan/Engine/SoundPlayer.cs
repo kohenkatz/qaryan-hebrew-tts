@@ -95,6 +95,7 @@ namespace Qaryan.Audio
             notify.SetNotificationPositions(posNotify);
 
             this.thread = new Thread(new ThreadStart(SoundPlayback));
+            this.thread.SetApartmentState(ApartmentState.STA);
             this.thread.Name = "SoundPlayback";
             this.thread.Priority = ThreadPriority.Highest;
 
@@ -130,6 +131,15 @@ namespace Qaryan.Audio
 
             this.stopped = true;
 
+        }
+
+        public void Join()
+        {
+            if (!this.running)
+                return;
+            if (this.thread==null)
+                return;
+            thread.Join();
         }
 
         private void SoundPlayback()

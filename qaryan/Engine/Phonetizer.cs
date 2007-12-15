@@ -53,7 +53,7 @@ namespace Qaryan.Core
 
         protected override void BeforeConsumption()
         {
-            Log(LogLevel.Info, "Started");
+            Log(LogLevel.MajorInfo, "Started");
             base.BeforeConsumption();
             firstStressInClause = true;
 
@@ -139,7 +139,12 @@ namespace Qaryan.Core
                         {
                             Vowel v = (Vowel)e;
                             if (v.IsVowelIn(Vowels.VeryShort))
-                                phone.Duration = 28; //38
+                            {
+                                if (v.vowel == Vowels.AudibleSchwa)
+                                    phone.Duration = 28;
+                                else
+                                    phone.Duration = 40;
+                            }
                             else if (v.IsVowelIn(Vowels.Short))
                                 phone.Duration = 90;
                             else if (v.IsVowelIn(Vowels.Long))
@@ -244,7 +249,7 @@ namespace Qaryan.Core
             Emit(phn);
             Log("{0}", phn);
             _DoneProducing();
-            Log("finished");
+            Log(LogLevel.MajorInfo,"Finished");
         }
 
         public override void Run(Producer<Segment> producer)

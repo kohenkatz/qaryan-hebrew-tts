@@ -99,6 +99,7 @@ namespace Qaryan.GUI
             this.Text = this.Text.Insert(letterPos, s);
             if (setSel)
                 SelectionStart = letterPos + s.Length;
+            ScrollToCaret();
         }
 
         void ReplaceCurLetter(string s)
@@ -246,6 +247,7 @@ namespace Qaryan.GUI
             SelectionLength = 0;
             Text = Text.Insert(sel, s);
             SelectionStart = sel + s.Length;
+            ScrollToCaret();
             //            Modified = true;
         }
 

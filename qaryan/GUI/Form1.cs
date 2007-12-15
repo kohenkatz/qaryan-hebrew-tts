@@ -18,6 +18,8 @@ using Qaryan.Core;
 using Qaryan.Audio;
 using System.Reflection;
 using MotiZilberman;
+using System.Xml;
+using System.Xml.Xsl;
 
 namespace Qaryan.GUI
 {
@@ -98,6 +100,8 @@ namespace Qaryan.GUI
 
             LoadVoices();
             Form1.CheckForIllegalCrossThreadCalls = false;
+            fujisaki = new FujisakiProcessor();
+
             fujisaki.PhraseCommand += OnPhraseCommand;
             fujisaki.AccentCommand += OnAccentCommand;
             fujisaki.PitchPointComputed += OnPitchPoint;
@@ -112,7 +116,7 @@ namespace Qaryan.GUI
         MBROLATranslator translator = new MBROLATranslator();
         MBROLASynthesizer synth = new MBROLASynthesizer();
         AudioTarget target;
-        FujisakiProcessor fujisaki = new FujisakiProcessor();
+        FujisakiProcessor fujisaki;
 
         PointPairList pcmds, acmds, pitch, pcomp;
 
@@ -137,6 +141,30 @@ namespace Qaryan.GUI
             acmds.Add(t2, 0);
         }
 
+        List<ProgressAnim> progAnims;
+
+        System.Windows.Forms.Label MkLabel(string text)
+        {
+            System.Windows.Forms.Label l = new System.Windows.Forms.Label();
+            l.Text = text;
+            l.Margin = Padding.Empty;
+            l.BorderStyle = BorderStyle.FixedSingle;
+            l.Width = 42;
+            l.Height = 21;
+            l.TextAlign = ContentAlignment.MiddleCenter;
+            l.ForeColor = Color.Black;
+            l.Font = new Font(l.Font, FontStyle.Bold);
+            return l;
+        }
+
+        System.Windows.Forms.Label MkLabel()
+        {
+            System.Windows.Forms.Label l = MkLabel("");
+            l.Width = 21;
+            l.ForeColor = Color.Blue;
+            return l;
+        }
+
         void Form1Load(object sender, EventArgs e)
         {
             Size = Settings.Default.Form1Size;
@@ -159,6 +187,33 @@ namespace Qaryan.GUI
             if (nikudHelp.Visible)
                 nikudHelp.BringToFront();
             textBox1.UseNikudMethod = nikudAssistanceToolStripMenuItem.Checked = Settings.Default.UseNikudMethod;
+            string[] componentStrings = new string[] {
+                "TOK","PAR","SEG","PHO","FUJ","TRA","MBR","AUD"
+            };
+            progAnims = new List<ProgressAnim>();
+            for (int j = 0; j < componentStrings.Length; j++)
+            {
+                flowLayoutPanel1.Controls.Add(MkLabel(componentStrings[j]));
+                if (j < componentStrings.Length - 1)
+                {
+                    ProgressAnim anim = new ProgressAnim();
+                    anim.Animation = imageList1;
+                    anim.Width = anim.Height = 21;
+                    anim.Margin = Padding.Empty;
+                    flowLayoutPanel1.Controls.Add(anim);
+                    progAnims.Add(anim);
+
+                    flowLayoutPanel1.Controls.Add(MkLabel());
+
+                    anim = new ProgressAnim();
+                    anim.Animation = imageList1;
+                    anim.Width = anim.Height = 21;
+                    anim.Margin = Padding.Empty;
+                    flowLayoutPanel1.Controls.Add(anim);
+                    progAnims.Add(anim);
+                }
+            }
+            //            timer1.Enabled = true;
             this.Activate();
         }
 
@@ -273,23 +328,149 @@ namespace Qaryan.GUI
             toolStripStatusLabel8.BackColor = Color.Red;
         }
 
+        XmlLogger logger;
+
         private void InitTTSObjects()
         {
+            logger = new XmlLogger();
+            XmlLog = new MemoryStream();
+
+            logger.Add(fujisaki);
+            logger.Writer = XmlWriter.Create(XmlLog);
+            logger.Start();
+
+
+
+            
+       
+            
+
+
             toolStripStatusLabel1.BackColor = toolStripStatusLabel2.BackColor = toolStripStatusLabel3.BackColor = toolStripStatusLabel4.BackColor = toolStripStatusLabel5.BackColor = toolStripStatusLabel6.BackColor = toolStripStatusLabel7.BackColor = toolStripStatusLabel8.BackColor = Color.Green;
 
             tokenizer = new Tokenizer();
+            logger.Add(tokenizer);
             tokenizer.DoneProducing += OnDoneProducing;
             parser = new Parser();
+            logger.Add(parser);
             parser.DoneProducing += OnDoneProducing;
             segmenter = new Segmenter();
+            logger.Add(segmenter);
             segmenter.DoneProducing += OnDoneProducing;
             phonetizer = new Phonetizer();
+            logger.Add(phonetizer);
             phonetizer.DoneProducing += OnDoneProducing;
             translator = new MBROLATranslator();
+            logger.Add(translator);
             translator.DoneProducing += OnDoneProducing;
             synth = new MBROLASynthesizer();
             synth.DoneProducing += OnDoneProducing;
+            logger.Add(synth);
 
+            tokenizer.ItemProduced += delegate(Producer<Token> p, ItemEventArgs<Token> e)
+                {
+                    progAnims[0].Ping();
+                };
+            tokenizer.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[0].Stop();
+            };
+            parser.ItemConsumed += delegate(ThreadedConsumer<Token> c, ItemEventArgs<Token> e)
+                {
+                    progAnims[1].Ping();
+                };
+            parser.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[1].Stop();
+                };
+            parser.ItemProduced += delegate(Producer<SpeechElement> p, ItemEventArgs<SpeechElement> e)
+                {
+                    progAnims[2].Ping();
+                };
+            parser.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[2].Stop();
+            };
+            segmenter.ItemConsumed += delegate(ThreadedConsumer<SpeechElement> c, ItemEventArgs<SpeechElement> e)
+                {
+                    progAnims[3].Ping();
+                };
+            segmenter.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[3].Stop();
+                };
+            segmenter.ItemProduced += delegate(Producer<Segment> p, ItemEventArgs<Segment> e)
+                {
+                    progAnims[4].Ping();
+                };
+            segmenter.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[4].Stop();
+            };
+            phonetizer.ItemConsumed += delegate(ThreadedConsumer<Segment> c, ItemEventArgs<Segment> e)
+                {
+                    progAnims[5].Ping();
+                };
+            phonetizer.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[5].Stop();
+                };
+            phonetizer.ItemProduced += delegate(Producer<Phone> p, ItemEventArgs<Phone> e)
+                {
+                    progAnims[6].Ping();
+                };
+            phonetizer.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[6].Stop();
+            };
+            fujisaki.ItemConsumed += delegate(ThreadedConsumer<Phone> c, ItemEventArgs<Phone> e)
+                {
+                    progAnims[7].Ping();
+                };
+            fujisaki.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[7].Stop();
+                };
+            fujisaki.ItemProduced += delegate(Producer<Phone> p, ItemEventArgs<Phone> e)
+                {
+                    progAnims[8].Ping();
+                };
+            fujisaki.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[8].Stop();
+            };
+            translator.ItemConsumed += delegate(ThreadedConsumer<Phone> c, ItemEventArgs<Phone> e)
+                {
+                    progAnims[9].Ping();
+                };
+            translator.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[9].Stop();
+                };
+            translator.ItemProduced += delegate(Producer<MBROLAElement> p, ItemEventArgs<MBROLAElement> e)
+                {
+                    progAnims[10].Ping();
+                };
+            translator.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[10].Stop();
+            };
+            synth.ItemConsumed += delegate(ThreadedConsumer<MBROLAElement> c, ItemEventArgs<MBROLAElement> e)
+                {
+                    progAnims[11].Ping();
+                };
+            synth.DoneConsuming += delegate(object sender, EventArgs e)
+                {
+                    progAnims[11].Stop();
+                };
+            synth.ItemProduced += delegate(Producer<AudioBufferInfo> p, ItemEventArgs<AudioBufferInfo> e)
+                {
+                    progAnims[12].Ping();
+                };
+            synth.DoneProducing += delegate(object sender, EventArgs e)
+            {
+                progAnims[12].Stop();
+            };
             acmds = new PointPairList();
             pcmds = new PointPairList();
             pitch = new PointPairList();
@@ -337,6 +518,9 @@ namespace Qaryan.GUI
             translitForm.TranslitText = value;
         }
 
+        MemoryStream XmlLog;
+
+
         private void „·¯ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitTTSObjects();
@@ -345,7 +529,50 @@ namespace Qaryan.GUI
                 text = textBox1.SelectedText;
 
             target = new DSoundAudioTarget(this);
+            logger.Add(target);
             target.AudioFinished += OnDSoundAudioFinished;
+            target.ItemConsumed += delegate(ThreadedConsumer<AudioBufferInfo> c, ItemEventArgs<AudioBufferInfo> ee)
+                {
+                    progAnims[13].Ping();
+                };
+            target.DoneConsuming += delegate(object s, EventArgs ee)
+                {
+                    progAnims[13].Stop();
+                };
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            settings.Encoding = System.Text.Encoding.UTF8;
+
+            LogForm logForm = new LogForm(XmlLog);
+
+            target.AudioFinished += delegate
+            {
+                XslCompiledTransform xslt = new XslCompiledTransform(true);
+                MemoryStream strr = new MemoryStream(Resources.QaryanLog);
+                strr.Seek(0, SeekOrigin.Begin);
+                XsltSettings xslts = new XsltSettings();
+                xslts.EnableScript = true;
+                xslts.EnableDocumentFunction = false;
+                xslt.Load(XmlReader.Create(strr), xslts, null);
+                strr.Close();
+                strr = new MemoryStream();
+                //  xslt.Load(XmlReader.Create());
+                logger.Stop();
+                logger.Writer = null;
+                FileStream fs = File.Create("logs/log1.xml");
+                XmlLog.WriteTo(fs);
+                fs.Close();
+                XmlLog.Seek(0, SeekOrigin.Begin);
+                XmlReader reader = XmlReader.Create(XmlLog);
+                strr.Seek(0, SeekOrigin.Begin);
+                XmlWriter writer = XmlWriter.Create(strr);
+                xslt.Transform(reader, writer);
+                strr.Seek(0, SeekOrigin.Begin);
+                logForm.webBrowser1.DocumentStream = strr;
+                logForm.Show();
+            };
             tokenizer.Run(text);
             parser.Run(tokenizer);
             segmenter.Run(parser);
@@ -381,8 +608,17 @@ namespace Qaryan.GUI
                 text = textBox1.SelectedText;
 
             target = new WaveFileAudioTarget();
-
+            logger.Add(target);     
             ((WaveFileAudioTarget)target).Filename = saveWavDialog.FileName;
+
+            target.ItemConsumed += delegate(ThreadedConsumer<AudioBufferInfo> c, ItemEventArgs<AudioBufferInfo> ee)
+                {
+                    progAnims[13].Ping();
+                };
+            target.DoneConsuming += delegate(object s, EventArgs ee)
+                {
+                    progAnims[13].Stop();
+                };
 
             target.AudioFinished += OnFileAudioFinished;
 
@@ -658,6 +894,14 @@ namespace Qaryan.GUI
                     break;
             }
             Settings.Default.Save();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            foreach (ProgressAnim anim in progAnims)
+            {
+                anim.Refresh();
+            }
         }
 
     }
