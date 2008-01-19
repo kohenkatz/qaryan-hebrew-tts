@@ -32,67 +32,98 @@ using Qaryan.Core.Properties;
 
 namespace Qaryan.Core
 {
-	public class Segment: IEnumerable<SpeechElement> {
-		protected List<SpeechElement> Elements;
-		
-		protected Segment() {
-			Elements=new List<SpeechElement>();
-		}
-		
-		public SpeechElement this[int index] {
-			get {
-				return Elements[index];
-			}
-			set {
-				Elements[index]=value;
-			}
-		}
-		
-		public void Add(SpeechElement Element) {
-			Elements.Add(Element);
-		}
-		
-		public IEnumerator<SpeechElement> GetEnumerator()
-		{
-			return Elements.GetEnumerator();
-		}
-		
-		//[System.Runtime.InteropServices.DispIdAttribute()]
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return Elements.GetEnumerator();
-		}
-	}
-	
-	/// <summary>
-	/// Description of Segmenter.
-	/// </summary>
-	public class Segmenter: LookaheadConsumerProducer<SpeechElement,Segment>
-	{
-		Syllable curSyl;
-		Segment curSegment;
-		Word curWord;
-		int curElementIndex=-1;
-		
-		List<SyllablePattern> StressHeuristics;
-		
-		bool relaxAudibleSchwa=true;
+    /// <summary>
+    /// Represents a speech segment resulting from the Segmentation phase of synthesis.
+    /// </summary>
+    public class Segment : IEnumerable<SpeechElement>
+    {
+        protected List<SpeechElement> Elements;
+
+        protected Segment()
+        {
+            Elements = new List<SpeechElement>();
+        }
+
+        /// <summary>
+        /// Gets or sets a specific child element of this <see cref="T:Qaryan.Core.Segment">Segment</see>.
+        /// </summary>
+        /// <param name="index">Zero-based index of child element.</param>
+        /// <returns>A <see cref="T:Qaryan.Core.Segment">Segment</see> object at the requested index.</returns>
+        public SpeechElement this[int index]
+        {
+            get
+            {
+                return Elements[index];
+            }
+            set
+            {
+                Elements[index] = value;
+            }
+        }
+
+        /// <summary>
+        /// Adds a <see cref="SpeechElement">SpeechElement</see> to the current <see cref="T:Qaryan.Core.Segment">Segment</see>'s list of child elements.
+        /// </summary>
+        /// <param name="Element">The element to add.</param>
+        public void Add(SpeechElement Element)
+        {
+            Elements.Add(Element);
+        }
+
+        public IEnumerator<SpeechElement> GetEnumerator()
+        {
+            return Elements.GetEnumerator();
+        }
+
+        //[System.Runtime.InteropServices.DispIdAttribute()]
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Elements.GetEnumerator();
+        }
+    }
+
+    /// <summary>
+    /// Given a "flat" input of <see cref="SpeechElement">SpeechElement</see>s, constructs a tree of <see cref="Segment">Segment</see> objects representing syllables, words, phrases and silence marks.
+    /// </summary>
+    /// <seealso cref="Parser"/>
+    /// <seealso cref="Phonetizer"/>
+    public class Segmenter : LookaheadConsumerProducer<SpeechElement, Segment>
+    {
+        Syllable curSyl;
+        Segment curSegment;
+        Word curWord;
+        int curElementIndex = -1;
+
+        List<SyllablePattern> StressHeuristics;
+
+        bool relaxAudibleSchwa = true;
 
         string stressHeuristicsFile;
 
-        Word.Stress defaultStress=Word.Stress.Milra;
+        Word.Stress defaultStress = Word.Stress.Milra;
 
+        /// <summary>
+        /// Gets or sets the default <see cref="Word.Stress">Word Stress</see> for words outputted by this <see cref="Segmenter">Segmenter</see>
+        /// </summary>
         public Word.Stress DefaultStress
         {
             get { return defaultStress; }
             set { defaultStress = value; }
         }
 
-		public bool RelaxAudibleSchwa {
-			get {return relaxAudibleSchwa;}
-			set {relaxAudibleSchwa=value;}
-		}
+        /// <summary>
+        /// Enables or disables the pragmatic reduction of שווא נע (<see>Vowels.AudibleSchwa</see>) to silence following the casual speech style.
+        /// </summary>
+        public bool RelaxAudibleSchwa
+        {
+            get { return relaxAudibleSchwa; }
+            set { relaxAudibleSchwa = value; }
+        }
 
+        /// <summary>
+        /// Loads stress assignment rules from a named file.
+        /// </summary>
+        /// <param name="Filename">Name of the XML file to load.</param>
         public void LoadStressHeuristics(string Filename)
         {
             Log("Loading " + Filename);
@@ -144,11 +175,11 @@ namespace Qaryan.Core
             }
             return null;
         }
-	
+
         static List<SyllablePattern> LoadStressHeuristicsFromXml(string Filename)
         {
             List<SyllablePattern> StressHeuristics = new List<SyllablePattern>();
-//            Log.Analyzer.WriteLine("Loading stress heuristics from XML....");
+            //            Log.Analyzer.WriteLine("Loading stress heuristics from XML....");
             FileStream fs = File.Open(Filename, FileMode.Open);
             //			XmlReaderSettings xrs=new XmlReaderSettings();
             XmlTextReader r = new XmlTextReader(fs);
@@ -205,200 +236,233 @@ namespace Qaryan.Core
                 //Log.Analyzer.WriteLine("Loaded pattern "+p.ToString());
             }
             //			r.ReadEndElement();
-//            Log.Analyzer.WriteLine(StressHeuristics.Count + " patterns loaded successfully.");
+            //            Log.Analyzer.WriteLine(StressHeuristics.Count + " patterns loaded successfully.");
             r.Close();
             fs.Close();
             return StressHeuristics;
         }
-	
 
-		protected override void BeforeConsumption()
-		{
-            Log(LogLevel.MajorInfo,"Started");			
-			base.BeforeConsumption();
-			curElementIndex=-1;
-			curSegment=curWord=null;
-			curSyl=null;
-			LoadStressHeuristics(stressHeuristicsFile);
-		}
-		
-		void AddAndProcessWord(Word w) {
-			if ((curSyl!=null) && !w.Syllables.Contains(curSyl)) {
-				w.Syllables.Add(curSyl);
-				curSyl=null;
-			}
-            Log(LogLevel.Info,"/{0}/", w.TranslitSyllables);
-			w.PlaceStress(StressHeuristics,DefaultStress);
+
+        protected override void BeforeConsumption()
+        {
+            Log(LogLevel.MajorInfo, "Started");
+            base.BeforeConsumption();
+            curElementIndex = -1;
+            curSegment = curWord = null;
+            curSyl = null;
+            LoadStressHeuristics(stressHeuristicsFile);
+        }
+
+        /// <summary>
+        /// Performs stress assignment and related processing on a word, and adds it to the queue of produced segments.
+        /// </summary>
+        /// <param name="w">The word obtained from the segmentation step.</param>
+        void AddAndProcessWord(Word w)
+        {
+            if ((curSyl != null) && !w.Syllables.Contains(curSyl))
+            {
+                w.Syllables.Add(curSyl);
+                curSyl = null;
+            }
+            SyllablePattern? sp = w.PlaceStress(StressHeuristics, DefaultStress);
             bool beforeStress = true;
-			foreach (Syllable syl in w.Syllables) {
-				bool stressed=syl.IsStressed;
+            foreach (Syllable syl in w.Syllables)
+            {
+                bool stressed = syl.IsStressed;
                 if (stressed)
                     beforeStress = false;
-				for (int i=0;i<syl.Phonemes.Count;i++) {
-					SpeechElement e=syl.Phonemes[i];
-					if (e is Vowel) {
-						Vowel v=(Vowel)e;
-						if (v.vowel==Vowels.KamatzIndeterminate) {
-							if (beforeStress && (syl.Coda== SyllableCoda.Closed) && (syl.Phonemes[syl.Phonemes.Count-1] is Consonant) /*&& ((w.Tag&TagTypes.Origin)!=TagTypes.Foreign)*/ && !stressed)
-								v.vowel=Vowels.KamatzKatan;
-							else
-								v.vowel=Vowels.KamatzGadol;
-//							Log.Analyzer.WriteLine("Kamatz determined to be "+v.vowel.ToString());
-						}
-						else if (v.vowel==Vowels.AudibleSchwa) {
-							if ((w.Tag&TagTypes.Origin)==TagTypes.Foreign)
-								v.vowel= Vowels.SilentSchwa;
-							else {
-								int j=w.Phonemes.IndexOf(e);
-								if ((j+1<w.Phonemes.Count)
-								    && (w.Phonemes[j+1] is Consonant)
-								    && (j-1>=0)
-								    && (w.Phonemes[j-1] is Consonant)
-								    && (w.Phonemes[j+1].Latin!=w.Phonemes[j-1].Latin) ) {
-									switch (w.Phonemes[j-1].Latin) {
-											/*											case "k":
-											case "l":
-											case "b":
-											case "m":
-												break;*/
-										case Consonants.Vav:
+                for (int i = 0; i < syl.Phonemes.Count; i++)
+                {
+                    SpeechElement e = syl.Phonemes[i];
+                    if (e is Vowel)
+                    {
+                        Vowel v = (Vowel)e;
+                        if (v.vowel == Vowels.KamatzIndeterminate)
+                        {
+                            if (beforeStress && (syl.Coda == SyllableCoda.Closed) && (syl.Phonemes[syl.Phonemes.Count - 1] is Consonant) /*&& ((w.Tag&TagTypes.Origin)!=TagTypes.Foreign)*/ && !stressed)
+                                v.vowel = Vowels.KamatzKatan;
+                            else
+                                v.vowel = Vowels.KamatzGadol;
+                        }
+                        else if (v.vowel == Vowels.AudibleSchwa)
+                        {
+                            if ((w.Tag & TagTypes.Origin) == TagTypes.Foreign)
+                                v.vowel = Vowels.SilentSchwa;
+                            else
+                            {
+                                int j = w.Phonemes.IndexOf(e);
+                                if ((j + 1 < w.Phonemes.Count)
+                                    && (w.Phonemes[j + 1] is Consonant)
+                                    && (j - 1 >= 0)
+                                    && (w.Phonemes[j - 1] is Consonant)
+                                    && (w.Phonemes[j + 1].Latin != w.Phonemes[j - 1].Latin))
+                                {
+                                    switch (w.Phonemes[j - 1].Latin)
+                                    {
+                                        /*											case "k":
+                                        case "l":
+                                        case "b":
+                                        case "m":
+                                            break;*/
+                                        case Consonants.Vav:
                                         case Consonants.Lamed:
-											break;
-										default:
-											if (!relaxAudibleSchwa)
-												break;
-											int son=((Consonant)w.Phonemes[j+1]).Sonority -
-												((Consonant)w.Phonemes[j-1]).Sonority;
-											if (son>=0)
-												v.Silent=true;
-											break;
-									}
-									
-								}
-							}
-						}
-					}
-				}
-			}
-			Emit(w);
-		}
-		
-		protected override void Consume(Queue<SpeechElement> InQueue)
-		{
-			SpeechElement curElement=InQueue.Dequeue();
+                                            break;
+                                        default:
+                                            if (!relaxAudibleSchwa)
+                                                break;
+                                            int son = ((Consonant)w.Phonemes[j + 1]).Sonority -
+                                                ((Consonant)w.Phonemes[j - 1]).Sonority;
+                                            if (son >= 0)
+                                                v.Silent = true;
+                                            break;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (sp != null)
+                Log(LogLevel.Info, "/{0}/ from pattern {1}", w.TranslitSyllablesStress, sp.ToString());
+            else
+                Log(LogLevel.Info, "/{0}/", w.TranslitSyllablesStress);
+            Emit(w);
+        }
+
+        protected override void Consume(Queue<SpeechElement> InQueue)
+        {
+            SpeechElement curElement = InQueue.Dequeue();
             _ItemConsumed(curElement);
             Log("Consuming {0} ({1})", curElement.GetType().Name, curElement.Latin);
-			SpeechElement nextElement=null;
-			if (InQueue.Count>0)
-				nextElement=InQueue.Peek();
-			if (curSegment==null) {
-				if ((curElement is Phoneme) || (curElement is WordTag))
-					curSegment=new Word();
-				else
-					curSegment=new SeparatorSegment();
-				curElementIndex=-1;
-			}
-			if (curSegment is Word) {
-				curWord=(curSegment as Word);
-				if (curElement is Phoneme) {
-					curWord.Add(curElement);
-					curElementIndex++;
-					if (curSyl==null) {
-						curSyl=new Syllable(curWord);
-						curSyl.Start=curElementIndex;
-						curSyl.End=curElementIndex;
-					}
-					else if (curSyl.Nucleus==null) {
-						curSyl.End++;
-						if ((curElement is Vowel) &&
-						    (curElement as Vowel).IsVowelIn(Vowels.LegalNuclei))
-							curSyl.Nucleus=curElement as Vowel;
-					}
-					else if (curElement is Consonant) {
-						if ((nextElement!=null) && (nextElement is Vowel) && (nextElement as Vowel).IsVowelIn(Vowels.Inaudible)) {
-							curSyl.End++;
-							nextElement=InQueue.Dequeue();
+            SpeechElement nextElement = null;
+            if (InQueue.Count > 0)
+                nextElement = InQueue.Peek();
+            if (curSegment == null)
+            {
+                if ((curElement is Phoneme) || (curElement is WordTag))
+                    curSegment = new Word();
+                else
+                    curSegment = new SeparatorSegment();
+                curElementIndex = -1;
+            }
+            if (curSegment is Word)
+            {
+                curWord = (curSegment as Word);
+                if (curElement is Phoneme)
+                {
+                    curWord.Add(curElement);
+                    curElementIndex++;
+                    if (curSyl == null)
+                    {
+                        curSyl = new Syllable(curWord);
+                        curSyl.Start = curElementIndex;
+                        curSyl.End = curElementIndex;
+                    }
+                    else if (curSyl.Nucleus == null)
+                    {
+                        curSyl.End++;
+                        if ((curElement is Vowel) &&
+                            (curElement as Vowel).IsVowelIn(Vowels.LegalNuclei))
+                            curSyl.Nucleus = curElement as Vowel;
+                    }
+                    else if (curElement is Consonant)
+                    {
+                        if ((nextElement != null) && (nextElement is Vowel) && (nextElement as Vowel).IsVowelIn(Vowels.Inaudible))
+                        {
+                            curSyl.End++;
+                            nextElement = InQueue.Dequeue();
                             Log("Assimilating a {1}", nextElement.GetType().Name, (nextElement as Vowel).vowel);
-						}
-						else if ((nextElement==null) || (nextElement is Separator)) {
-							curSyl.End++;
-//							curWord.Syllables.Add(curSyl);
-//							curSyl=null;
-						}
-						else {
-							
-							if (((curElement as Consonant).Flags&ConsonantFlags.StrongDagesh)!=0) {
-								curSyl.End++;
-								curSyl.HintStrongDagesh=true;
-							}
-							curWord.Syllables.Add(curSyl);
-							curSyl=new Syllable(curWord);
-							curSyl.Start=curElementIndex;
-							curSyl.End=curElementIndex;
-						}
-					}
-					else {
-						// non-nucleic vowel, move on
-						curSyl.End++;
-					}
-					
-				}
-				else if (curElement is WordTag)
-					curWord.Tag=(curElement as WordTag).Tag;
-				else if (curElement is Qaryan.Core.Cantillation)
-					curWord.CantillationMarks.Add((curElement as Cantillation).Mark);
-				else if (curElement is Separator) {
-					AddAndProcessWord(curSegment as Word);
-					curSegment=null;
-				}
-			}
-			if (curElement is Separator) {
-				if (curSegment!=null) {
-					if (curSegment is SeparatorSegment) {
-						curSegment.Add(curElement);
-					}
-					else {
-						if (curSegment is Word)
-							AddAndProcessWord(curSegment as Word);
-						else
-							Emit(curSegment);
-						curSegment=new SeparatorSegment(curElement as Separator);
-					}
-					Emit(curSegment);
+                        }
+                        else if ((nextElement == null) || (nextElement is Separator))
+                        {
+                            curSyl.End++;
+                            //							curWord.Syllables.Add(curSyl);
+                            //							curSyl=null;
+                        }
+                        else
+                        {
+
+                            if (((curElement as Consonant).Flags & ConsonantFlags.StrongDagesh) != 0)
+                            {
+                                curSyl.End++;
+                                curSyl.HintStrongDagesh = true;
+                            }
+                            curWord.Syllables.Add(curSyl);
+                            curSyl = new Syllable(curWord);
+                            curSyl.Start = curElementIndex;
+                            curSyl.End = curElementIndex;
+                        }
+                    }
+                    else
+                    {
+                        // non-nucleic vowel, move on
+                        curSyl.End++;
+                    }
+
+                }
+                else if (curElement is WordTag)
+                    curWord.Tag = (curElement as WordTag).Tag;
+                else if (curElement is Qaryan.Core.Cantillation)
+                    curWord.CantillationMarks.Add((curElement as Cantillation).Mark);
+                else if (curElement is Separator)
+                {
+                    AddAndProcessWord(curSegment as Word);
+                    curSegment = null;
+                }
+            }
+            if (curElement is Separator)
+            {
+                if (curSegment != null)
+                {
+                    if (curSegment is SeparatorSegment)
+                    {
+                        curSegment.Add(curElement);
+                    }
+                    else
+                    {
+                        if (curSegment is Word)
+                            AddAndProcessWord(curSegment as Word);
+                        else
+                            Emit(curSegment);
+                        curSegment = new SeparatorSegment(curElement as Separator);
+                    }
+                    Emit(curSegment);
                     Log("Added separator segment");
-					curSegment=null;
-				}
-				else {
-					Emit(curSegment=new SeparatorSegment(curElement as Separator));
+                    curSegment = null;
+                }
+                else
+                {
+                    Emit(curSegment = new SeparatorSegment(curElement as Separator));
                     Log("Added separator segment");
-					curSegment=null;
-				}
-			}
-		}
-		
-		protected override void AfterConsumption()
-		{
-			base.AfterConsumption();
-			if (curSegment!=null) {
-				if (curSegment is Word)
-					AddAndProcessWord(curSegment as Word);
-				else
-					Emit(curSegment);
-				curSegment=null;
-			}
+                    curSegment = null;
+                }
+            }
+        }
+
+        protected override void AfterConsumption()
+        {
+            base.AfterConsumption();
+            if (curSegment != null)
+            {
+                if (curSegment is Word)
+                    AddAndProcessWord(curSegment as Word);
+                else
+                    Emit(curSegment);
+                curSegment = null;
+            }
             _DoneProducing();
-            Log(LogLevel.MajorInfo,"Finished");
-		}
-		
-		public override void Run(Producer<SpeechElement> producer)
-		{
-			base.Run(producer,2);
-		}
-		
-		public Segmenter()
-		{
+            Log(LogLevel.MajorInfo, "Finished");
+        }
+
+        public override void Run(Producer<SpeechElement> producer)
+        {
+            base.Run(producer, 2);
+        }
+
+        public Segmenter()
+        {
             this.stressHeuristicsFile = FileBindings.StressHeuristicsPath;
-            
-		}
-	}
+        }
+    }
 }

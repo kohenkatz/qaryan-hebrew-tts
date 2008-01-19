@@ -17,53 +17,60 @@ using System;
 
 namespace Qaryan.Audio
 {
-
     /// <summary>
     ///     Contains constants that describe waveform-audio format types.
     /// </summary>
     public enum WaveFormatTag
     {
-        Pcm = 1,
+        /// <summary>
+        /// PCM
+        /// </summary>
+        Pcm = 1
     }
 
     /// <summary>
-    /// A structure compatible with Microsoft's DirectSound wave format structure.
+    /// A structure compatible with Microsoft's DirectSound wave format structure, duplicated so as to remove the dependency on the MDX assemblies.
     /// </summary>
     public struct WaveFormat
     {
-
-        // Summary:
-        //     Retrieves and sets the required average data-transfer rate, in bytes per
-        //     second, for the format type.
+        /// <summary>
+        ///     Retrieves and sets the required average data-transfer rate, in bytes per
+        ///     second, for the format type.
+        /// </summary>
         public uint AverageBytesPerSecond;
-        //
-        // Summary:
-        //     Retrieves and sets the bits per sample for the format type.
+
+        /// <summary>
+        ///     Retrieves and sets the bits per sample for the format type.
+        /// </summary>
         public ushort BitsPerSample;
-        //
-        // Summary:
-        //     Retrieves and sets the minimum atomic unit of data, in bytes, for the format
-        //     type.
+
+        /// <summary>
+        ///     Retrieves and sets the minimum atomic unit of data, in bytes, for the format
+        ///     type.
+        /// </summary>
         public ushort BlockAlign;
-        //
-        // Summary:
-        //     Retrieves and sets the number of channels in the waveform-audio data, for
-        //     the format type.
+
+        /// <summary>
+        ///     Retrieves and sets the number of channels in the waveform-audio data, for
+        ///     the format type.
+        /// </summary>
         public ushort Channels;
-        //
-        // Summary:
-        //     Retrieves and sets the waveform-audio format type, for the format type.
+
+        /// <summary>
+        ///     Retrieves and sets the waveform-audio format type, for the format type.
+        /// </summary>
         public WaveFormatTag FormatTag;
-        //
-        // Summary:
-        //     Retrieves and sets the sample rate, in samples per second (hertz), for the
-        //     format type.
+
+        /// <summary>
+        ///     Retrieves and sets the sample rate, in samples per second (hertz), for the
+        ///     format type.
+        /// </summary>
         public uint SamplesPerSecond;
 
     }
 
     /// <summary>
-    /// Summary description for AudioBufferInfo
+    /// An audio buffer carrying format information.
     /// </summary>
     public struct AudioBufferInfo
     {

@@ -34,8 +34,10 @@ namespace Qaryan.Core
     public delegate void ProcDelegate();
 
 	/// <summary>
-	/// Description of FujisakiProcessor.
+	/// Generates pitch information using an instance of the Fujisaki model.
 	/// </summary>
+    /// <seealso cref="Phonetizer"/>
+    /// <seealso cref="Qaryan.Synths.MBROLA.MBROLATranslator"/>
 	public class FujisakiProcessor:LookaheadConsumerProducer<Phone,Phone>
 	{
         public override string Name
@@ -46,6 +48,10 @@ namespace Qaryan.Core
             }
         }
 		FujisakiModel Fujisaki=new FujisakiModel();
+
+        /// <summary>
+        /// Exposes the internal Fujisaki model object.
+        /// </summary>
         public FujisakiModel Model
         {
             get
@@ -54,27 +60,49 @@ namespace Qaryan.Core
             }
         }
 
+        /// <summary>
+        /// Raised when a pitch point has been computed.
+        /// </summary>
         public event DataPointEvent PitchPointComputed;
+
+        /// <summary>
+        /// Raised when the phrase (long-term) component of a pitch point has been computed.
+        /// </summary>
         public event DataPointEvent PhraseComponentComputed;
+
+        /// <summary>
+        /// Raised when the accent (short-term) component of a pitch point has been computed.
+        /// </summary>
         public event DataPointEvent AccentComponentComputed;
+
+        /// <summary>
+        /// Raised when an accent command is sent to the underlying Fujisaki model.
+        /// </summary>
         public event AccentCommandEvent AccentCommand;
+
+        /// <summary>
+        /// Raised when a phrase command is sent co the underlyling Fujisaki model.
+        /// </summary>
         public event DataPointEvent PhraseCommand;
+
+        /// <summary>
+        /// To be deleted via refactoring.
+        /// </summary>
         public event ProcDelegate NoMoreData;
 
         Queue<Phone> MidQueue = new Queue<Phone>();
 		double UtteranceTime=0;
 		double MidQueueDuration=0;
 
+        /// <summary>
+        /// Resets the underlying Fujisaki model and clears all phones pending F0 calculation.
+        /// </summary>
         public void Reset()
         {
             MidQueue.Clear();
             Model.Reset();
         }
 
-		public FujisakiProcessor()
-		{
-		}
-		
 		protected override void BeforeConsumption()
 		{
 			Log(LogLevel.MajorInfo,"Started");

@@ -21,16 +21,31 @@ using Qaryan.Core;
 
 namespace Qaryan.Audio
 {
+    /// <summary>
+    /// A specialized <see cref="Producer">Producer</see> designed to convey out-of-stream information regarding produced audio buffers.
+    /// </summary>
+    /// <seealso cref="AudioBufferInfo"/>
+    /// <seealso cref="AudioTarget"/>
     public interface AudioProvider : Producer<AudioBufferInfo>
     {
+        /// <summary>
+        /// Gets or sets the audio provider's audio format.
+        /// </summary>
         WaveFormat AudioFormat
         {
             get;
             set;
         }
+
+        /// <summary>
+        /// Notifies interested clients (notably <see cref="AudioTarget"/>s) when audio output is over.
+        /// </summary>
         event SimpleNotify AudioFinished;
     }
 
+    /// <summary>
+    /// Represents an abstract audio device capable of playing <see cref="AudioBufferInfo">AudioBufferInfo</see> objects.
+    /// </summary>
     public abstract class AudioTarget: LookaheadConsumer<AudioBufferInfo>
     {
         public override string Name
@@ -41,6 +56,9 @@ namespace Qaryan.Audio
             }
         }
 
+        /// <summary>
+        /// Notifies interested clients when audio playback is over.
+        /// </summary>
         public event SimpleNotify AudioFinished;
 
         AudioProvider Provider;
@@ -49,6 +67,9 @@ namespace Qaryan.Audio
         protected abstract void PlayBuffer(AudioBufferInfo buffer);
         protected abstract void Close();
 
+        /// <summary>
+        /// Stops playback immediately.
+        /// </summary>
         public virtual void Stop()
         {
             AudioFinished();
@@ -56,6 +77,9 @@ namespace Qaryan.Audio
 
         private bool eof = false;
 
+        /// <summary>
+        /// A flag signifying whether the attached AudioProvider is still generating buffers (<see langword="false"/>) or has finished doing so (<see langword="true"/>).
+        /// </summary>
         protected bool Eof
         {
             get
@@ -109,6 +133,9 @@ namespace Qaryan.Audio
             eof = true;
         }
 
+        /// <summary>
+        /// Returns whether the object is currently consuming buffers.
+        /// </summary>
         public virtual bool IsRunning
         {
             get

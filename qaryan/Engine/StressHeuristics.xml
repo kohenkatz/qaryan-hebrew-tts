@@ -119,7 +119,7 @@
 		<Syllable Nucleus="VeryLong" Coda="Open" />
 	</Pattern>-->
 	<Pattern Result="Milel">
-		<Syllable Nucleus="Tzere|TzereMale" />
+		<Syllable Nucleus="Patah|Tzere|TzereMale" />
 		<Syllable Nucleus="Shuruk" Start="n" />
 	</Pattern>
 	<Pattern Result="Milel">

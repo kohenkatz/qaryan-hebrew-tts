@@ -29,10 +29,13 @@ namespace Qaryan.Core
 	public delegate void DataAvailableEvent();
 		
 	/// <summary>
-	/// Description of PlotSource.
+	/// Exposes the <see cref="DataAvailable">DataAvailable</see> event.
 	/// </summary>
 	public interface PlotSource
 	{
+        /// <summary>
+        /// Indicates that new data is available from the object.
+        /// </summary>
 		event DataAvailableEvent DataAvailable;
 	}
 }

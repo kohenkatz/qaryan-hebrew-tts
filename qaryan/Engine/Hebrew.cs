@@ -26,20 +26,93 @@ using System.Collections.Generic;
 
 namespace Qaryan.Core
 {
+    /// <summary>
+    /// Defines types of word tags and various bitmasks.
+    /// </summary>
 	[Flags]
     public enum TagTypes
     {
-		Unrecognized=0,Unstressed=1,Milra=2,Milel=4,MilelDMilel=8,Foreign=16,Reserved=32,
-		User=512,Inferred=1024,
+        /// <summary>
+        /// An unsupported tag.
+        /// </summary>
+		Unrecognized=0,
+        
+        /// <summary>
+        /// /ס/, the no-stress tag.
+        /// </summary>
+        Unstressed=1,
+        
+        /// <summary>
+        /// /ר/, the Milra stress tag.
+        /// </summary>
+        Milra=2,
+        
+        /// <summary>
+        /// /ע/, the Milel stress tag.
+        /// </summary>
+        Milel=4,
+        
+        /// <summary>
+        /// /עע/, the Milel Demilel stress tag.
+        /// </summary>
+        MilelDMilel=8,
+        
+        /// <summary>
+        /// /ל/, the foreign-origin tag.
+        /// </summary>
+        Foreign=16,
+        
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        Reserved=32,
+
+        /// <summary>
+        /// Any tag including this value comes directly from the user.
+        /// </summary>
+		User=512,
+        
+        /// <summary>
+        /// Any tag including this value is not user-specified but inferred from some feature of the word.
+        /// </summary>
+        Inferred=1024,
+
+        /// <summary>
+        /// A combination of all the stress tags.
+        /// </summary>
 		Stress=Unstressed|Milra|Milel|MilelDMilel,
+
+        /// <summary>
+        /// A combination of all the origin tags.
+        /// </summary>
 		Origin=Foreign|Reserved,
+
+        /// <summary>
+        /// A combination of all the tag certainty values.
+        /// </summary>
 		Certainty=User|Inferred
 	}
-	
+
+	/// <summary>
+	/// Defines consonant flags.
+	/// </summary>
 	[Flags]
     public enum ConsonantFlags
     {
-		LightDagesh=1,StrongDagesh=2,Mapik=4
+        /// <summary>
+        /// The consonant includes a דָּגֵשׁ קַל (Dagéš Qal; <i>dagesh lene</i>).
+        /// </summary>
+		LightDagesh=1,
+        
+        /// <summary>
+        /// The consonant includes a דָּגֵשׁ חָזָק (Dagéš Ḥazaq; <i>dagesh forte</i>).
+        /// </summary>
+        StrongDagesh=2,
+        
+        /// <summary>
+        /// The consonant is ה and includes a מפיק (Mappiq).
+        /// </summary>
+        Mappiq=4
 	}
 	
 	[Flags]
@@ -113,6 +186,9 @@ namespace Qaryan.Core
 		public const string W="W";
 	}
 	
+    /// <summary>
+    /// A collection of general utilities for handling Hebrew characters.
+    /// </summary>
     public sealed class HebrewChar {
 		public static readonly Dictionary<string,string> Expansions = new Dictionary<string,string>();
 		

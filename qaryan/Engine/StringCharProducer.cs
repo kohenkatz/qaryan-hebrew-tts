@@ -30,11 +30,19 @@ using MotiZilberman;
 
 namespace Qaryan.Core
 {
+    /// <summary>
+    /// Produces a stream of <see cref="char">char</see>s, usable in the chained producer/consumer model, from an ordinary <see cref="string">string</see>.
+    /// </summary>
+    /// <seealso cref="Tokenizer"/>
 	public class StringCharProducer: Producer<char> {
 		Queue<char> queue;
         public event ProduceEventHandler<char> ItemProduced;
         public event EventHandler DoneProducing;
 
+        /// <summary>
+        /// Creates a new StringCharProducer from a given string.
+        /// </summary>
+        /// <param name="s">A string.</param>
 		public StringCharProducer(string s) {
 			queue=new Queue<char>();
             foreach (char c in s)

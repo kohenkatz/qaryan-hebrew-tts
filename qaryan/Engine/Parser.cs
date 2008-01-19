@@ -29,8 +29,10 @@ using MotiZilberman;
 namespace Qaryan.Core
 {
 	/// <summary>
-	/// Description of Parser.
+    /// Produces <see cref="SpeechElement">SpeechElement</see>s by parsing and (almost fully) disambiguating the linguistic intent of each consumed <see cref="Token">Token</see>.
 	/// </summary>
+    /// <seealso cref="Tokenizer"/>
+    /// <seealso cref="Segmenter"/>
 	public class Parser: LookaheadConsumerProducer<Token,SpeechElement>
 	{
 		const int windowSize=4;
@@ -45,10 +47,19 @@ namespace Qaryan.Core
 		Consonant prevConsonant=null;
 		SpeechElement prevElement=null;
 		
+        /// <summary>
+        /// Describes various <see cref="Parser">Parser</see> settings which can be changed.
+        /// </summary>
 		public struct ContextOptions {
+            /// <summary>
+            /// (Experimental) enables or disables speech in an "everyday register", featuring some extended consonant and vowel reductions.
+            /// </summary>
 			public bool EverydayRegister;
 		}
 		
+        /// <summary>
+        /// Contains client-configurable parser settings.
+        /// </summary>
 		public ContextOptions Options=new ContextOptions();
 		
 		void AddElement(SpeechElement eElement) {
@@ -150,13 +161,13 @@ namespace Qaryan.Core
 							newElement=new Consonant(Consonants.Aleph);
 							break;
 						case 'ב':
-							if (l.HasDagesh())
+							if (l.HasDagesh)
 								newElement=new Consonant(Consonants.Bet);
 							else
 								newElement=new Consonant(Consonants.Vet);
 							break;
 						case 'ג':
-							if (l.HasApostrophe()) {
+							if (l.HasApostrophe) {
 								newElement=new Consonant(Consonants.Jimmel);
 							}
 							else
@@ -169,7 +180,7 @@ namespace Qaryan.Core
 							newElement=new Consonant(Consonants.He);
 							break;
 						case 'ו':
-							if ((l.HasDagesh()&&l.HasAnyVowels()) || l.HasAnyVowelsExcept('\u05B9'))
+							if ((l.HasDagesh&&l.HasAnyVowels) || l.HasAnyVowelsExcept('\u05B9'))
 								newElement=new Consonant(Consonants.Vav);
 							else if ((next!=null) && (next.Letter=='ו') && (next.HasAnyModifier('\u05B9',HebrewChar.Shuruk)))
 								newElement=new Consonant(Consonants.Vav);
@@ -180,7 +191,7 @@ namespace Qaryan.Core
 										newElement=new Vowel(Vowels.HolamMale);
 										break;
 									case '\0':
-										if (l.HasShuruk()) {
+										if (l.HasShuruk) {
 											if (curIsWordStart) {
 												AddElement(newElement=new Consonant(Consonants.Aleph));
 //												Log.Parser.WriteLine("Added consonant "+newElement.Latin+" (sonority "+((Consonant)newElement).Sonority+")");
@@ -198,13 +209,13 @@ namespace Qaryan.Core
 							}
 							break;
 						case 'ז':
-							if (l.HasApostrophe())
+							if (l.HasApostrophe)
 								newElement=new Consonant(Consonants.Zhayin);
 							else
 								newElement=new Consonant(Consonants.Zayin);
 							break;
 						case 'ח':
-							if (l.HasApostrophe())
+							if (l.HasApostrophe)
 								newElement=new Consonant(Consonants.Khaf);
 							else
 								newElement=new Consonant(Consonants.Het);
@@ -217,7 +228,7 @@ namespace Qaryan.Core
 							break;
 						case 'כ':
 						case 'ך':
-							if (l.HasDagesh())
+							if (l.HasDagesh)
 								newElement=new Consonant(Consonants.Kaf);
 							else
 								newElement=new Consonant(Consonants.Khaf);
@@ -241,14 +252,14 @@ namespace Qaryan.Core
 							break;
 						case 'פ':
 						case 'ף':
-							if (l.HasDagesh())
+							if (l.HasDagesh)
 								newElement=new Consonant(Consonants.Pe);
 							else
 								newElement=new Consonant(Consonants.Fe);
 							break;
 						case 'צ':
 						case 'ץ':
-							if (l.HasApostrophe())
+							if (l.HasApostrophe)
 								newElement=new Consonant(Consonants.Tchaddik);
 							else
 								newElement=new Consonant(Consonants.Tsaddik);
@@ -289,7 +300,7 @@ namespace Qaryan.Core
 							prevConsonant=parsed[parsed.Count-(i-prevIndex)] as Consonant;
 						}*/
 						Consonant curConsonant=(Consonant)newElement;
-						if (l.HasDagesh()) {
+						if (l.HasDagesh) {
 							if (wordOrigin== TagTypes.Foreign) {
 								if (!HebrewChar.IsBegedKefet(l.Letter))
 									curConsonant.Flags|=ConsonantFlags.LightDagesh;
@@ -330,8 +341,8 @@ namespace Qaryan.Core
 						
 						bool nextIsUnvoicedEhevi = (next!=null)
 							&& HebrewChar.IsEhevi(next.Letter)
-							&& !next.HasAnyVowels()
-							&& !next.HasMappiq();
+							&& !next.HasAnyVowels
+							&& !next.HasMappiq;
 						
 						if (nextIsUnvoicedEhevi) {
 							if (next.Letter=='ו') {
@@ -369,7 +380,7 @@ namespace Qaryan.Core
                                 else if (nextHasSchwa|nextHasHataf)
 									newElement=new Vowel(Vowels.SilentSchwa);
 								else if (nextIsBegedKefet) {
-									if (next.HasDagesh())
+									if (next.HasDagesh)
 										newElement=new Vowel(Vowels.SilentSchwa);
 									else
 										newElement=new Vowel(Vowels.AudibleSchwa);

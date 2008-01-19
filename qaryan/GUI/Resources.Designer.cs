@@ -115,6 +115,20 @@ namespace Qaryan.GUI {
             }
         }
         
+        internal static byte[] QaryanLog_js {
+            get {
+                object obj = ResourceManager.GetObject("QaryanLog_js", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] QaryanLog_xsl {
+            get {
+                object obj = ResourceManager.GetObject("QaryanLog_xsl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to הטקסט שונה. האם ברצונך לשמור את השינויים?.
         /// </summary>

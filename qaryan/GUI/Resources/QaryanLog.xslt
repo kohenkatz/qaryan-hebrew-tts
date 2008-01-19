@@ -12,8 +12,34 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
           font-size:14px;
           }
 
-          .Info {
+
+          .Debug {}
+          .Info {}
+          .MajorInfo {}
+          .Warning {}
+          .Error {}
+          
+          .Debug td.message {
+          color: #555555
+          }
+
+
+          .Info td.message {
+          color: brown
+          }
+
+          .MajorInfo td.message {
           color: blue
+          }
+
+          .Warning td.message {
+          font-weight:bold;
+          color: blue
+          }
+
+          .Error td.message {
+          font-weight:bold;
+          color: red;
           }
 
           .component0 {
@@ -28,7 +54,7 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
           background-color:#FFE7BF;
           }
 
-          .component3  {
+          .component3 {
           background-color:#FFBBBB;
           }
 
@@ -48,19 +74,28 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
           background-color:#EFDB00;
           }
         </style>
+        <script src="resx:///?QaryanLog_js" type="text/javascript" language="JavaScript"></script>
         <title>Qaryan TTS Synthesis Log</title>
       </head>
       <body>
         <h2>
           Qaryan TTS Synthesis Log
         </h2>
+        Detail level:
+        <select onchange="filter(this)">
+          <option value="1" selected="selected">Debug</option>
+          <option value="2">Info</option>
+          <option value="4">Major info</option>
+          <option value="8">Warning</option>
+          <option value="16">Error</option>
+        </select>
         <table>
           <tr style="font-weight:bold">
             <td>
-              Source
+              Time
             </td>
             <td>
-              Level
+              Source
             </td>
             <td>
               Message
@@ -73,13 +108,13 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
                 <xsl:value-of select="@TextLevel"/>
                 component<xsl:value-of select="@ComponentNum"/>
               </xsl:attribute>
+              <td>
+                <xsl:value-of select="@Time" />
+              </td>
               <td> 
                 <xsl:value-of select="@Component" />
               </td>
-              <td>
-                <xsl:value-of select="@TextLevel" />
-              </td>
-              <td>
+              <td class="message">
                 <xsl:value-of select="current()" />
               </td>
             </tr>

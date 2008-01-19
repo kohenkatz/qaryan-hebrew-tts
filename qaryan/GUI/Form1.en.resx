@@ -124,40 +124,67 @@
   <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>634, 28</value>
   </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
   <data name="toolStripMenuItem2.Text" xml:space="preserve">
     <value>New</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>Open...</value>
   </data>
-  <data name="שמירהMenuItem.Text" xml:space="preserve">
+  <data name="saveMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="saveMenuItem.Text" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
   <data name="toolStripMenuItem4.Text" xml:space="preserve">
     <value>Save As...</value>
   </data>
-  <data name="דברToolStripMenuItem.Text" xml:space="preserve">
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 6</value>
+  </data>
+  <data name="speakMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="speakMenuItem.Text" xml:space="preserve">
     <value>Speak</value>
   </data>
-  <data name="השתקToolStripMenuItem.Text" xml:space="preserve">
+  <data name="stopMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="stopMenuItem.Text" xml:space="preserve">
     <value>Stop Speech</value>
   </data>
-  <data name="דברלקובץToolStripMenuItem.Text" xml:space="preserve">
+  <data name="speakToFileMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="speakToFileMenuItem.Text" xml:space="preserve">
     <value>Speak to File...</value>
   </data>
-  <data name="יציאהToolStripMenuItem.Text" xml:space="preserve">
+  <data name="exitMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="exitMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="קובץToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="fileMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 20</value>
   </data>
-  <data name="קובץToolStripMenuItem.Text" xml:space="preserve">
+  <data name="fileMenuItem.Text" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="קולToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="voiceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="קולToolStripMenuItem.Text" xml:space="preserve">
+  <data name="voiceMenuItem.Text" xml:space="preserve">
     <value>Reload Voices</value>
   </data>
   <data name="nikudAssistanceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -166,10 +193,10 @@
   <data name="nikudAssistanceToolStripMenuItem.Text" xml:space="preserve">
     <value>Use Nikud Assistance</value>
   </data>
-  <data name="גופןToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="fontMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="גופןToolStripMenuItem.Text" xml:space="preserve">
+  <data name="fontMenuItem.Text" xml:space="preserve">
     <value>Font...</value>
   </data>
   <data name="toolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
@@ -184,82 +211,88 @@
   <data name="toolStripMenuItem1.Text" xml:space="preserve">
     <value>Omit moving schwas</value>
   </data>
-  <data name="הגייתמכפלToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="strongDageshMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
   </data>
-  <data name="הגייתמכפלToolStripMenuItem.Text" xml:space="preserve">
+  <data name="strongDageshMenuItem.Text" xml:space="preserve">
     <value>Pronounce strong dagesh</value>
   </data>
-  <data name="הגייהיומיומיתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="everydayMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
   </data>
-  <data name="הגייהיומיומיתToolStripMenuItem.Text" xml:space="preserve">
+  <data name="everydayMenuItem.Text" xml:space="preserve">
     <value>Everyday pronunciation</value>
   </data>
-  <data name="הגייהמלעיליתToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="milelMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
   </data>
-  <data name="הגייהמלעיליתToolStripMenuItem.Text" xml:space="preserve">
+  <data name="milelMenuItem.Text" xml:space="preserve">
     <value>Mil'el pronunciation</value>
   </data>
   <data name="akanyeIkanyeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
   </data>
-  <data name="הגדרותToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="displayLogsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 22</value>
+  </data>
+  <data name="displayLogsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Enable debug logs</value>
+  </data>
+  <data name="settingsMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="הגדרותToolStripMenuItem.Text" xml:space="preserve">
+  <data name="settingsMenuItem1.Text" xml:space="preserve">
     <value>Miscellaneous</value>
   </data>
-  <data name="הגדרותToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="settingsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 20</value>
   </data>
-  <data name="הגדרותToolStripMenuItem1.Text" xml:space="preserve">
+  <data name="settingsMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="גרףהנגנהToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="graphMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
-  <data name="גרףהנגנהToolStripMenuItem.Text" xml:space="preserve">
+  <data name="graphMenuItem.Text" xml:space="preserve">
     <value>Fujisaki Graph</value>
   </data>
-  <data name="תעתיקToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="translitMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
-  <data name="תעתיקToolStripMenuItem.Text" xml:space="preserve">
+  <data name="translitMenuItem.Text" xml:space="preserve">
     <value>Transliteration</value>
   </data>
-  <data name="mBROLAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="mbrolaMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
-  <data name="אנגליתToolStripMenuItem.Text" xml:space="preserve">
+  <data name="englishMenuItem.Text" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="עבריתToolStripMenuItem.Text" xml:space="preserve">
+  <data name="hebrewMenuItem.Text" xml:space="preserve">
     <value>Hebrew</value>
   </data>
-  <data name="שפתממשקמשתמשToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="langMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
-  <data name="שפתממשקמשתמשToolStripMenuItem.Text" xml:space="preserve">
+  <data name="langMenuItem.Text" xml:space="preserve">
     <value>UI Language</value>
   </data>
-  <data name="תצוגהToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="viewMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 20</value>
   </data>
-  <data name="תצוגהToolStripMenuItem.Text" xml:space="preserve">
+  <data name="viewMenuItem.Text" xml:space="preserve">
     <value>View</value>
   </data>
-  <data name="ניקודToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="nikudMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 22</value>
   </data>
-  <data name="ניקודToolStripMenuItem.Text" xml:space="preserve">
+  <data name="nikudMenuItem.Text" xml:space="preserve">
     <value>Nikud...</value>
   </data>
-  <data name="עזרהToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="helpMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 20</value>
   </data>
-  <data name="עזרהToolStripMenuItem.Text" xml:space="preserve">
+  <data name="helpMenuItem.Text" xml:space="preserve">
     <value>Help</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
@@ -466,8 +499,50 @@
   <data name="saveFileDialog1.Filter" xml:space="preserve">
     <value>Text files|*.txt|All files|*.*</value>
   </data>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB0
+        BwAAAk1TRnQBSQFMAgEBBgEAAQkBAAEEAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/wEAIP8gACD/IAAg/yAA
+        IP8gACD/IAAg/yAAIP8gAAz/AvMB9BH/IAAg/yAAIP8gACD/IAAg/yAAIP8gACD/IAAg/yAAIP8gAP//
+        wf8HngMIA8IBGwHzAfQD/wSeBsIB8wH0B/8HwgHzAfQK/wTCAfMB9AH/B8ID8wP0Bv8DwgPzA/QK/wPz
+        A/QN/wP0///F/wFCAU0BPgcAAT4DAAEoAwABQAMAASADAAEBAQABAQYAAQEWAAP//wACAAs=
+</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>634, 436</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Inherit</value>

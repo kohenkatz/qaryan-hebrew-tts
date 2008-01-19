@@ -64,6 +64,13 @@
     <Compile Include="FujisakiParams.Designer.cs">
       <DependentUpon>FujisakiParams.cs</DependentUpon>
     </Compile>
+    <Compile Include="IeApp\IeApp.cs" />
+    <Compile Include="IeApp\KnownContentType.cs" />
+    <Compile Include="IeApp\Session.cs" />
+    <Compile Include="IeApp\Win32.Enums.cs" />
+    <Compile Include="IeApp\Win32.Interfaces.cs" />
+    <Compile Include="IeApp\Win32.Methods.cs" />
+    <Compile Include="IeApp\Win32.Structs.cs" />
     <Compile Include="KeyShape.cs">
     </Compile>
     <Compile Include="LogForm.cs">
@@ -104,6 +111,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.en.resx</DependentUpon>
     </Compile>
+    <Compile Include="ResxHandler.cs" />
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -216,5 +224,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\QaryanLog.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\QaryanLog.js" />
   </ItemGroup>
 </Project>

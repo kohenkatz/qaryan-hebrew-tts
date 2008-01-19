@@ -30,12 +30,6 @@ namespace MotiZilberman
 {
     public delegate void StringEventHandler(object sender, string value);
 
-    public class QQueue<T> : Queue<T>
-    {
-
-    }
-    public delegate void ConsumeDelegate<T>(Queue<T> queue);
-
     public class ItemEventArgs<T> : EventArgs
     {
         protected T item;
@@ -58,32 +52,49 @@ namespace MotiZilberman
     public delegate void ConsumeEventHandler<T>(ThreadedConsumer<T> sender, ItemEventArgs<T> e);
 
     /// <summary>
-    /// Designates a generic subprocess which produces a particular type of objects.
+    /// Exposes a generic subprocess capable of producing objects of arbitrary type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of objects to be produced.</typeparam>
+    /// <seealso cref="ThreadedConsumer{T}"/>
     public interface Producer<T>
     {
         /// <summary>
-        /// 
+        /// Enables a consumer to poll a producer's current state.
+        /// <para>
+        /// Returns <see langword="true">true</see> if the consumer should expect more <typeparamref name="T"/>s to appear on the queue or <see langword="false">false</see> if output has ceased.
+        /// </para>
         /// </summary>
         bool IsRunning
         {
             get;
         }
 
+        /// <summary>
+        /// A first-in, first-out collection of the <typeparamref name="T"/>s.
+        /// </summary>
         Queue<T> OutQueue
         {
             get;
         }
 
+        /// <summary>
+        /// Raised whenever an item of type <typeparamref name="T"/> has been produced.
+        /// <para>This event faciliates monitoring and logging outside of the one-to-one producer/consumer model.</para>
+        /// </summary>
         event ProduceEventHandler<T> ItemProduced;
+
+        /// <summary>
+        /// Raised whenever output from this producer has stopped.
+        /// <para>Upon receiving this event, a consumer may enter a state in which it cannot consume any further items on this producer's queue until it is explicitly run again.</para>
+        /// </summary>
         event EventHandler DoneProducing;
     }
 
     /// <summary>
-    /// Implements a generic subprocess which consumes a particular type of objects.
+    /// Exposes a generic subprocess capable of consuming objects of arbitrary type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of objects to be consumed.</typeparam>
+    /// <seealso cref="Producer{T}"/>
     public abstract class ThreadedConsumer<T>
     {
         protected delegate bool Condition();
@@ -91,6 +102,9 @@ namespace MotiZilberman
         protected abstract void Consume(Queue<T> InQueue);
         protected Thread thread;
 
+        /// <summary>
+        /// The <c>System.Threading.Thread</c> under which the consumer runs.
+        /// </summary>
         public Thread Thread
         {
             get
@@ -99,16 +113,37 @@ namespace MotiZilberman
             }
         }
 
+        /// <summary>
+        /// Invoked in the consumer's thread after it is initialized and before consumption starts.
+        /// </summary>
+        /// <seealso cref="AfterConsumption"/>
+        /// <seealso cref="Consume"/>
+        /// <seealso cref="Run"/>
         protected virtual void BeforeConsumption()
         {
 
         }
 
+        /// <summary>
+        /// Invoked in the consumer's thread after consumption ends.
+        /// </summary>
+        /// <seealso cref="BeforeConsumption"/>
+        /// <seealso cref="Consume"/>
+        /// <seealso cref="Run"/>
         protected virtual void AfterConsumption()
         {
             _DoneConsuming();
         }
 
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s subject to the externally-defined <paramref name="WaitCondition">wait condition</paramref> and <paramref name="EndCondition">end condition</paramref>.
+        /// </summary>
+        /// <param name="producer">A producer of <typeparamref name="T"/> objects.</param>
+        /// <param name="WaitCondition">The consumption thread will yield to other threads as long as the producer is running and this delegate returns <see langword="true"/>.</param>
+        /// <param name="EndCondition">The consumption thread will terminate (gracefully) when this delegte returns <see langword="true"/>.</param>
+        /// <seealso cref="BeforeConsumption"/>
+        /// <seealso cref="AfterConsumption"/>
+        /// <seealso cref="Consume"/>
         protected void Run(Producer<T> producer, Condition WaitCondition, Condition EndCondition/*, ConsumeDelegate<T> Consume*/)
         {
             thread = new Thread(delegate()
@@ -130,14 +165,30 @@ namespace MotiZilberman
 
         }
 
+        /// <summary>
+        /// Causes the current thread to wait until the consumer's own thread has terminated, facilitating synchronous behavior.
+        /// </summary>
+        /// <seealso cref="Thread.Join"/>
         public virtual void Join()
         {
             thread.Join();
         }
 
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s.
+        /// </summary>
         public abstract void Run(Producer<T> producer);
 
+        /// <summary>
+        /// Raised whenever an item of type <typeparamref name="T"/> has been consumed.
+        /// <para>This event faciliates monitoring and logging outside of the one-to-one producer/consumer model.</para>
+        /// </summary>
         public event ConsumeEventHandler<T> ItemConsumed;
+
+        /// <summary>
+        /// Raised when consumption is over.
+        /// <para>This event faciliates monitoring and logging outside of the one-to-one producer/consumer model.</para>
+        /// </summary>
         public event EventHandler DoneConsuming;
 
         protected void _DoneConsuming()
@@ -153,6 +204,13 @@ namespace MotiZilberman
         }
     }
 
+    /// <summary>
+    /// Implements general logic for consumers which operate on a "lookahead window" of a certain minimal size.
+    /// <para>This class implements common logging facilities for its subclasses.</para>
+    /// </summary>
+    /// <typeparam name="T">The type of objects to be consumed.</typeparam>
+    /// <seealso cref="ThreadedConsumer{T}"/>
+    /// <seealso cref="Producer{T}"/>
     public abstract class LookaheadConsumer<T> : ThreadedConsumer<T>, ILogSource
     {
         public virtual string Name
@@ -163,11 +221,17 @@ namespace MotiZilberman
             }
         }
 
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s, using a lookahead window of at least <paramref name="windowSize"/> elements.
+        /// </summary>
         protected void Run(Producer<T> producer, int windowSize)
         {
             base.Run(producer, delegate { return (producer.OutQueue.Count < windowSize); }, delegate { return (producer.OutQueue.Count <= 0); });
         }
 
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s, using a lookahead window of at least one element.
+        /// </summary>
         public override void Run(Producer<T> producer)
         {
             Run(producer, 1);
@@ -209,6 +273,13 @@ namespace MotiZilberman
         }
     }
 
+    /// <summary>
+    /// Encapsulates a dual producer/consumer process, operating on consumed <typeparam name="T1"/>s to produce a stream of <typeparam name="T2"/>s.
+    /// <para>This class implements common logging facilities for its subclasses.</para>
+    /// </summary>
+    /// <typeparam name="T">The type of objects to be consumed.</typeparam>
+    /// <seealso cref="ThreadedConsumer{T}"/>
+    /// <seealso cref="Producer{T}"/>
     public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, Producer<T2>, ILogSource
     {
         Queue<T2> producedQueue;
@@ -256,6 +327,10 @@ namespace MotiZilberman
             }
         }
 
+        /// <summary>
+        /// Adds an item to the output queue.
+        /// </summary>
+        /// <param name="item"></param>
         protected void Emit(T2 item)
         {
             if (ItemProduced != null)
@@ -312,25 +387,38 @@ namespace MotiZilberman
         }
     }
 
+    /// <summary>
+    /// Encapsulates a dual producer/consumer process, operating on a "lookahead window" of <typeparam name="T1"/>s to produce a stream of <typeparam name="T2"/>s.
+    /// </summary>
+    /// <typeparam name="T">The type of objects to be consumed.</typeparam>
+    /// <seealso cref="LookaheadConsumer{T}"/>
+    /// <seealso cref="Producer{T}"/>
     public abstract class LookaheadConsumerProducer<T1, T2> : ConsumerProducer<T1, T2>
     {
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s, using a lookahead window of at least <paramref name="windowSize"/> elements.
+        /// </summary>
         protected void Run(Producer<T1> producer, int windowSize)
         {
             base.Run(producer, delegate { return (producer.OutQueue.Count < windowSize); }, delegate { return (producer.OutQueue.Count <= 0); });
         }
 
+        /// <summary>
+        /// Attaches the consumer to a specified producer and begins consumption of <typeparamref name="T"/>s, using a lookahead window of at least one element.
+        /// </summary>
         public override void Run(Producer<T1> producer)
         {
             Run(producer, 1);
         }
     }
 
-    public delegate void ItemConsumedDelegate<T>(T item);
-
+    /// <summary>
+    /// A "dummy" <see cref="LookaheadConsumer">LookaheadConsumer</see>.
+    /// <para>This class is primarily useful as a bridge between the producer/consumer chain and ordinary event-driver programming.</para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DelegateConsumer<T> : LookaheadConsumer<T>
     {
-
-
         protected override void Consume(Queue<T> InQueue)
         {
             while (InQueue.Count > 0)
@@ -338,5 +426,8 @@ namespace MotiZilberman
         }
     }
 
+    /// <summary>
+    /// Provides a blank, parameterless delegate type for simple notifications.
+    /// </summary>
     public delegate void SimpleNotify();
 }

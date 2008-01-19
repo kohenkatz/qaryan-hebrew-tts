@@ -31,7 +31,7 @@ using MotiZilberman;
 namespace Qaryan.Synths.MBROLA
 {
 	/// <summary>
-	/// Translates <c>Qaryan.Core.Phone</c>s to <c>MBROLAElement</c>s according to the capabilities of a chosen <c>MBROLAVoice</c>.
+	/// Translates <see cref="Qaryan.Core.Phone">Phone</see>s to <see cref="MBROLAElement">MBROLAElement</see>s according to the capabilities of a selected <see cref="MBROLAVoice">MBROLAVoice</see>.
 	/// </summary>
 	public class MBROLATranslator : LookaheadConsumerProducer<Phone,MBROLAElement> {
         public override string Name
@@ -44,6 +44,10 @@ namespace Qaryan.Synths.MBROLA
 
 		MBROLAVoice voice;
 		MBROLAElement curElement=null,last_e=null;
+
+        /// <summary>
+        /// Gets or sets the current voice.
+        /// </summary>
 		public MBROLAVoice Voice {
 			get { return voice; }
 			set { voice = value; }

@@ -38,7 +38,7 @@ namespace Qaryan.Synths.MBROLA
 {
  
     /// <summary>
-    /// An interface to the MBROLA synthesizer implemented on top of MbrPlay.dll.
+    /// An interface to the MBROLA synthesizer, encapsulating MbrPlay.dll.
     /// </summary>
     public class MBROLASynthesizer : Synthesizer<MBROLAElement>
     {

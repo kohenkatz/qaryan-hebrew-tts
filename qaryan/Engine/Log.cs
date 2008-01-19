@@ -59,7 +59,7 @@ namespace MotiZilberman
             if (!started)
             {
                 writer.WriteStartDocument();
-                writer.WriteProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"QaryanLog.xslt\"");
+                writer.WriteProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"resx:///?QaryanLog_xsl\"");
                 writer.WriteStartElement("Log");
             }
             started = true;

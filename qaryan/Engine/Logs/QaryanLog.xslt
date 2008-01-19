@@ -13,6 +13,12 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
           }
 
 
+          .Debug {}
+          .Info {}
+          .MajorInfo {}
+          .Warning {}
+          .Error {}
+
           .Debug td.message {
           color: #555555
           }
@@ -68,12 +74,21 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
           background-color:#EFDB00;
           }
         </style>
+        <script language="JavaScript" type="text/javascript" src="resx://QaryanLog_js"></script>
         <title>Qaryan TTS Synthesis Log</title>
       </head>
       <body>
         <h2>
           Qaryan TTS Synthesis Log
         </h2>
+        Detail level:
+        <select onchange="filter(this)">
+          <option value="1" selected="selected">Debug</option>
+          <option value="2">Info</option>
+          <option value="4">Major info</option>
+          <option value="8">Warning</option>
+          <option value="16">Error</option>
+        </select>
         <table>
           <tr style="font-weight:bold">
             <td>
@@ -96,7 +111,7 @@ doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
               <td>
                 <xsl:value-of select="@Time" />
               </td>
-              <td> 
+              <td>
                 <xsl:value-of select="@Component" />
               </td>
               <td class="message">

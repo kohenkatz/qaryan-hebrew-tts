@@ -31,18 +31,45 @@ using MotiZilberman;
 namespace Qaryan.Core
 {
     /// <summary>
-    /// Description of Phonetizer.
+    /// Produces "flat" phonetic instructions (<see cref="Phone">Phone</see> objects) from <see cref="Segment">Segment</see>s.
     /// </summary>
+    /// <seealso cref="Segmenter"/>
+    /// <seealso cref="FujisakiProcessor"/>
+    /// <seealso cref="Qaryan.Synths.MBROLA.MBROLATranslator"/>
     public class Phonetizer : LookaheadConsumerProducer<Segment, Phone>
     {
         //		int bpm;
         bool firstStressInClause = true;
 
+        /// <summary>
+        /// Describes various <see cref="Phonetizer">Phonetizer</see> settings which can be changed.
+        /// </summary>
         public struct ContextOptions
         {
-            public bool Akanye, Ikanye, DistinguishStrongDagesh, SingCantillation;
+            /// <summary>
+            /// Enables or disables the <see href="http://en.wikipedia.org/wiki/Vowel_reduction_in_Russian#Back_vowels">Akanye</see> effect (unstressed /o/ =&gt; /a/).
+            /// </summary>
+            public bool Akanye;
+
+            /// <summary>
+            /// Enables or disables the <see href="http://en.wikipedia.org/wiki/Vowel_reduction_in_Russian#Front_vowels">Ikanye</see> effect (unstressed /e/ =&gt; /i/).
+            /// </summary>
+            public bool Ikanye;
+
+            /// <summary>
+            /// Enables or disables the lengthening of consonants marked with דגש חזק (Dagesh Hazak).
+            /// </summary>
+            public bool DistinguishStrongDagesh;
+
+            /// <summary>
+            /// Not currently used.
+            /// </summary>
+            public bool SingCantillation;
         }
 
+        /// <summary>
+        /// Contains client-configurable phonetizer settings.
+        /// </summary>
         public ContextOptions Options = new ContextOptions();
 
         /*double MidiNotePitch(byte note) {
@@ -86,6 +113,10 @@ namespace Qaryan.Core
             }
             else if (seg is Word)
             {
+                bool nextIsPunctuation=false;
+                if (nextSeg is SeparatorSegment)
+                    nextIsPunctuation = HebrewChar.IsPunctuation(nextSeg[0].Latin[0]);
+                        
                 Word w = (Word)seg;
 
                 bool beforeStress = true;
@@ -99,6 +130,7 @@ namespace Qaryan.Core
                         beforeStress = false;
                     bool beforeNucleus = true;
 
+                    bool heavySyl = ((syl.Coda == SyllableCoda.Closed) ^ ((syl.Nucleus!=null) && syl.Nucleus.IsVowelIn(Vowels.Long)));
                     //					bool sylStart=true;
                     //foreach (SpeechElement e in	w.Phonemes.GetRange(syl.Start,syl.End-syl.Start+1)) {
                     for (int elemIndex = 0; elemIndex < syl.Phonemes.Count; elemIndex++)
@@ -193,9 +225,12 @@ namespace Qaryan.Core
                             else
                                 phone.Duration *= 1.1F;
                         }
+                        
+                        if ((!nextIsPunctuation) && !heavySyl)
+                            phone.Duration *= 0.7;
 
-//                        if ((nextSeg is SeparatorSegment) && (sylIndex == w.Syllables.Count - 1))
-//                            phone.Duration *= 1.6;
+                        //                        if ((nextSeg is SeparatorSegment) && (sylIndex == w.Syllables.Count - 1))
+                        //                            phone.Duration *= 1.6;
                         Emit(phone);
                         Log("{0}", phone);
 
@@ -249,16 +284,12 @@ namespace Qaryan.Core
             Emit(phn);
             Log("{0}", phn);
             _DoneProducing();
-            Log(LogLevel.MajorInfo,"Finished");
+            Log(LogLevel.MajorInfo, "Finished");
         }
 
         public override void Run(Producer<Segment> producer)
         {
             base.Run(producer, 2);
-        }
-
-        public Phonetizer()
-        {
         }
     }
 }

@@ -99,11 +99,34 @@ namespace Qaryan.Core
             }
         }
 
-        public void PlaceStress(List<SyllablePattern> StressHeuristics, Word.Stress DefaultStress)
+        public string TranslitSyllablesStress
         {
-/*            HebrewParser.Log.Analyzer.Write("/" + TranslitSyllables + "/");
-            if (Tag != TagTypes.Unrecognized)
-                HebrewParser.Log.Analyzer.WriteLine(" (tagged " + Tag.ToString() + ")");*/
+            get
+            {
+                StringBuilder result = new StringBuilder();
+                foreach (Syllable syl in Syllables)
+                {
+                    foreach (SpeechElement e in syl.Phonemes)
+                    {
+                        if (syl.IsStressed)
+                            result.Append(e.Latin.ToUpper());
+                        else
+                            result.Append(e.Latin);
+                    }
+                    result.Append("-");
+                }
+                if (result.Length > 0)
+                    if (result[result.Length - 1] == '-')
+                        result.Remove(result.Length - 1, 1);
+                return result.ToString();
+            }
+        }
+
+        public SyllablePattern? PlaceStress(List<SyllablePattern> StressHeuristics, Word.Stress DefaultStress)
+        {
+            /*            HebrewParser.Log.Analyzer.Write("/" + TranslitSyllables + "/");
+                        if (Tag != TagTypes.Unrecognized)
+                            HebrewParser.Log.Analyzer.WriteLine(" (tagged " + Tag.ToString() + ")");*/
             if (CantillationMarks.Count > 0)
             {
                 StressPosition = Stress.None;
@@ -116,7 +139,7 @@ namespace Qaryan.Core
                             break;
                     }
                 }
-//                HebrewParser.Log.Analyzer.WriteLine(" set to " + StressPosition.ToString() + " by cantillation mark");
+                //                HebrewParser.Log.Analyzer.WriteLine(" set to " + StressPosition.ToString() + " by cantillation mark");
             }
             else if ((Tag & TagTypes.Stress) != TagTypes.Unrecognized)
             {
@@ -143,18 +166,18 @@ namespace Qaryan.Core
                     if (p.Match(this))
                     {
                         StressPosition = p.Result;
-//                        HebrewParser.Log.Analyzer.WriteLine(" matches " + StressPosition.ToString() + " pattern: " + p.ToString());
-                        return;
+                        return p;
                     }
                 }
                 StressPosition = DefaultStress;
-//                HebrewParser.Log.Analyzer.WriteLine(" defaulted to " + StressPosition.ToString());
+                //                HebrewParser.Log.Analyzer.WriteLine(" defaulted to " + StressPosition.ToString());
             }
             if ((int)StressPosition > Syllables.Count)
             {
                 StressPosition = (Stress)Syllables.Count;
-//                HebrewParser.Log.Analyzer.WriteLine("\t^--- Falling back to " + StressPosition.ToString());
+                //                HebrewParser.Log.Analyzer.WriteLine("\t^--- Falling back to " + StressPosition.ToString());
             }
+            return null;
         }
 
         public Word()

@@ -22,6 +22,9 @@ using MotiZilberman;
 
 namespace Qaryan.Audio
 {
+    /// <summary>
+    /// An <see cref="AudioTarget">AudioTarget</see> encapsulating a DirectSound output device.
+    /// </summary>
     public class DSoundAudioTarget : AudioTarget
     {
         public override string Name

@@ -127,6 +127,7 @@
     <None Include="app.config" />
     <Content Include="Logs\log1.xml" />
     <EmbeddedResource Include="Logs\QaryanLog.xslt" />
+    <Content Include="Logs\QaryanLog.js" />
     <Content Include="Start.txt" />
     <Content Include="Voices\cz1.xml" />
     <Content Include="Voices\hb1_license.txt" />
