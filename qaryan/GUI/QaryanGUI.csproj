@@ -64,13 +64,6 @@
     <Compile Include="FujisakiParams.Designer.cs">
       <DependentUpon>FujisakiParams.cs</DependentUpon>
     </Compile>
-    <Compile Include="IeApp\IeApp.cs" />
-    <Compile Include="IeApp\KnownContentType.cs" />
-    <Compile Include="IeApp\Session.cs" />
-    <Compile Include="IeApp\Win32.Enums.cs" />
-    <Compile Include="IeApp\Win32.Interfaces.cs" />
-    <Compile Include="IeApp\Win32.Methods.cs" />
-    <Compile Include="IeApp\Win32.Structs.cs" />
     <Compile Include="KeyShape.cs">
     </Compile>
     <Compile Include="MbrolaForm.cs">
