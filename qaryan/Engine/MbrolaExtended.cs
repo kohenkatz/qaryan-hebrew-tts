@@ -25,7 +25,7 @@ namespace MBROLA
 
     /// <summary>
     /// Provides a way to retrieve information from MBROLA diphone databases directly, without depending on MBROLA itself.
-    /// Members in this class are experimental, subject to change and generally dangerous.
+    /// Members in this class are experimental and considered unstable.
     /// </summary>
 	public class DiphoneDB {
         public static WaveFormat WaveFormatFromFile(string filename)

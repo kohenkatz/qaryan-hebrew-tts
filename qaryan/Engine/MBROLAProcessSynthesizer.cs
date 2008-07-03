@@ -14,7 +14,7 @@ namespace Qaryan.Synths.MBROLA
     /// A cross-platform interface to the main MBROLA executable, provided as an alternative
     /// to MBROLASynthesizer.
     /// </summary>
-    public class MBROLAProcessSynthesizer : Synthesizer<MBROLAElement>
+    public class MBROLAProcessSynthesizer : MBROLASynthesizerBase
     {
         public override string Name
         {
@@ -25,7 +25,18 @@ namespace Qaryan.Synths.MBROLA
         }
         Process mbrola;
 
-        MBROLAVoice voice;
+        public override MBROLAVoice Voice
+        {
+            get
+            {
+                return base.Voice;
+            }
+            set
+            {
+                base.Voice = value;
+                Voice.MBROLAVoicePath = MBROLAVoicePath;
+            }
+        }
 
         long samplesBalance;
 
@@ -61,40 +72,7 @@ namespace Qaryan.Synths.MBROLA
                     Voice.MBROLAVoicePath = MBROLAVoicePath;
             }
         }
-
-        public MBROLAVoice Voice
-        {
-            get { return voice; }
-            set
-            {
-                voice = value;
-                voice.MBROLAVoicePath = MBROLAVoicePath;
-            }
-        }
-
-
-        public override WaveFormat AudioFormat
-        {
-            get
-            {
-                WaveFormat format = base.AudioFormat;
-                format.Channels = 1;
-                if (voice != null)
-                    format.SamplesPerSecond = voice.SampleRate;
-                else
-                    format.SamplesPerSecond = 22050;
-                format.BitsPerSample = 16;
-                format.AverageBytesPerSecond = format.SamplesPerSecond * format.BitsPerSample / 8;
-                format.BlockAlign = (ushort)(format.Channels * (format.BitsPerSample / 8));
-                format.FormatTag = WaveFormatTag.Pcm;
-                return format;
-            }
-            set
-            {
-                base.AudioFormat = value;
-            }
-        }
-        
+      
         Thread t;
 
         protected override void BeforeConsumption()
@@ -105,8 +83,10 @@ namespace Qaryan.Synths.MBROLA
                 //                Thread.CurrentThread.Abort();
                 throw new FileNotFoundException(String.Format("The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set to a correct value.", Voice.Name), Voice.FileName);
             }
+            Log(LogLevel.MajorInfo, "Started");
+
             base.BeforeConsumption();
-            Log(LogLevel.MajorInfo,"Started");
+
             samplesBalance = 0;
             isDoneConsuming = isDoneSynth = false;
             mbrola = new System.Diagnostics.Process();
@@ -204,6 +184,7 @@ namespace Qaryan.Synths.MBROLA
         protected override void AfterConsumption()
         {
             Log("After consumption");
+            Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();
             isDoneConsuming = true;
             Log("writing ^Z");
@@ -213,7 +194,7 @@ namespace Qaryan.Synths.MBROLA
             Log("reading from mbrola to end");
             Log("Waiting for mbrola to exit");
             mbrola.WaitForExit();
-            Log(LogLevel.MajorInfo,"Finished");
+
         }
 
         protected override void Consume(Queue<MBROLAElement> InQueue)

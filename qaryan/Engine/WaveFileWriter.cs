@@ -12,6 +12,9 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
+//
+//    Original WaveFileWriter class by Colin Savage
+//    <http://dotnet.org.za/colin/archive/2006/09/22/Using-DirectSound-to-record-PCM-data.aspx>
 
 using System;
 using System.IO;

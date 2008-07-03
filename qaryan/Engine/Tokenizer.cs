@@ -367,8 +367,8 @@ namespace Qaryan.Core
                 else
                 {
                     LetterToken lt = new LetterToken(letter, sb.ToString());
-                    this.Emit(lt);
                     Log("Producing letter " + lt.Value);
+                    this.Emit(lt);
                     sb.Length = 0;
                     state = TokenState.Neutral;
                 }
@@ -381,8 +381,8 @@ namespace Qaryan.Core
                     {
                         state = TokenState.Neutral;
                         TagToken tt = new TagToken(sb.ToString());
-                        this.Emit(tt);
                         Log("Producing tag " + tt.Type);
+                        this.Emit(tt);
                         sb.Length = 0;
                     }
                     else
@@ -394,8 +394,8 @@ namespace Qaryan.Core
                         if (sb.Length > 0)
                         {
                             Token t = new Token(sb.ToString());
-                            this.Emit(t);
                             Log("Producing neutral token " + t.Value);
+                            this.Emit(t);
                         }
                         if (c == '/')
                             state = TokenState.Tag;
@@ -409,14 +409,14 @@ namespace Qaryan.Core
                     else if (HebrewChar.IsCantillation(c))
                     {
                         CantillationToken ct = new CantillationToken(c.ToString());
-                        this.Emit(ct);
                         Log("Producing cantillation mark " + ct.Value);
+                        this.Emit(ct);
                     }
                     else if (HebrewChar.IsPunctuation(c))
                     {
                         PunctuationToken pt = new PunctuationToken(c.ToString());
-                        this.Emit(pt);
                         Log("Producing punctuation " + pt.Value);
+                        this.Emit(pt);
                     }
                     else
                         sb.Append(c);
@@ -426,25 +426,26 @@ namespace Qaryan.Core
 
         protected override void AfterConsumption()
         {
-            base.AfterConsumption();
+
             switch (state)
             {
                 case TokenState.Neutral:
                     if (sb.Length > 0)
                     {
                         Token t = new Token(sb.ToString());
-                        this.Emit(new Token(sb.ToString()));
                         Log("Producing neutral token " + t.Value);
+                        this.Emit(t);
                     }
                     break;
                 case TokenState.Letter:
                     LetterToken lt = new LetterToken(letter, sb.ToString());
-                    this.Emit(lt);
                     Log("Producing letter " + lt.Value);
+                    this.Emit(lt);
                     break;
             }
-            _DoneProducing();
             Log(LogLevel.MajorInfo, "Finished");
+            base.AfterConsumption();
+            _DoneProducing();
         }
 
         /// <summary>

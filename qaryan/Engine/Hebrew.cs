@@ -33,7 +33,7 @@ namespace Qaryan.Core
     public enum TagTypes
     {
         /// <summary>
-        /// An unsupported tag.
+        /// An unrecognized or non-existent tag.
         /// </summary>
 		Unrecognized=0,
         

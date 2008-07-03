@@ -87,7 +87,6 @@ namespace Qaryan.GUI
             this.everydayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.milelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.akanyeIkanyeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.displayLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.translitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,6 +116,7 @@ namespace Qaryan.GUI
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox1 = new Qaryan.GUI.NikudTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -659,8 +659,7 @@ namespace Qaryan.GUI
             this.strongDageshMenuItem,
             this.everydayMenuItem,
             this.milelMenuItem,
-            this.akanyeIkanyeToolStripMenuItem,
-            this.displayLogsToolStripMenuItem});
+            this.akanyeIkanyeToolStripMenuItem});
             this.settingsMenuItem1.Name = "settingsMenuItem1";
             this.settingsMenuItem1.ShortcutKeyDisplayString = null;
             // 
@@ -725,19 +724,6 @@ namespace Qaryan.GUI
             this.akanyeIkanyeToolStripMenuItem.Name = "akanyeIkanyeToolStripMenuItem";
             this.akanyeIkanyeToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.akanyeIkanyeToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
-            // 
-            // displayLogsToolStripMenuItem
-            // 
-            this.displayLogsToolStripMenuItem.AccessibleDescription = null;
-            this.displayLogsToolStripMenuItem.AccessibleName = null;
-            resources.ApplyResources(this.displayLogsToolStripMenuItem, "displayLogsToolStripMenuItem");
-            this.displayLogsToolStripMenuItem.BackgroundImage = null;
-            this.displayLogsToolStripMenuItem.Checked = global::Qaryan.GUI.Settings.Default.EnableLog;
-            this.displayLogsToolStripMenuItem.CheckOnClick = true;
-            this.displayLogsToolStripMenuItem.Name = "displayLogsToolStripMenuItem";
-            this.displayLogsToolStripMenuItem.ShortcutKeyDisplayString = null;
-            this.displayLogsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
-            this.displayLogsToolStripMenuItem.Click += new System.EventHandler(this.displayLogsToolStripMenuItem_Click);
             // 
             // viewMenuItem
             // 
@@ -862,7 +848,8 @@ namespace Qaryan.GUI
             this.toolStripButton5,
             this.toolStripSeparator3,
             this.toolStripLabel1,
-            this.toolStripComboBox1});
+            this.toolStripComboBox1,
+            this.toolStripButton6});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // newToolStripButton
@@ -1041,6 +1028,18 @@ namespace Qaryan.GUI
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.AccessibleDescription = null;
+            this.toolStripButton6.AccessibleName = null;
+            resources.ApplyResources(this.toolStripButton6, "toolStripButton6");
+            this.toolStripButton6.BackgroundImage = null;
+            this.toolStripButton6.Checked = true;
+            this.toolStripButton6.CheckOnClick = true;
+            this.toolStripButton6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Name = "toolStripButton6";
+            // 
             // panel1
             // 
             this.panel1.AccessibleDescription = null;
@@ -1100,7 +1099,6 @@ namespace Qaryan.GUI
             // timer1
             // 
             this.timer1.Interval = 10;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -1119,11 +1117,11 @@ namespace Qaryan.GUI
             this.Icon = null;
             this.Location = global::Qaryan.GUI.Settings.Default.Form1Pos;
             this.Name = "Form1";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.Activated += new System.EventHandler(this.Form1_Activated);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1Load);
+            this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -1237,6 +1235,6 @@ namespace Qaryan.GUI
         private System.Windows.Forms.ToolStripMenuItem nikudMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem displayLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton6;
 	}
 }

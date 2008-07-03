@@ -146,16 +146,19 @@ namespace MotiZilberman
         /// <seealso cref="Consume"/>
         protected void Run(Producer<T> producer, Condition WaitCondition, Condition EndCondition/*, ConsumeDelegate<T> Consume*/)
         {
+            BeforeConsumption();
             thread = new Thread(delegate()
             {
-                BeforeConsumption();
                 while (Thread.CurrentThread.IsAlive && (producer.IsRunning || !EndCondition()))
                 {
 
                     while ((producer.IsRunning) && WaitCondition())
                         Thread.Sleep(0);
                     if (Thread.CurrentThread.IsAlive)
-                        Consume(producer.OutQueue);
+//                        lock (producer.OutQueue)
+                        {
+                            Consume(producer.OutQueue);
+                        }
                 }
                 AfterConsumption();
             });
@@ -331,11 +334,14 @@ namespace MotiZilberman
         /// Adds an item to the output queue.
         /// </summary>
         /// <param name="item"></param>
-        protected void Emit(T2 item)
+        protected virtual void Emit(T2 item)
         {
             if (ItemProduced != null)
                 ItemProduced(this, new ItemEventArgs<T2>(item));
-            OutQueue.Enqueue(item);
+//            lock (OutQueue)
+            //{
+                OutQueue.Enqueue(item);
+            //}
         }
 
         protected override void Consume(Queue<T1> InQueue)

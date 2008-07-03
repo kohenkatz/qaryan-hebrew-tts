@@ -49,7 +49,10 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectSound.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -63,6 +66,8 @@
     <Compile Include="AudioBufferInfo.cs" />
     <Compile Include="AudioTarget.cs" />
     <Compile Include="MbrolaExtended.cs" />
+    <Compile Include="MBROLASynthesizerBase.cs" />
+    <Compile Include="NativeSynth.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +107,7 @@
     <Compile Include="Tokenizer.cs" />
     <Compile Include="TranslitListener.cs" />
     <Compile Include="WaveFileAudioTarget.cs" />
+    <Compile Include="WaveFileReader.cs" />
     <Compile Include="WaveFileWriter.cs" />
     <Compile Include="WaveStreamWriter.cs" />
     <Content Include="StressHeuristics.xml" />
@@ -125,20 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Logs\log1.xml" />
-    <EmbeddedResource Include="Logs\QaryanLog.xslt" />
-    <Content Include="Logs\QaryanLog.js" />
     <Content Include="Start.txt" />
     <Content Include="Voices\cz1.xml" />
     <Content Include="Voices\hb1_license.txt" />
     <Content Include="Voices\hb2_license.txt" />
     <Content Include="Voices\ir1.xml" />
-    <None Include="LogFile.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="LogFile.xsx">
-      <DependentUpon>LogFile.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -146,6 +143,7 @@
     <Content Include="Voices\hb1" />
     <Content Include="Voices\hb2" />
     <Content Include="Voices\lt2.xml" />
+    <Content Include="Voices\us2.xml" />
     <None Include="Voices\voice.xml.template" />
   </ItemGroup>
   <ItemGroup>

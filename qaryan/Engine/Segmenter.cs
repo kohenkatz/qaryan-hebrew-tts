@@ -126,7 +126,7 @@ namespace Qaryan.Core
         /// <param name="Filename">Name of the XML file to load.</param>
         public void LoadStressHeuristics(string Filename)
         {
-            Log("Loading " + Filename);
+            Log("Loading " + Path.GetFileName(Filename));
             StressHeuristics = LoadStressHeuristicsFromXml(Filename);
         }
 
@@ -265,6 +265,7 @@ namespace Qaryan.Core
                 curSyl = null;
             }
             SyllablePattern? sp = w.PlaceStress(StressHeuristics, DefaultStress);
+//            Log(LogLevel.Debug, sp);
             bool beforeStress = true;
             foreach (Syllable syl in w.Syllables)
             {
@@ -333,8 +334,9 @@ namespace Qaryan.Core
         protected override void Consume(Queue<SpeechElement> InQueue)
         {
             SpeechElement curElement = InQueue.Dequeue();
-            _ItemConsumed(curElement);
             Log("Consuming {0} ({1})", curElement.GetType().Name, curElement.Latin);
+            _ItemConsumed(curElement);
+
             SpeechElement nextElement = null;
             if (InQueue.Count > 0)
                 nextElement = InQueue.Peek();
@@ -427,14 +429,14 @@ namespace Qaryan.Core
                             Emit(curSegment);
                         curSegment = new SeparatorSegment(curElement as Separator);
                     }
+                    Log("Adding separator segment");
                     Emit(curSegment);
-                    Log("Added separator segment");
                     curSegment = null;
                 }
                 else
                 {
+                    Log("Adding separator segment");
                     Emit(curSegment = new SeparatorSegment(curElement as Separator));
-                    Log("Added separator segment");
                     curSegment = null;
                 }
             }
@@ -442,7 +444,6 @@ namespace Qaryan.Core
 
         protected override void AfterConsumption()
         {
-            base.AfterConsumption();
             if (curSegment != null)
             {
                 if (curSegment is Word)
@@ -451,8 +452,9 @@ namespace Qaryan.Core
                     Emit(curSegment);
                 curSegment = null;
             }
-            _DoneProducing();
             Log(LogLevel.MajorInfo, "Finished");
+            base.AfterConsumption();
+            _DoneProducing();
         }
 
         public override void Run(Producer<SpeechElement> producer)

@@ -12,15 +12,8 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
-
-/*
- * Created by SharpDevelop.
- * User: Moti Z
- * Date: 8/25/2007
- * Time: 8:22 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
+//
+//    Based on <http://www.isca-speech.org/archive/sp2004/sp04_001.pdf>.
 
 using System;
 using System.Collections.Generic;
@@ -49,7 +42,7 @@ namespace Qaryan.Core
     }
 
     /// <summary>
-    /// A straightforward implementation of H. Fujisaki's famous command-response model of F<sub>0</sub> synthesis.
+    /// A straightforward implementation of H. Fujisaki's command-response model of F<sub>0</sub> generation.
     /// </summary>
     public sealed class FujisakiModel
     {
@@ -217,6 +210,38 @@ namespace Qaryan.Core
         public void AddAccentCommand(double T1, double T2, double A)
         {
             a.Add(new AccentCommand(T1, T2, A));
+        }
+
+        internal AccentCommand BeginAccentCommand(double T1, double A)
+        {
+            a.Add(new AccentCommand(T1, double.MaxValue, A));
+            return a[a.Count - 1];
+        }
+
+        internal AccentCommand EndAccentCommand(double T2)
+        {
+            if (a.Count > 0)
+            {
+                a[a.Count - 1]=new AccentCommand(a[a.Count - 1].T1,T2,a[a.Count - 1].A);
+                return a[a.Count - 1];
+            }
+            return new AccentCommand(0, 0, 0);
+        }
+
+        public bool IsAccentCommandUnclosed
+        {
+            get
+            {
+                return (a.Count > 0) && (a[a.Count - 1].T2 == double.MaxValue);
+            }
+        }
+
+        internal AccentCommand ToggleAccentCommand(double T, double A)
+        {
+            if (IsAccentCommandUnclosed)
+                return EndAccentCommand(T);
+            else
+                return BeginAccentCommand(T, A);
         }
 
         /// <summary>

@@ -111,42 +111,46 @@ namespace MBROLA
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate void reset_ParserFunction(ref MbrParser.Parser ps);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void close_ParserFunction (ref MbrParser.Parser ps);
+        delegate void close_ParserFunction(ref MbrParser.Parser ps);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         delegate StatePhone nextphone_ParserFunction(ref MbrParser.Parser ps, ref IntPtr ph);
 
         [StructLayout(LayoutKind.Sequential)]
-        struct Parser: IDisposable
+        struct Parser : IDisposable
         {
             public IntPtr self;
             public reset_ParserFunction reset;
             public close_ParserFunction close;
             public nextphone_ParserFunction nextphone;
-            internal Parser(MbrParser mbrp) {
-                reset = delegate(ref Parser ps) {
+            internal Parser(MbrParser mbrp)
+            {
+                reset = delegate(ref Parser ps)
+                {
                     mbrp.Reset();
                 };
-                close = delegate(ref Parser ps) {
+                close = delegate(ref Parser ps)
+                {
                     mbrp.Close();
                 };
-                nextphone = delegate(ref Parser ps, ref IntPtr ph) {
+                nextphone = delegate(ref Parser ps, ref IntPtr ph)
+                {
                     return mbrp.NextPhone(ref ph);
                 };
                 self = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Parser)));
-                Marshal.StructureToPtr(this,self,false);
+                Marshal.StructureToPtr(this, self, false);
             }
 
             #region IDisposable Members
 
             public void Dispose()
             {
-                Marshal.DestroyStructure(self,this.GetType());
+                Marshal.DestroyStructure(self, this.GetType());
             }
 
             #endregion
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "setParser_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "setParser_MBR", CharSet = CharSet.Ansi)]
         private static extern void setParser_MBR(IntPtr pParser);
 
         Parser myParser;
@@ -165,13 +169,13 @@ namespace MBROLA
         public abstract void Close();
         public abstract StatePhone NextPhone(ref IntPtr ph);
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "init_Phone", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "init_Phone", CharSet = CharSet.Ansi)]
         protected static extern IntPtr InitPhone(string phone, float fdur);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "reset_Phone", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "reset_Phone", CharSet = CharSet.Ansi)]
         protected static extern void ResetPhone(IntPtr hPhoneme);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "close_Phone", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "close_Phone", CharSet = CharSet.Ansi)]
         protected static extern void ClosePhone(IntPtr hPhoneme);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "appendf0_Phone", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "appendf0_Phone", CharSet = CharSet.Ansi)]
         protected static extern void Appendf0Phone(IntPtr hPhoneme, float percent, float pitch);
     }
 
@@ -214,7 +218,7 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "init_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "init_MBR", CharSet = CharSet.Ansi)]
         private static extern int Init_MBR(string dbaname);
 
         public static void Init(string dbName)
@@ -224,7 +228,7 @@ namespace MBROLA
 
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "init_rename_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "init_rename_MBR", CharSet = CharSet.Ansi)]
         private static extern int InitRename_MBR(string dbaname, string replacing, string cloning);
 
         public static void InitRename(string dbName, string replacing, string cloning)
@@ -233,19 +237,19 @@ namespace MBROLA
                 throw new MbrolaException(Mbrola.LastErrorString);
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "write_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "write_MBR", CharSet = CharSet.Ansi)]
         public static extern int Write(string buffer_in);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "read_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "read_MBR", CharSet = CharSet.Ansi)]
         //public static extern int Read([MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)] short[] buffer_out, int nb_wanted);
         public static unsafe extern int Read(IntPtr buffer_out, int nb_wanted);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "readtype_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "readtype_MBR", CharSet = CharSet.Ansi)]
         public static extern int ReadType([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] short[] buffer_out, int nb_wanted, AudioType filter);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "close_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "close_MBR", CharSet = CharSet.Ansi)]
         public static extern void Close();
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "reset_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "reset_MBR", CharSet = CharSet.Ansi)]
         public static extern void Reset();
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "lastError_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "lastError_MBR", CharSet = CharSet.Ansi)]
         private static extern int LastError_MBR();
         public static int LastError
         {
@@ -255,7 +259,7 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "lastErrorStr_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "lastErrorStr_MBR", CharSet = CharSet.Ansi)]
         private static extern int LastErrorStr_MBR(StringBuilder buffer_err, int nb_wanted);
         public static string LastErrorString
         {
@@ -268,9 +272,9 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "setNoError_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "setNoError_MBR", CharSet = CharSet.Ansi)]
         private static extern void setNoError_MBR(int noError);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "getNoError_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "getNoError_MBR", CharSet = CharSet.Ansi)]
         private static extern int getNoError_MBR();
 
         public static bool NoErrorMode
@@ -285,11 +289,11 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "flush_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "flush_MBR", CharSet = CharSet.Ansi)]
         public static extern int Flush();
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "getVersion_MBR", CharSet = CharSet.Ansi)]
-        private static extern int  getVersion_MBR(StringBuilder buffer, int nb_wanted);
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "getVersion_MBR", CharSet = CharSet.Ansi)]
+        private static extern int getVersion_MBR(StringBuilder buffer, int nb_wanted);
         public static string Version
         {
             get
@@ -301,10 +305,10 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "setFreq_MBR", CharSet = CharSet.Ansi)]
-        private static extern void  setFreq_MBR(int nFreq);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "getFreq_MBR", CharSet = CharSet.Ansi)]
-        private static extern int  getFreq_MBR();
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "setFreq_MBR", CharSet = CharSet.Ansi)]
+        private static extern void setFreq_MBR(int nFreq);
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "getFreq_MBR", CharSet = CharSet.Ansi)]
+        private static extern int getFreq_MBR();
         public static int Freq
         {
             get
@@ -317,10 +321,10 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "setVolumeRatio_MBR", CharSet = CharSet.Ansi)]
-        private static extern void  setVolumeRatio_MBR(float fVol);
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "getVolumeRatio_MBR", CharSet = CharSet.Ansi)]
-        private static extern float  getVolumeRatio_MBR();
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "setVolumeRatio_MBR", CharSet = CharSet.Ansi)]
+        private static extern void setVolumeRatio_MBR(float fVol);
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "getVolumeRatio_MBR", CharSet = CharSet.Ansi)]
+        private static extern float getVolumeRatio_MBR();
         public static float VolumeRatio
         {
             get
@@ -333,7 +337,7 @@ namespace MBROLA
             }
         }
 
-        [DllImport("Mbrola.dll", CallingConvention=CallingConvention.Winapi, EntryPoint = "getDatabaseInfo_MBR", CharSet = CharSet.Ansi)]
+        [DllImport("Mbrola.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "getDatabaseInfo_MBR", CharSet = CharSet.Ansi)]
         private static extern int getDatabaseInfo_MBR(StringBuilder buffer, int nb_wanted, int idx);
 
         public static int DatabaseInfoCount
@@ -429,7 +433,7 @@ namespace MBROLA
 
         public static string RegGetDatabasePath(string dbID)
         {
-            StringBuilder sb=new StringBuilder(260);
+            StringBuilder sb = new StringBuilder(260);
             _RegGetDatabasePath(dbID, sb, sb.Capacity);
             return sb.ToString();
         }

@@ -78,6 +78,12 @@ namespace Qaryan.Core
             return p;
         }*/
 
+        protected override void Emit(Phone item)
+        {
+            Log("{0}", item);
+            base.Emit(item);
+        }
+
         protected override void BeforeConsumption()
         {
             Log(LogLevel.MajorInfo, "Started");
@@ -86,7 +92,6 @@ namespace Qaryan.Core
 
             Phone phn = new Phone("_", 1);
             Emit(phn);
-            Log("{0}", phn);
         }
 
         protected override void Consume(Queue<Segment> InQueue)
@@ -106,7 +111,6 @@ namespace Qaryan.Core
                     if (phn == null)
                         phn = new Phone("_", 1);
                     Emit(phn);
-                    Log("{0}", phn);
 
                 }
                 firstStressInClause = true;
@@ -212,9 +216,9 @@ namespace Qaryan.Core
                             {
                                 if (beforeStress)
 
-                                    phone.Duration *= 0.5;
+                                    phone.Duration *= 0.7;
                                 else
-                                    phone.Duration *= 0.6;
+                                    phone.Duration *= 0.9;
                             }
                         }
                         if ((e is Consonant) && ((((Consonant)e).Flags & ConsonantFlags.StrongDagesh) != 0))
@@ -226,13 +230,13 @@ namespace Qaryan.Core
                                 phone.Duration *= 1.1F;
                         }
                         
-                        if ((!nextIsPunctuation) && !heavySyl)
-                            phone.Duration *= 0.7;
+                       /* if ((!nextIsPunctuation) && !heavySyl)
+                            phone.Duration *= 0.7;*/
 
                         //                        if ((nextSeg is SeparatorSegment) && (sylIndex == w.Syllables.Count - 1))
                         //                            phone.Duration *= 1.6;
                         Emit(phone);
-                        Log("{0}", phone);
+
 
 
 
@@ -267,7 +271,6 @@ namespace Qaryan.Core
                             }
                             Phone phone;
                             Emit(phone = new Phone("_", len));
-                            Log("{0}", phone);
                         }
 
 
@@ -279,12 +282,12 @@ namespace Qaryan.Core
 
         protected override void AfterConsumption()
         {
-            base.AfterConsumption();
             Phone phn = new Phone("_", 1);
             Emit(phn);
-            Log("{0}", phn);
-            _DoneProducing();
             Log(LogLevel.MajorInfo, "Finished");
+            base.AfterConsumption();
+            _DoneProducing();
+
         }
 
         public override void Run(Producer<Segment> producer)

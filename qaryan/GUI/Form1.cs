@@ -20,7 +20,7 @@ using System.Reflection;
 using MotiZilberman;
 using System.Xml;
 using System.Xml.Xsl;
-using global::ArtSko.Tools.IeApps;
+using Qaryan.Synths.Native;
 
 namespace Qaryan.GUI
 {
@@ -31,13 +31,7 @@ namespace Qaryan.GUI
     {
         static Form1()
         {
-            IeApp.RegisterHandlerAssembly(typeof(ResxHandler).Assembly, true);
-            IeApp.RegisterTemporaryHandler<ResxHandler>(true);
-            Application.ApplicationExit += delegate(object sender, EventArgs e)
-            {
-                IeApp.RegisterTemporaryHandler<ResxHandler>(false); // you may omit this
-                IeApp.RegisterHandlerAssembly(typeof(ResxHandler).Assembly, false);
-            };
+
         }
 
         List<MBROLAVoice> Voices = new List<MBROLAVoice>();
@@ -126,7 +120,7 @@ namespace Qaryan.GUI
         Segmenter segmenter = new Segmenter();
         Phonetizer phonetizer = new Phonetizer();
         MBROLATranslator translator = new MBROLATranslator();
-        MBROLASynthesizer synth = new MBROLASynthesizer();
+        Synthesizer<MBROLAElement> synth = new MBROLASynthesizer();
         AudioTarget target;
         FujisakiProcessor fujisaki;
 
@@ -314,49 +308,38 @@ namespace Qaryan.GUI
             toolStripStatusLabel8.BackColor = Color.Red;
         }
 
-        XmlLogger logger;
-        LogForm logForm;
-
         private void InitTTSObjects()
         {
-            if (Settings.Default.EnableLog)
-            {
-                logger = new XmlLogger();
-                XmlLog = new MemoryStream();
-                logForm = new LogForm(XmlLog);
-                logger.Add(fujisaki);
-                logger.Writer = XmlWriter.Create(XmlLog);
-                logger.Start();
-            }
+            InitTTSObjects(toolStripButton6.Checked);
+        }
 
-
+        private void InitTTSObjects(bool MBROLA)
+        {
             toolStripStatusLabel1.BackColor = toolStripStatusLabel2.BackColor = toolStripStatusLabel3.BackColor = toolStripStatusLabel4.BackColor = toolStripStatusLabel5.BackColor = toolStripStatusLabel6.BackColor = toolStripStatusLabel7.BackColor = toolStripStatusLabel8.BackColor = Color.Green;
 
             tokenizer = new Tokenizer();
-            if (Settings.Default.EnableLog)
-                logger.Add(tokenizer);
             tokenizer.DoneProducing += OnDoneProducing;
             parser = new Parser();
-            if (Settings.Default.EnableLog)
-                logger.Add(parser);
             parser.DoneProducing += OnDoneProducing;
             segmenter = new Segmenter();
-            if (Settings.Default.EnableLog)
-                logger.Add(segmenter);
             segmenter.DoneProducing += OnDoneProducing;
             phonetizer = new Phonetizer();
-            if (Settings.Default.EnableLog)
-                logger.Add(phonetizer);
             phonetizer.DoneProducing += OnDoneProducing;
-            translator = new MBROLATranslator();
-            if (Settings.Default.EnableLog)
-                logger.Add(translator);
-            translator.DoneProducing += OnDoneProducing;
-            synth = new MBROLASynthesizer();
-            synth.DoneProducing += OnDoneProducing;
-            if (Settings.Default.EnableLog)
-                logger.Add(synth);
 
+            translator = new MBROLATranslator();
+
+            translator.DoneProducing += OnDoneProducing;           
+            if (MBROLA)
+            {
+                synth = new MBROLASynthesizer();
+
+            }
+            else
+            {
+                synth = new NativeSynthesizer();
+            }
+
+            synth.DoneProducing += OnDoneProducing;
             acmds = new PointPairList();
             pcmds = new PointPairList();
             pitch = new PointPairList();
@@ -376,8 +359,17 @@ namespace Qaryan.GUI
             fujisaki.PitchPointComputed += OnPitchPoint;
             fujisaki.PhraseComponentComputed += OnPhraseComponent;
             fujisaki.NoMoreData += delegate { updateGraph(fujisakiForm.zedGraphControl1); };
+            if (MBROLA)
+                translator.Voice = (synth as MBROLASynthesizerBase).Voice = Voices[toolStripComboBox1.SelectedIndex];
+            else
+            {
+                translator.Voice = Voices[toolStripComboBox1.SelectedIndex];
+                NativeVoice nvoice = new NativeVoice();
+                nvoice.LoadFromXml(Path.Combine(FileBindings.EnginePath, "NativeVoices/" + translator.Voice.Name + "/db.xml"));
+                (synth as NativeSynthesizer).Voice = nvoice;
+            }
 
-            translator.Voice = synth.Voice = Voices[toolStripComboBox1.SelectedIndex];
+            
             segmenter.RelaxAudibleSchwa = Settings.Default.RelaxAudibleSchwa;
             phonetizer.Options.DistinguishStrongDagesh = Settings.Default.DistinguishStrongDagesh;
             phonetizer.Options.Akanye = phonetizer.Options.Ikanye = Settings.Default.AkanyeIkanye;
@@ -404,10 +396,6 @@ namespace Qaryan.GUI
             translitForm.TranslitText = value;
         }
 
-        MemoryStream XmlLog;
-
-
-
         private void „·¯ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitTTSObjects();
@@ -416,17 +404,8 @@ namespace Qaryan.GUI
                 text = textBox1.SelectedText;
 
             target = new DSoundAudioTarget(this);
-            if (Settings.Default.EnableLog)
-                logger.Add(target);
             target.AudioFinished += OnDSoundAudioFinished;
-            if (Settings.Default.EnableLog)
-            {
-                XmlWriterSettings settings = new XmlWriterSettings();
-                settings.Indent = true;
-                settings.IndentChars = "\t";
-                settings.Encoding = System.Text.Encoding.UTF8;
-                target.AudioFinished += FinalizeLog;
-            }
+
             tokenizer.Run(text);
             parser.Run(tokenizer);
             segmenter.Run(parser);
@@ -435,38 +414,6 @@ namespace Qaryan.GUI
             translator.Run(fujisaki);
             synth.Run(translator);
             target.Run(synth);
-        }
-
-        void FinalizeLog()
-        {
-            /*XslCompiledTransform xslt = new XslCompiledTransform(true);
-            MemoryStream strr = new MemoryStream(Resources.QaryanLog);
-            strr.Seek(0, SeekOrigin.Begin);
-            XsltSettings xslts = new XsltSettings();
-            xslts.EnableScript = true;
-            xslts.EnableDocumentFunction = false;
-            xslt.Load(XmlReader.Create(strr), xslts, null);
-            strr.Close();
-            strr = new MemoryStream();
-            //  xslt.Load(XmlReader.Create());
-            logger.Stop();
-            logger.Writer = null;
-            Directory.CreateDirectory("logs");
-            FileStream fs = File.Create("logs/log1.xml");
-            XmlLog.WriteTo(fs);
-            fs.Close();
-            XmlLog.Seek(0, SeekOrigin.Begin);
-            XmlReader reader = XmlReader.Create(XmlLog);
-            strr.Seek(0, SeekOrigin.Begin);
-            XmlWriter writer = XmlWriter.Create(strr);
-            xslt.Transform(reader, writer);
-            strr.Seek(0, SeekOrigin.Begin);*/
-            logger.Stop();
-            logger.Writer = null;
-            XmlLog.Seek(0, SeekOrigin.Begin);
-            logForm.webBrowser1.DocumentStream = XmlLog;
-            //logForm.webBrowser1.Url = new Uri("resx:///?QaryanLog_xsl");
-            logForm.Show();
         }
 
         private void toolStripStatusLabel2_Click(object sender, EventArgs e)
@@ -494,12 +441,10 @@ namespace Qaryan.GUI
                 text = textBox1.SelectedText;
 
             target = new WaveFileAudioTarget();
-            if (Settings.Default.EnableLog)
-                logger.Add(target);
+
             ((WaveFileAudioTarget)target).Filename = saveWavDialog.FileName;
 
             target.AudioFinished += OnFileAudioFinished;
-            target.AudioFinished += FinalizeLog;
             tokenizer.Run(text);
             parser.Run(tokenizer);
             segmenter.Run(parser);
@@ -706,14 +651,14 @@ namespace Qaryan.GUI
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (toolStripComboBox1.SelectedIndex == toolStripComboBox1.Items.Count - 1)
+         /*   if (toolStripComboBox1.SelectedIndex == toolStripComboBox1.Items.Count - 1)
             {
                 System.Diagnostics.Process p = new System.Diagnostics.Process();
                 p.StartInfo.FileName = Resources.WikiBase + Resources.WikiVoicesPage;
                 p.Start();
                 toolStripComboBox1.SelectedIndex = lastSelectedIndex;
             }
-            else
+            else*/
                 lastSelectedIndex = toolStripComboBox1.SelectedIndex;
         }
 
@@ -770,21 +715,8 @@ namespace Qaryan.GUI
                 case "akanyeIkanyeToolStripMenuItem":
                     Settings.Default.AkanyeIkanye = senderItem.Checked;
                     break;
-                case "displayLogsToolStripMenuItem":
-                    Settings.Default.EnableLog = senderItem.Checked;
-                    break;
             }
             Settings.Default.Save();
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-        }
-
-        private void displayLogsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

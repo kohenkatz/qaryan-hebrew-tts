@@ -13,15 +13,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * Created by SharpDevelop.
- * User: Moti Z
- * Date: 8/25/2007
- * Time: 10:01 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -66,9 +57,10 @@ namespace Qaryan.Synths.MBROLA
 		protected override void AfterConsumption()
 		{
 			AddElement(null);
+            Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();
             _DoneProducing();
-            Log(LogLevel.MajorInfo,"Finished");
+
 		}
 		
 		void AddElement(MBROLAElement e) {

@@ -73,12 +73,6 @@
     <Compile Include="IeApp\Win32.Structs.cs" />
     <Compile Include="KeyShape.cs">
     </Compile>
-    <Compile Include="LogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LogForm.Designer.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MbrolaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,10 +119,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LogForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>LogForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NikudHelp.en.resx">
       <SubType>Designer</SubType>
       <DependentUpon>NikudHelp.cs</DependentUpon>

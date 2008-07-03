@@ -13,15 +13,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * Created by SharpDevelop.
- * User: Moti Z
- * Date: 9/22/2007
- * Time: 6:40 PM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System;
 using System.Collections.Generic;
 using MotiZilberman;
@@ -119,7 +110,7 @@ namespace Qaryan.Core
 			Phone p=InQueue.Dequeue();
 
 			
-			if (p.Symbol=="_") {                
+			if (p.Symbol=="_") {
 				Fujisaki.AddPhraseCommand((UtteranceTime+p.Duration)/1000,0.3);
                 if (PhraseCommand!=null)
                     PhraseCommand(UtteranceTime + p.Duration, 0.3);
@@ -128,9 +119,12 @@ namespace Qaryan.Core
                 if (p.Context.IsAccented)
                 {
                     double Aa = 0.5;
-                    Fujisaki.AddAccentCommand((UtteranceTime - 200) / 1000, (UtteranceTime + 0) / 1000, Aa);
-                    if (AccentCommand != null)
-                        AccentCommand(UtteranceTime - 200, UtteranceTime, Aa);
+                    AccentCommand Ai=Fujisaki.ToggleAccentCommand(UtteranceTime/1000, Aa);
+                    if (!Fujisaki.IsAccentCommandUnclosed)
+                        if (AccentCommand != null)
+                            AccentCommand(Ai.T1, Ai.T2, Ai.A);
+                    //Fujisaki.AddAccentCommand((UtteranceTime - 200) / 1000, (UtteranceTime + 0) / 1000, Aa);/
+                    
                 }
 
 			}
@@ -138,7 +132,7 @@ namespace Qaryan.Core
             UtteranceTime += p.Duration;
             MidQueueDuration += p.Duration;
 			
-			if (MidQueueDuration>=210)
+			if (MidQueueDuration>=500)
 				ProcessMidQueue();
 		}
 		
@@ -146,11 +140,15 @@ namespace Qaryan.Core
 		{
 			
 			ProcessMidQueue();
+
             if (NoMoreData != null) 
                 NoMoreData();
+
+            Log(LogLevel.MajorInfo, "Finished");
+
 			base.AfterConsumption();
             _DoneProducing();
-			Log(LogLevel.MajorInfo,"Finished");
+
 		}
 
 

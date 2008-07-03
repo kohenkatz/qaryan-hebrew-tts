@@ -103,14 +103,20 @@ namespace Qaryan.Synths.MBROLA
             }
         }
 
+        uint SampleRateCache=0;
+
         public uint SampleRate
         {
             get
             {
-                if (Mbrola.Binding == MbrolaBinding.Library)
-                    return (uint)MbrPlay.GetDefaultFreq();
-                else
-                    return DiphoneDB.WaveFormatFromFile(FileName).SamplesPerSecond;
+                if (SampleRateCache == 0)
+                {
+                    if (Mbrola.Binding == MbrolaBinding.Library)
+                        SampleRateCache= (uint)MbrPlay.GetDefaultFreq();
+                    else
+                        SampleRateCache= DiphoneDB.WaveFormatFromFile(FileName).SamplesPerSecond;
+                }
+                return SampleRateCache;
             }
         }
 

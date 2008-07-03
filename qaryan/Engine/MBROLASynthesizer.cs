@@ -13,15 +13,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
- * Created by SharpDevelop.
- * User: Moti Z
- * Date: 8/25/2007
- * Time: 10:18 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
 using System;
 using System.Text;
 using System.IO;
@@ -40,59 +31,27 @@ namespace Qaryan.Synths.MBROLA
     /// <summary>
     /// An interface to the MBROLA synthesizer, encapsulating MbrPlay.dll.
     /// </summary>
-    public class MBROLASynthesizer : Synthesizer<MBROLAElement>
+    public class MBROLASynthesizer : MBROLASynthesizerBase
     {
         public event StringEventHandler Error;
 
-        public override WaveFormat AudioFormat
-        {
-            get
-            {
-                WaveFormat format=base.AudioFormat;
-                format.Channels = 1;
-                if (voice != null)
-                    format.SamplesPerSecond = voice.SampleRate;
-                else
-                    format.SamplesPerSecond = 22050;
-                format.BitsPerSample = 16;
-                format.AverageBytesPerSecond = format.SamplesPerSecond * format.BitsPerSample / 8;
-                format.BlockAlign = (ushort)(format.Channels * (format.BitsPerSample / 8));
-                format.FormatTag = WaveFormatTag.Pcm;
-                return format;
-            }
-            set
-            {
-                base.AudioFormat = value;
-            }
-        }
-
         StringBuilder pho;
 
-        MBROLAVoice voice;
+
 
         internal bool IsDoneConsuming = false;
-
-        public MBROLAVoice Voice
-        {
-            get { return voice; }
-            set
-            {
-                voice = value;
-                voice.Activate();
-            }
-        }
 
         MbrThread myMbrThread;
 
         protected override void BeforeConsumption()
         {
+            Log(LogLevel.MajorInfo, "Started");
             base.BeforeConsumption();
             pho = new StringBuilder();
-            Log(LogLevel.MajorInfo,"Started");
             IsDoneConsuming = false;
 //            Mbrola.Init("C:\\Documents and Settings\\Moti Z\\My Documents\\SharpDevelop Projects\\Qaryan.Core refactor\\Voices\\" + Voice.Name);
-            MbrPlay.SetDatabase(voice.Name);
-            MbrPlay.SetVolumeRatio(voice.VolumeRatio);
+            MbrPlay.SetDatabase(Voice.Name);
+            MbrPlay.SetVolumeRatio(Voice.VolumeRatio);
             myMbrThread = new MbrThread();
             myMbrThread.Error += delegate(object sender, string error)
             {
@@ -130,10 +89,10 @@ namespace Qaryan.Synths.MBROLA
             //            Console.WriteLine(error);
 
             myMbrThread.Join();
-
+            Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();
             IsDoneConsuming = true;
-            Log(LogLevel.MajorInfo,"Finished");
+
         }
 
 //        bool isRunning = false;
@@ -170,8 +129,8 @@ namespace Qaryan.Synths.MBROLA
 //                        fout.Write(buf, 0, buf.Length);
                         break;
                     case MbrMessage.End:
-                        Finished = true;
                         Synth.Log("Synth terminated");
+                        Finished = true;
 //                        fout.Close();
                         break;
                     default:
@@ -278,17 +237,6 @@ namespace Qaryan.Synths.MBROLA
                 else
                     return base.IsRunning;
             }
-        }
-
-        public override void Run(Producer<MBROLAElement> producer)
-        {
-
-            base.Run(producer, 1);
-        }
-
-
-        public MBROLASynthesizer()
-        {
         }
     }
 }

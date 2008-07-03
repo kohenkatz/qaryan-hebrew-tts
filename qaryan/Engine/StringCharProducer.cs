@@ -47,7 +47,8 @@ namespace Qaryan.Core
 			queue=new Queue<char>();
             foreach (char c in s)
             {
-                queue.Enqueue(c);
+                lock(queue)
+                    queue.Enqueue(c);
                 if (ItemProduced != null)
                     ItemProduced(this, new ItemEventArgs<char>(c));
             }

@@ -92,7 +92,7 @@ namespace Qaryan.Audio
 
         protected override void BeforeConsumption()
         {
-            Log(LogLevel.MajorInfo, "Buffering");
+            Log(LogLevel.MajorInfo, "Start buffering");
             base.BeforeConsumption();
             isConsuming = true;
             eof = false;
@@ -120,9 +120,9 @@ namespace Qaryan.Audio
 
         protected override void AfterConsumption()
         {
+            Log(LogLevel.MajorInfo, "Finished buffering");
             base.AfterConsumption();
             isConsuming = false;
-            Log(LogLevel.MajorInfo, "Finished buffering");
         }
 
         protected void OnAudioFinished()
@@ -158,8 +158,8 @@ namespace Qaryan.Audio
 
         protected void _AudioFinished()
         {
-            Close();
             Log(LogLevel.Info, "Audio playback finished");
+            Close();
             if (AudioFinished != null)
                 AudioFinished();
         }

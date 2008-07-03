@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_07E3B9DF44C94165B79BA4E14D6267B6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_291E9271596F4DE03D7AC10A2BA62F0A"
         "OwnerKey" = "8:_6C1F52326902175181E988609DC0B15D"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,12 +52,6 @@
         "Entry"
         {
         "MsmKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AD109BF0C285426695D9D3791A3468F0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -294,7 +294,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.2858.32464, Culture=neutral, PublicKeyToken=4f93e6b580bb7ede, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.2982.26260, Culture=neutral, PublicKeyToken=4f93e6b580bb7ede, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_6C1F52326902175181E988609DC0B15D"
@@ -1095,6 +1095,59 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_07E3B9DF44C94165B79BA4E14D6267B6"
+            {
+            "SourcePath" = "8:MBROLAShared\\Release\\MBROLAShared.msm"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{45950163-AB7C-4629-AE4F-12F63D48A159}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+                "KeyOutputModule"
+                {
+                "UseDynamicProperties" = "11:TRUE"
+                "IsDependency" = "11:FALSE"
+                "SourcePath" = "8:MBROLAShared\\Release\\MBROLAShared.msm"
+                    "Properties"
+                    {
+                        "_01C5AABE142C4EF9A72E5176446474D3.EE3C1CD4EB1549CEB47360AF4FE514EB"
+                        {
+                        "Name" = "8:_01C5AABE142C4EF9A72E5176446474D3.EE3C1CD4EB1549CEB47360AF4FE514EB"
+                        "DisplayName" = "8:Module Retargetable Folder"
+                        "Description" = "8:"
+                        "Type" = "3:32769"
+                        "ContextData" = "8:_RetargetableFolder"
+                        "Attributes" = "3:6"
+                        "Setting" = "3:1"
+                        "UsePlugInResources" = "11:FALSE"
+                        }
+                    }
+                "LanguageId" = "3:1033"
+                "Exclude" = "11:FALSE"
+                "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
+                "Feature" = "8:"
+                "IsolateTo" = "8:"
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_37CB25270CB549C88177B9A8A68DF1AB"
             {
             "SourcePath" = "8:"
@@ -1149,59 +1202,6 @@
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AD109BF0C285426695D9D3791A3468F0"
-            {
-            "SourcePath" = "8:MBROLAShared\\Release\\MBROLAShared.msm"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{69D44040-83C3-43B2-AE6F-56FF85E1BCFD}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-                "KeyOutputModule"
-                {
-                "UseDynamicProperties" = "11:TRUE"
-                "IsDependency" = "11:FALSE"
-                "SourcePath" = "8:MBROLAShared\\Debug\\MBROLAShared.msm"
-                    "Properties"
-                    {
-                        "_01C5AABE142C4EF9A72E5176446474D3.EE3C1CD4EB1549CEB47360AF4FE514EB"
-                        {
-                        "Name" = "8:_01C5AABE142C4EF9A72E5176446474D3.EE3C1CD4EB1549CEB47360AF4FE514EB"
-                        "DisplayName" = "8:Module Retargetable Folder"
-                        "Description" = "8:"
-                        "Type" = "3:32769"
-                        "ContextData" = "8:_RetargetableFolder"
-                        "Attributes" = "3:6"
-                        "Setting" = "3:1"
-                        "UsePlugInResources" = "11:FALSE"
-                        }
-                    }
-                "LanguageId" = "3:1033"
-                "Exclude" = "11:FALSE"
-                "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-                "Feature" = "8:"
-                "IsolateTo" = "8:"
                 }
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FFF1B3308D0F46FBB4E6A9BB25BC8723"

@@ -139,7 +139,7 @@ namespace Qaryan.Core
                             break;
                     }
                 }
-                //                HebrewParser.Log.Analyzer.WriteLine(" set to " + StressPosition.ToString() + " by cantillation mark");
+                //(" set to " + StressPosition.ToString() + " by cantillation mark");
             }
             else if ((Tag & TagTypes.Stress) != TagTypes.Unrecognized)
             {

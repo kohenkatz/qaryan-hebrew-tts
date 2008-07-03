@@ -12,7 +12,9 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with Qaryan.  If not, see <http://www.gnu.org/licenses/>.
-
+//
+//    Original SoundPlayer class by Gary Linscott (Premandrake)
+//    <http://www.gamedev.net/community/forums/topic.asp?topic_id=322115>
 using System;
 using System.Threading;
 using System.Windows.Forms;

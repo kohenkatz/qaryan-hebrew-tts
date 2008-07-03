@@ -41,6 +41,9 @@
 	<Pattern Result="None" Anchor="End">
 		<Syllable Nucleus="KamatzIndeterminate" Start="vĕḳ" End="l" />
 	</Pattern>
+  <Pattern Result="None" Anchor="End">
+    <Syllable Nucleus="KamatzIndeterminate" Start="wĕḳ" End="l" />
+  </Pattern>
 	<Pattern Result="None" Anchor="End">
 		<Syllable Nucleus="KamatzIndeterminate" Start="lĕḳ" End="l" />
 	</Pattern>

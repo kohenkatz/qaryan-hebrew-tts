@@ -44,8 +44,8 @@ namespace Qaryan.Audio
         {
             if ((!IsRunning)&&(Buffers.Count < 1))
             {
-                Player.Stop();
                 Log(LogLevel.Debug, "Not running and no buffers left");
+                Player.Stop();
                 if (Eof)
                     _AudioFinished();
             }
@@ -54,7 +54,7 @@ namespace Qaryan.Audio
                 int pos = 0;
                 if (Buffers.Count < 1)
                 {
-                    Log(LogLevel.Warning, "Buffer underrun, {0} bytes requested",length);
+                    //Log(LogLevel.Warning, "Buffer underrun, {0} bytes requested",length);
                     return;
                 }
                 else
@@ -72,25 +72,25 @@ namespace Qaryan.Audio
                         pos += availCopy;
                         if (bufPos >= buf.Length)
                         {
-                            Log(LogLevel.Debug, "End of queued buffer ({0} bytes)", buf.Length);
+                            //Log(LogLevel.Debug, "End of queued buffer ({0} bytes)", buf.Length);
                             Buffers.Dequeue();
                             bufPos = 0;
                         }
                     }
-                    Log(LogLevel.Debug, "Copied {0} bytes into {1} byte device buffer", copied, length);
-                    if ((length>copied) && (!Eof) && (IsRunning))
-                        Log(LogLevel.Warning, "Buffer underrun, {0} bytes short", length-copied);
+                    //Log(LogLevel.Debug, "Copied {0} bytes into {1} byte device buffer", copied, length);
+                    /*if ((length>copied) && (!Eof) && (IsRunning))
+                        Log(LogLevel.Warning, "Buffer underrun, {0} bytes short", length-copied);*/
                 }
             }
         }
 
         protected override void Open(WaveFormat format)
         {
+            Log(LogLevel.Info, "Open {0}ch, {1} bits/sample, {2} Hz PCM output", format.Channels, format.BitsPerSample, format.SamplesPerSecond);
             bufPos = 0;
             Buffers = new Queue<byte[]>();
             Player = new SoundPlayer(owner, PullAudio, format);
             Player.Resume();
-            Log(LogLevel.Info, "Open {0}ch, {1} bits/sample, {2} Hz PCM output", format.Channels, format.BitsPerSample, format.SamplesPerSecond);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)
