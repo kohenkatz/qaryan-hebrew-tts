@@ -192,7 +192,7 @@ namespace Qaryan.CLI
                 voiceName = opts["mbrola-voice"].Value as string;
             tra.Voice.LoadFromXml(Path.Combine(FileBindings.VoicePath, voiceName + ".xml"));
 
-
+            Console.Error.WriteLine("{0}: Voice={1}", "Main", tra.Voice.DisplayName);
 
             /* mbrola = new System.Diagnostics.Process();
              mbrola.StartInfo.FileName = "C:\\downloads\\mbrola_cygwin.exe";
