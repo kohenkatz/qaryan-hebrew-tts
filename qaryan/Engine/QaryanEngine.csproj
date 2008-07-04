@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RegisterForComInterop>false</RegisterForComInterop>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <OutputPath>..\Dist\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -47,6 +48,9 @@
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\Dist\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -116,16 +120,32 @@
     <Compile Include="WaveFileReader.cs" />
     <Compile Include="WaveFileWriter.cs" />
     <Compile Include="WaveStreamWriter.cs" />
-    <Content Include="StressHeuristics.xml" />
-    <Content Include="Voices\ee1.xml" />
-    <Content Include="Voices\es1.xml" />
-    <Content Include="Voices\hb1.xml" />
-    <Content Include="Voices\hb2.xml" />
-    <Content Include="Voices\la1.xml" />
+    <Content Include="StressHeuristics.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\ee1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\es1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\hb1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\hb2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\la1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Voices\ar1.xml" />
-    <Content Include="Voices\ar2.xml" />
+    <Content Include="Voices\ar1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\ar2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="MbrolaVoice.xsd">
@@ -138,18 +158,34 @@
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="Start.txt" />
-    <Content Include="Voices\cz1.xml" />
-    <Content Include="Voices\hb1_license.txt" />
-    <Content Include="Voices\hb2_license.txt" />
-    <Content Include="Voices\ir1.xml" />
+    <Content Include="Voices\cz1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\hb1_license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\hb2_license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\ir1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Voices\hb1" />
-    <Content Include="Voices\hb2" />
-    <Content Include="Voices\lt2.xml" />
-    <Content Include="Voices\us2.xml" />
+    <Content Include="Voices\hb1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\hb2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\lt2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\us2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Voices\voice.xml.template" />
   </ItemGroup>
   <ItemGroup>

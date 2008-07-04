@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QaryanSAPI", "SAPI\QaryanSAPI\QaryanSAPI.csproj", "{E758819E-5B8C-4CA1-AA98-5082EAC2ECF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QaryanSAPI", "SAPI\QaryanSAPI.csproj", "{E758819E-5B8C-4CA1-AA98-5082EAC2ECF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QaryanEngine", "Engine\QaryanEngine.csproj", "{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}"
 EndProject
