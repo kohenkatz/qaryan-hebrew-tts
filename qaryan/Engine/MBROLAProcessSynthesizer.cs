@@ -106,7 +106,7 @@ namespace Qaryan.Synths.MBROLA
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                Log(LogLevel.Error, "MBROLA failed to load properly. Make sure that MBROLA_DATABASE_DIR is set to a correct value.");
+                Log(LogLevel.Error, "MBROLA failed to load properly. Your system might be missing an MBROLA binary - get one from <http://tcts.fpms.ac.be/synthesis/mbrola/mbrcopybin.html>");
                 Thread.CurrentThread.Abort();
                 return;
             }
