@@ -38,9 +38,7 @@ namespace Qaryan.Synths.MBROLA
             }
         }
 
-        long samplesBalance;
-
-        bool isDoneConsuming = false;
+//        bool isDoneConsuming = false;
         bool isDoneSynth = false;
 
         string _MBROLAExecutable = "mbrola";
@@ -87,9 +85,9 @@ namespace Qaryan.Synths.MBROLA
 
             base.BeforeConsumption();
 
-            samplesBalance = 0;
-            isDoneConsuming = isDoneSynth = false;
+            /*isDoneConsuming = */isDoneSynth = false;
             mbrola = new System.Diagnostics.Process();
+            mbrola.EnableRaisingEvents = true;
             mbrola.StartInfo.FileName = MBROLAExecutable;
 
 
@@ -99,7 +97,7 @@ namespace Qaryan.Synths.MBROLA
             //mbrola.StartInfo.RedirectStandardError = true;
             mbrola.StartInfo.CreateNoWindow = true;
             mbrola.StartInfo.UseShellExecute = false;
-            //mbrola.ErrorDataReceived += new DataReceivedEventHandler(mbrola_ErrorDataReceived);
+            mbrola.ErrorDataReceived += new DataReceivedEventHandler(mbrola_ErrorDataReceived);
 
             try
             {
@@ -123,7 +121,8 @@ namespace Qaryan.Synths.MBROLA
             t = new Thread(delegate()
             {
                 int ofs = 0;
-                while (Thread.IsAlive && !mbrola.HasExited)
+                while (Thread.CurrentThread.IsAlive && 
+                    !mbrola.HasExited)
                 {
                     Log("about to read from mbrola");
                     while (mbrola.StandardOutput.EndOfStream && !mbrola.HasExited)
@@ -137,8 +136,9 @@ namespace Qaryan.Synths.MBROLA
                     {
                         if (!mbrola.HasExited)
                         {
-                            Log("reading...");
+                            Log("Reading...");
                             l = mbrola.StandardOutput.BaseStream.Read(buf, ofs, buf.Length - ofs);
+                            
                         }
                     }
                     catch (IOException)
@@ -149,19 +149,10 @@ namespace Qaryan.Synths.MBROLA
                     byte[] abuf = new byte[l];
                     Buffer.BlockCopy(buf, ofs, abuf, 0, l);
                     Log("Read {0} into buffer of {1}", l, buf.Length);
-/*                    lock (this)
-                        samplesBalance -= (uint)l;*/
-                    Log("samplesBalance is now {0}", samplesBalance);
                     if (abuf.Length > 0)
                         BufferReady(abuf);
                     else if (mbrola.HasExited)
-                    {
-                        if (!mbrola.HasExited)
-                        {
-                            mbrola.Kill();
-                        }
                         break;
-                    }
 
                     ofs += l;
                     if (ofs >= buf.Length)
@@ -171,6 +162,8 @@ namespace Qaryan.Synths.MBROLA
                     mbrola.StandardOutput.ReadToEnd();
                 InvokeAudioFinished();
                 isDoneSynth = true;
+                if (mbrola.HasExited)
+                    Log("MBROLA has terminated");
             }
             );
             t.Start();
@@ -178,7 +171,7 @@ namespace Qaryan.Synths.MBROLA
 
         void mbrola_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Log(LogLevel.Warning, "From MBROLA '{0}'", e.Data);
+            Log(LogLevel.Warning, "From MBROLA: '{0}'", e.Data);
         }
 
         protected override void AfterConsumption()
@@ -186,14 +179,14 @@ namespace Qaryan.Synths.MBROLA
             Log("After consumption");
             Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();
-            isDoneConsuming = true;
+//            isDoneConsuming = true;
             Log("writing ^Z");
             mbrola.StandardInput.BaseStream.WriteByte(26);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(10);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(13);  // ^Z
-            Log("reading from mbrola to end");
-            Log("Waiting for mbrola to exit");
-            mbrola.WaitForExit();
+            Log("Closing MBROLA stdin");
+            mbrola.StandardInput.Close();
+            //mbrola.WaitForExit();
 
         }
 
@@ -202,8 +195,6 @@ namespace Qaryan.Synths.MBROLA
             while (InQueue.Count > 0)
             {
                 MBROLAElement elem = InQueue.Dequeue();
-/*                lock (this)
-                    samplesBalance += (long)Math.Ceiling(elem.Duration * AudioFormat.SamplesPerSecond / 1000);*/
                 Log("Writing ", elem.Symbol);
                 mbrola.StandardInput.Write(elem);
             }

@@ -66,8 +66,16 @@ namespace Qaryan.GUI
 
         public Form1()
         {
-            Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(Settings.Default.Culture);
-            Application.CurrentInputLanguage = InputLanguage.FromCulture(System.Globalization.CultureInfo.GetCultureInfo("he-IL"));
+            try
+            {
+                Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(Settings.Default.Culture);
+
+                Application.CurrentInputLanguage = InputLanguage.FromCulture(System.Globalization.CultureInfo.GetCultureInfo("he-IL"));
+            } catch {
+                // Mono chokes on an exception here but otherwise runs nicely.
+                // This is the little hack to fix it.
+            }
+
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
@@ -404,6 +412,7 @@ namespace Qaryan.GUI
                 text = textBox1.SelectedText;
 
             target = new DSoundAudioTarget(this);
+            //target = new PortAudioTarget(this);
             target.AudioFinished += OnDSoundAudioFinished;
 
             tokenizer.Run(text);

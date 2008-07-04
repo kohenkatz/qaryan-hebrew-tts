@@ -63,9 +63,9 @@
 		<UnifyRule Symbol1="i" Symbol2="i">i</UnifyRule>		
 		<UnifyRule Symbol1="e" Symbol2="e">e</UnifyRule>		-->
 		<UnifyRule Symbol1="_" Symbol2="?">_</UnifyRule>
-		<UnifyRule Symbol1="?" Symbol2="ALL"></UnifyRule>
     <UnifyRule Symbol1="v" Symbol2="v">v</UnifyRule>
     <UnifyRule Symbol1="a" Symbol2="a">a</UnifyRule>
+    <UnifyRule Symbol1="?" Symbol2="ALL"></UnifyRule>    
     <UnifyRule Symbol1="e" Symbol2="e">e</UnifyRule>
 		<!--<UnifyRule Symbol1="?" Symbol2="?"></UnifyRule>
 		<UnifyRule Symbol1="?" Symbol2="b"></UnifyRule>

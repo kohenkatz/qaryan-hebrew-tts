@@ -20,17 +20,17 @@ using Qaryan.Core;
 
 namespace Qaryan.Core
 {
-    public delegate void DataPointEvent(double x,double y);
+    public delegate void DataPointEvent(double x, double y);
     public delegate void AccentCommandEvent(double t1, double t2, double a);
     public delegate void ProcDelegate();
 
-	/// <summary>
-	/// Generates pitch information using an instance of the Fujisaki model.
-	/// </summary>
+    /// <summary>
+    /// Generates pitch information using an instance of the Fujisaki model.
+    /// </summary>
     /// <seealso cref="Phonetizer"/>
     /// <seealso cref="Qaryan.Synths.MBROLA.MBROLATranslator"/>
-	public class FujisakiProcessor:LookaheadConsumerProducer<Phone,Phone>
-	{
+    public class FujisakiProcessor : LookaheadConsumerProducer<Phone, Phone>
+    {
         public override string Name
         {
             get
@@ -38,7 +38,7 @@ namespace Qaryan.Core
                 return "Fujisaki";
             }
         }
-		FujisakiModel Fujisaki=new FujisakiModel();
+        FujisakiModel Fujisaki = new FujisakiModel();
 
         /// <summary>
         /// Exposes the internal Fujisaki model object.
@@ -82,8 +82,8 @@ namespace Qaryan.Core
         public event ProcDelegate NoMoreData;
 
         Queue<Phone> MidQueue = new Queue<Phone>();
-		double UtteranceTime=0;
-		double MidQueueDuration=0;
+        double UtteranceTime = 0;
+        double MidQueueDuration = 0;
 
         /// <summary>
         /// Resets the underlying Fujisaki model and clears all phones pending F0 calculation.
@@ -94,91 +94,101 @@ namespace Qaryan.Core
             Model.Reset();
         }
 
-		protected override void BeforeConsumption()
-		{
-			Log(LogLevel.MajorInfo,"Started");
-			base.BeforeConsumption();
-			MidQueue=new Queue<Phone>();
-			UtteranceTime=0;
-			MidQueueDuration=0;
-		}
-	
-		protected override void Consume(Queue<Phone> InQueue)
-		{
+        protected override void BeforeConsumption()
+        {
+            Log(LogLevel.MajorInfo, "Started");
+            base.BeforeConsumption();
+            MidQueue = new Queue<Phone>();
+            UtteranceTime = 0;
+            MidQueueDuration = 0;
+        }
+
+        protected override void Consume(Queue<Phone> InQueue)
+        {
             if (InQueue.Count == 0)
                 return;
-			Phone p=InQueue.Dequeue();
+            Phone p = InQueue.Dequeue();
 
-			
-			if (p.Symbol=="_") {
-				Fujisaki.AddPhraseCommand((UtteranceTime+p.Duration)/1000,0.3);
-                if (PhraseCommand!=null)
+
+            if (p.Symbol == "_")
+            {
+                Fujisaki.AddPhraseCommand((UtteranceTime + p.Duration) / 1000, 0.3);
+                if (PhraseCommand != null)
                     PhraseCommand(UtteranceTime + p.Duration, 0.3);
-			}
-			else if (p.Context.IsNucleus) {
+            }
+            else if (p.Context.IsNucleus)
+            {
                 if (p.Context.IsAccented)
                 {
-                    double Aa = 0.5;
-                    AccentCommand Ai=Fujisaki.ToggleAccentCommand(UtteranceTime/1000, Aa);
-                    if (!Fujisaki.IsAccentCommandUnclosed)
-                        if (AccentCommand != null)
-                            AccentCommand(Ai.T1, Ai.T2, Ai.A);
+
+                        double Aa = 0.5;
+                        AccentCommand Ai;
+                        if (p.Context.NextSeparator== ".")
+                            Ai=Fujisaki.ToggleAccentCommand(UtteranceTime / 1000, -Aa);
+                        else
+                            Ai=Fujisaki.ToggleAccentCommand(UtteranceTime / 1000, Aa);
+                        if (!Fujisaki.IsAccentCommandUnclosed)
+                            if (AccentCommand != null)
+                                AccentCommand(Ai.T1*1000, Ai.T2*1000, Ai.A);
                     //Fujisaki.AddAccentCommand((UtteranceTime - 200) / 1000, (UtteranceTime + 0) / 1000, Aa);/
-                    
+
                 }
 
-			}
-			MidQueue.Enqueue(p);
+            }
+            MidQueue.Enqueue(p);
             UtteranceTime += p.Duration;
             MidQueueDuration += p.Duration;
-			
-			if (MidQueueDuration>=500)
-				ProcessMidQueue();
-		}
-		
-		protected override void AfterConsumption()
-		{
-			
-			ProcessMidQueue();
 
-            if (NoMoreData != null) 
+            if (MidQueueDuration >= 500)
+                ProcessMidQueue();
+        }
+
+        protected override void AfterConsumption()
+        {
+
+            ProcessMidQueue();
+
+            if (NoMoreData != null)
                 NoMoreData();
 
             Log(LogLevel.MajorInfo, "Finished");
 
-			base.AfterConsumption();
+            base.AfterConsumption();
             _DoneProducing();
 
-		}
+        }
 
 
-		protected void ProcessMidQueue() {
-			if (MidQueue.Count==0)
-				return;
-			double LocalTime=UtteranceTime-MidQueueDuration;
-			
-			while (MidQueue.Count>0) {
-				Phone p=MidQueue.Dequeue();
-				MidQueueDuration-=p.Duration;
-				p.PitchCurve.Clear();
-				for (double t=0;t<p.Duration;t+=p.Duration/8) {
-					double f0=Fujisaki.F0((LocalTime+t)/1000);
-					p.PitchCurve.Add(new PitchPoint(t,f0));
-                    if (PitchPointComputed!=null)
+        protected void ProcessMidQueue()
+        {
+            if (MidQueue.Count == 0)
+                return;
+            double LocalTime = UtteranceTime - MidQueueDuration;
+
+            while (MidQueue.Count > 0)
+            {
+                Phone p = MidQueue.Dequeue();
+                MidQueueDuration -= p.Duration;
+                p.PitchCurve.Clear();
+                for (double t = 0; t < p.Duration; t += p.Duration / 8)
+                {
+                    double f0 = Fujisaki.F0((LocalTime + t) / 1000);
+                    p.PitchCurve.Add(new PitchPoint(t, f0));
+                    if (PitchPointComputed != null)
                         PitchPointComputed(LocalTime + t, f0);
-                    if (PhraseComponentComputed!=null)
+                    if (PhraseComponentComputed != null)
                         PhraseComponentComputed(LocalTime + t, Fujisaki.F0PComponent((LocalTime + t) / 1000));
-                    if (AccentComponentComputed!=null)
+                    if (AccentComponentComputed != null)
                         AccentComponentComputed(LocalTime + t, Fujisaki.F0AComponent((LocalTime + t) / 1000));
-				}
-				Emit(p);
-				LocalTime+=p.Duration;
-			}
-		}
-			
-		public override void Run(Producer<Phone> producer)
-		{
-			base.Run(producer,1);
-		}
-	}
+                }
+                Emit(p);
+                LocalTime += p.Duration;
+            }
+        }
+
+        public override void Run(Producer<Phone> producer)
+        {
+            base.Run(producer, 1);
+        }
+    }
 }

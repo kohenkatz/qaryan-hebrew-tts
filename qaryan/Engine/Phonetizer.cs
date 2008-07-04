@@ -117,9 +117,9 @@ namespace Qaryan.Core
             }
             else if (seg is Word)
             {
-                bool nextIsPunctuation=false;
+                /*bool nextIsPunctuation = false;
                 if (nextSeg is SeparatorSegment)
-                    nextIsPunctuation = HebrewChar.IsPunctuation(nextSeg[0].Latin[0]);
+                    nextIsPunctuation = HebrewChar.IsPunctuation(nextSeg[0].Latin[0]);*/
                         
                 Word w = (Word)seg;
 
@@ -134,14 +134,14 @@ namespace Qaryan.Core
                         beforeStress = false;
                     bool beforeNucleus = true;
 
-                    bool heavySyl = ((syl.Coda == SyllableCoda.Closed) ^ ((syl.Nucleus!=null) && syl.Nucleus.IsVowelIn(Vowels.Long)));
+                    //bool heavySyl = ((syl.Coda == SyllableCoda.Closed) ^ ((syl.Nucleus!=null) && syl.Nucleus.IsVowelIn(Vowels.Long)));
                     //					bool sylStart=true;
                     //foreach (SpeechElement e in	w.Phonemes.GetRange(syl.Start,syl.End-syl.Start+1)) {
                     for (int elemIndex = 0; elemIndex < syl.Phonemes.Count; elemIndex++)
                     {
                         SpeechElement e = syl.Phonemes[elemIndex];
                         Phone phone = null;
-                        bool sylEnd = (elemIndex == syl.Phonemes.Count - 1);
+//                        bool sylEnd = (elemIndex == syl.Phonemes.Count - 1);
                         if ((e is Consonant) && ((((Consonant)e).Flags & ConsonantFlags.StrongDagesh) != 0) && (e == HintStrongDagesh))
                         {
                             continue;
@@ -150,6 +150,8 @@ namespace Qaryan.Core
                         phone = Phone.Create(e);
                         if (phone == null)
                             continue;
+                        phone.Context.SylIndex = sylIndex;
+                        phone.Context.SylReverseIndex = w.Syllables.Count - sylIndex - 1;
                         phone.Context.IsNucleus = (syl.Nucleus == e);
                         phone.Context.IsAccented = stressed;
                         if (nextSeg is SeparatorSegment)
@@ -193,7 +195,7 @@ namespace Qaryan.Core
                                 phone.Duration += 30;
                         }
                         else if (e is Consonant)
-                            phone.Duration = (((Consonant)e).Sonority) * 2.6 + 60;
+                            phone.Duration = (((Consonant)e).Sonority) * 1.6 + 60;
                         else
                             phone.Duration = 100;
 
@@ -216,7 +218,7 @@ namespace Qaryan.Core
                             {
                                 if (beforeStress)
 
-                                    phone.Duration *= 0.7;
+                                    phone.Duration *= 0.85;
                                 else
                                     phone.Duration *= 0.9;
                             }
@@ -269,8 +271,7 @@ namespace Qaryan.Core
                                     len = 30;
                                     break;
                             }
-                            Phone phone;
-                            Emit(phone = new Phone("_", len));
+                            Emit(new Phone("_", len));
                         }
 
 

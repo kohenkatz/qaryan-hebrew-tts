@@ -44,7 +44,7 @@ namespace Qaryan.Synths.MBROLA
 			set { voice = value; }
 		}
 		
-		List<MBROLAElement> elements;
+//		List<MBROLAElement> elements;
 
 		protected override void BeforeConsumption()
 		{
@@ -100,7 +100,7 @@ namespace Qaryan.Synths.MBROLA
 		{
 			if (InQueue.Count==0)
 				return;
-			elements=new List<MBROLAElement>();
+//			elements=new List<MBROLAElement>();
 			MBROLAElement mbre;
 			Phone p=InQueue.Dequeue();
             _ItemConsumed(p);

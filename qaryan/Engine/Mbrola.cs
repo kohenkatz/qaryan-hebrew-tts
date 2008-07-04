@@ -204,7 +204,7 @@ namespace MBROLA
                     return binding.Value;
                 try
                 {
-                    int i = Mbrola.LastError_MBR();
+                    Mbrola.LastError_MBR();
                     return MbrolaBinding.Library;
                 }
                 catch

@@ -49,8 +49,8 @@ namespace Qaryan.Audio
             return result;
         }
 
-        [DllImport("user32.dll", SetLastError = false)]
-        static extern IntPtr GetDesktopWindow();
+//        [DllImport("user32.dll", SetLastError = false)]
+//        static extern IntPtr GetDesktopWindow();
 
         BufferDescription bufferDesc;
 

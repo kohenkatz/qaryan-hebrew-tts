@@ -77,6 +77,7 @@ namespace Qaryan.Core {
 		public bool IsAccented,IsNucleus;
 		public double AccentStrength;
         public string NextSeparator, NextPunctuation;
+        public int SylIndex, SylReverseIndex;
 	}
 	
 	public class Phone : ICloneable {

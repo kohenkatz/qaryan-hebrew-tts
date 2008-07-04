@@ -59,29 +59,5 @@ namespace Qaryan.Core.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        ///&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
-        ///  &lt;xsl:output method=&quot;html&quot; encoding=&quot;UTF-8&quot;
-        ///doctype-public=&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
-        ///doctype-system=&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot; /&gt;
-        ///  &lt;xsl:template match=&quot;/Log&quot;&gt;
-        ///    &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-        ///      &lt;head&gt;
-        ///        &lt;style&gt;
-        ///          body {
-        ///          font-family:Arial;
-        ///          font-size:14px;
-        ///          }
-        ///
-        ///
-        ///         [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string QaryanLog {
-            get {
-                return ResourceManager.GetString("QaryanLog", resourceCulture);
-            }
-        }
     }
 }

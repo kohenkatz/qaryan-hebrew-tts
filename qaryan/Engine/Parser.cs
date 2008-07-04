@@ -44,7 +44,7 @@ namespace Qaryan.Core
         bool isFirstWindow = true;
         bool isLastWindow = false;
         Vowel prevVowel = null;
-        Consonant prevConsonant = null;
+//        Consonant prevConsonant = null;
         SpeechElement prevElement = null;
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Qaryan.Core
             this.Emit(eElement);
             prevElement = eElement;
             prevVowel = prevElement as Vowel;
-            prevConsonant = prevElement as Consonant;
+//            prevConsonant = prevElement as Consonant;
         }
 
         protected override void BeforeConsumption()
@@ -83,7 +83,7 @@ namespace Qaryan.Core
             isFirstWindow = true;
             isLastWindow = false;
             prevVowel = null;
-            prevConsonant = null;
+//            prevConsonant = null;
             prevElement = null;
         }
 
@@ -127,7 +127,7 @@ namespace Qaryan.Core
                 {
                     LetterToken next = null;
                     LetterToken further = null;
-                    int nextIndex = -1, furtherIndex = -1;
+                    int nextIndex = -1 /*, furtherIndex = -1*/;
                     int j;
                     /*j=i-1;
                 while ((j>0)&&!(tokens[j] is LetterToken)) {
@@ -161,7 +161,7 @@ namespace Qaryan.Core
                     if (j < tokens.Length)
                     {
                         further = tokens[j] as LetterToken;
-                        furtherIndex = j;
+//                        furtherIndex = j;
                     }
                     bool curIsWordEnd = (isLastWindow && (i == tokens.Length - 1)) ||
                         (next == null);
