@@ -559,6 +559,9 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>634, 436</value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
   <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Inherit</value>
   </data>
