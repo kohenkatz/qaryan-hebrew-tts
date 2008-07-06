@@ -46,13 +46,21 @@ namespace Qaryan.Audio
     /// <summary>
     /// Represents an abstract audio device capable of playing <see cref="AudioBufferInfo">AudioBufferInfo</see> objects.
     /// </summary>
-    public abstract class AudioTarget: LookaheadConsumer<AudioBufferInfo>
+    public abstract class AudioTarget: LookaheadConsumer<AudioBufferInfo>, IPlatformSupported
     {
         public override string Name
         {
             get
             {
                 return "Audio";
+            }
+        }
+
+        public virtual bool PlatformSupported
+        {
+            get
+            {
+                return true;
             }
         }
 

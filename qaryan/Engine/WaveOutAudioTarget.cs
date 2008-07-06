@@ -1,4 +1,3 @@
-#if bogus
 //    This file is part of Qaryan.
 //
 //    Qaryan is free software: you can redistribute it and/or modify
@@ -20,28 +19,30 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using MotiZilberman;
+using WaveLib;
 
 namespace Qaryan.Audio
 {
     /// <summary>
     /// An <see cref="AudioTarget">AudioTarget</see> encapsulating a DirectSound output device.
     /// </summary>
-    public class DSoundAudioTarget : AudioTarget
+    public class WaveOutAudioTarget : AudioTarget
     {
         public override string Name
         {
             get
             {
-                return base.Name+" (DirectX)";
+                return base.Name + " (waveOut)";
             }
         }
 
         public override bool PlatformSupported
         {
-            get {
+            get
+            {
                 try
                 {
-                    new Microsoft.DirectX.DirectSound.DevicesCollection().Reset();
+                    WaveNative.waveOutGetNumDevs();
                     return true;
                 }
                 catch
@@ -50,49 +51,47 @@ namespace Qaryan.Audio
                 }
             }
         }
-        DSoundPlayer Player;
+        WaveOutPlayer Player;
 
         Queue<byte[]> Buffers;
         int bufPos = 0;
 
-        void PullAudio(byte[] buffer, int length)
+        void PullAudio(IntPtr buffer, int size)
         {
-            if ((!IsRunning)&&(Buffers.Count < 1))
+            if ((!IsRunning) && (Buffers.Count < 1))
             {
                 Log(LogLevel.Debug, "Not running and no buffers left");
-                Player.Stop();
+                Stop();
                 if (Eof)
                     _AudioFinished();
             }
             else
             {
-                int pos = 0;
                 if (Buffers.Count < 1)
                 {
-                    //Log(LogLevel.Warning, "Buffer underrun, {0} bytes requested",length);
+                    Log(LogLevel.Warning, "Buffer underrun, {0} bytes requested",size);
                     return;
                 }
                 else
                 {
                     int copied = 0;
-                    while ((copied < length) && (Buffers.Count > 0))
+                    while ((copied < size) && (Buffers.Count > 0))
                     {
                         byte[] buf = Buffers.Peek();
-                        int toCopy = length - copied;
+                        int toCopy = size - copied;
                         int availCopy = Math.Min(buf.Length - bufPos, toCopy);
-                        System.Buffer.BlockCopy(buf, bufPos, buffer, pos, availCopy);
-                        
+                        System.Runtime.InteropServices.Marshal.Copy(buf, bufPos, buffer, availCopy);
                         copied += availCopy;
                         bufPos += availCopy;
-                        pos += availCopy;
+                        buffer = (IntPtr)((int)buffer + availCopy);
                         if (bufPos >= buf.Length)
                         {
-                            //Log(LogLevel.Debug, "End of queued buffer ({0} bytes)", buf.Length);
+                            Log(LogLevel.Debug, "End of queued buffer ({0} bytes)", buf.Length);
                             Buffers.Dequeue();
                             bufPos = 0;
                         }
                     }
-                    //Log(LogLevel.Debug, "Copied {0} bytes into {1} byte device buffer", copied, length);
+                    Log(LogLevel.Debug, "Copied {0} bytes into {1} byte device buffer", copied, size);
                     /*if ((length>copied) && (!Eof) && (IsRunning))
                         Log(LogLevel.Warning, "Buffer underrun, {0} bytes short", length-copied);*/
                 }
@@ -104,8 +103,7 @@ namespace Qaryan.Audio
             Log(LogLevel.Info, "Open {0}ch, {1} bits/sample, {2} Hz PCM output", format.Channels, format.BitsPerSample, format.SamplesPerSecond);
             bufPos = 0;
             Buffers = new Queue<byte[]>();
-            Player = new DSoundPlayer(owner, PullAudio, format);
-            Player.Resume();
+            Player = new WaveOutPlayer(0, new WinWaveFormat(format),4096,2,PullAudio);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)
@@ -119,17 +117,24 @@ namespace Qaryan.Audio
 
         public override void Stop()
         {
-            if (Player != null)
-                Player.Dispose();
             Buffers.Clear();
             base.Stop();
+            try
+            {
+                if (Player != null)
+                    Player.Dispose();
+            }
+            finally
+            {
+                Player = null;
+            }
         }
 
         public override bool IsRunning
         {
             get
             {
-                return base.IsRunning || (Buffers.Count>0);
+                return base.IsRunning || (Buffers.Count > 0);
             }
         }
 
@@ -141,15 +146,10 @@ namespace Qaryan.Audio
         public override void Join()
         {
             base.Join();
-            if (Player!=null)
-                Player.Join();
         }
-        Control owner;
 
-        public DSoundAudioTarget(Control owner)
+        public WaveOutAudioTarget()
         {
-            this.owner = owner;
         }
     }
 }
-#endif

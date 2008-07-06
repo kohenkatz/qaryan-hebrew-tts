@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="AudioBufferInfo.cs" />
     <Compile Include="AudioTarget.cs" />
+    <Compile Include="IPlatformSupported.cs" />
     <Compile Include="MbrolaExtended.cs" />
     <Compile Include="MBROLASynthesizerBase.cs" />
     <Compile Include="NativeSynth.cs" />
@@ -113,6 +114,10 @@
     <Compile Include="WaveFileAudioTarget.cs" />
     <Compile Include="WaveFileReader.cs" />
     <Compile Include="WaveFileWriter.cs" />
+    <Compile Include="WaveNative.cs" />
+    <Compile Include="WaveOut.cs" />
+    <Compile Include="WaveOutAudioTarget.cs" />
+    <Compile Include="WaveStream.cs" />
     <Compile Include="WaveStreamWriter.cs" />
     <Content Include="StressHeuristics.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

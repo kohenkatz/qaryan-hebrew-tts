@@ -11,7 +11,7 @@ namespace Qaryan.Core
     /// </summary>
     public sealed class FileBindings
     {
-        static string enginePath = Environment.CurrentDirectory;
+        static string enginePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         /// <summary>
         /// The path where Qaryan's core files are found.

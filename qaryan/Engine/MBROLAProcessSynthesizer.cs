@@ -91,7 +91,9 @@ namespace Qaryan.Synths.MBROLA
             mbrola.StartInfo.FileName = MBROLAExecutable;
 
 
-            mbrola.StartInfo.Arguments = "-e \"" + Voice.FileName + "\" - -";
+            mbrola.StartInfo.Arguments =
+                string.Format("-e \"{0}\" -v {1} - -", Voice.FileName, Voice.VolumeRatio);
+            
             mbrola.StartInfo.RedirectStandardInput = true;
             mbrola.StartInfo.RedirectStandardOutput = true;
             //mbrola.StartInfo.RedirectStandardError = true;

@@ -21,38 +21,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_49C4EB6CB0EA4892F46FE7DF4821505E"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4E71187E9315202993BB0FC39620A3F1"
         "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5084744B5FAB707EAB9D140ACB5CEBA0"
-        "OwnerKey" = "8:_5C6F5C2944EF9E4809F420B27EAAD70A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5084744B5FAB707EAB9D140ACB5CEBA0"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5C6F5C2944EF9E4809F420B27EAAD70A"
-        "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5C6F5C2944EF9E4809F420B27EAAD70A"
-        "OwnerKey" = "8:_49C4EB6CB0EA4892F46FE7DF4821505E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,14 +39,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9C9685B576DB2D82E3B8D6F61C5771EA"
+        "MsmKey" = "8:_BC90B001DC548AA0D282DA4472EED389"
         "OwnerKey" = "8:_7C2DB21C058B4DADAA672686D86C189A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9C9685B576DB2D82E3B8D6F61C5771EA"
-        "OwnerKey" = "8:_49C4EB6CB0EA4892F46FE7DF4821505E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -100,25 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_49C4EB6CB0EA4892F46FE7DF4821505E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9C9685B576DB2D82E3B8D6F61C5771EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5C6F5C2944EF9E4809F420B27EAAD70A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5084744B5FAB707EAB9D140ACB5CEBA0"
+        "OwnerKey" = "8:_BC90B001DC548AA0D282DA4472EED389"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -226,37 +172,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_49C4EB6CB0EA4892F46FE7DF4821505E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_49C4EB6CB0EA4892F46FE7DF4821505E"
-                    {
-                    "Name" = "8:Qaryan.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Qaryan.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4E71187E9315202993BB0FC39620A3F1"
             {
             "AssemblyRegister" = "3:1"
@@ -271,68 +186,6 @@
                     }
                 }
             "SourcePath" = "8:ZedGraph.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5084744B5FAB707EAB9D140ACB5CEBA0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                "ScatterAssemblies"
-                {
-                    "_5084744B5FAB707EAB9D140ACB5CEBA0"
-                    {
-                    "Name" = "8:Microsoft.DirectX.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.DirectX.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5C6F5C2944EF9E4809F420B27EAAD70A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-                "ScatterAssemblies"
-                {
-                    "_5C6F5C2944EF9E4809F420B27EAAD70A"
-                    {
-                    "Name" = "8:Microsoft.DirectX.DirectSound.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.DirectX.DirectSound.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
@@ -366,24 +219,24 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9C9685B576DB2D82E3B8D6F61C5771EA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BC90B001DC548AA0D282DA4472EED389"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PortAudioSharp, Version=0.19.2.32573, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Qaryan, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_9C9685B576DB2D82E3B8D6F61C5771EA"
+                    "_BC90B001DC548AA0D282DA4472EED389"
                     {
-                    "Name" = "8:PortAudioSharp.dll"
+                    "Name" = "8:Qaryan.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:PortAudioSharp.dll"
+            "SourcePath" = "8:Qaryan.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"
@@ -417,7 +270,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
@@ -1227,7 +1080,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7C2DB21C058B4DADAA672686D86C189A"
             {
-            "SourcePath" = "8:..\\GUI\\obj\\Debug\\QaryanGUI.exe"
+            "SourcePath" = "8:..\\GUI\\obj\\Release\\QaryanGUI.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F67230EBE6240C486A8D6326751484A"

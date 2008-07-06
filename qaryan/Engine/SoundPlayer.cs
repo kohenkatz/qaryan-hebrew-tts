@@ -1,3 +1,4 @@
+#if bogus
 //    This file is part of Qaryan.
 //
 //    Qaryan is free software: you can redistribute it and/or modify
@@ -15,6 +16,7 @@
 //
 //    Original SoundPlayer class by Gary Linscott (Premandrake)
 //    <http://www.gamedev.net/community/forums/topic.asp?topic_id=322115>
+
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -26,7 +28,7 @@ namespace Qaryan.Audio
 {
     delegate void PullAudio(byte[] buffer, int length);
 
-    class SoundPlayer : IDisposable
+    class DSoundPlayer : IDisposable
     {
         private Device soundDevice;
         private SecondaryBuffer soundBuffer;
@@ -54,7 +56,7 @@ namespace Qaryan.Audio
 
         BufferDescription bufferDesc;
 
-        public SoundPlayer(Control owner, PullAudio pullAudio, Qaryan.Audio.WaveFormat format)
+        public DSoundPlayer(Control owner, PullAudio pullAudio, Qaryan.Audio.WaveFormat format)
         {
             this.pullAudio = pullAudio;
 
@@ -220,3 +222,4 @@ namespace Qaryan.Audio
         }
     }
 }
+#endif

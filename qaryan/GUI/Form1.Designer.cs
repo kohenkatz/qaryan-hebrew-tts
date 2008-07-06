@@ -118,12 +118,12 @@ namespace Qaryan.GUI
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new Qaryan.GUI.NikudTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new Qaryan.GUI.NikudTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -1050,20 +1050,6 @@ namespace Qaryan.GUI
             this.panel1.Font = null;
             this.panel1.Name = "panel1";
             // 
-            // textBox1
-            // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.AccessibleDescription = null;
-            this.textBox1.AccessibleName = null;
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.BackgroundImage = null;
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("UseNikudMethod", global::Qaryan.GUI.Settings.Default, "UseNikudMethod", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.HideSelection = false;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.UseNikudMethod = global::Qaryan.GUI.Settings.Default.UseNikudMethod;
-            this.textBox1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.textBox1_PreviewKeyDown);
-            this.textBox1.CtrlEnter += new System.EventHandler(this.textBox1_CtrlEnter);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "txt";
@@ -1100,6 +1086,20 @@ namespace Qaryan.GUI
             // 
             this.timer1.Interval = 10;
             // 
+            // textBox1
+            // 
+            this.textBox1.AcceptsReturn = true;
+            this.textBox1.AccessibleDescription = null;
+            this.textBox1.AccessibleName = null;
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.BackgroundImage = null;
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("UseNikudMethod", global::Qaryan.GUI.Settings.Default, "UseNikudMethod", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox1.HideSelection = false;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.UseNikudMethod = global::Qaryan.GUI.Settings.Default.UseNikudMethod;
+            this.textBox1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.textBox1_PreviewKeyDown);
+            this.textBox1.CtrlEnter += new System.EventHandler(this.textBox1_CtrlEnter);
+            // 
             // Form1
             // 
             this.AccessibleDescription = null;
@@ -1114,7 +1114,6 @@ namespace Qaryan.GUI
             this.Controls.Add(this.tabControl1);
             this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::Qaryan.GUI.Settings.Default, "Form1Pos", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Font = null;
-            this.Icon = null;
             this.Location = global::Qaryan.GUI.Settings.Default.Form1Pos;
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1Load);

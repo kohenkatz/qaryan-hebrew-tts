@@ -18,8 +18,6 @@ using Qaryan.Core;
 using Qaryan.Audio;
 using System.Reflection;
 using MotiZilberman;
-using System.Xml;
-using System.Xml.Xsl;
 using Qaryan.Synths.Native;
 
 namespace Qaryan.GUI
@@ -128,7 +126,9 @@ namespace Qaryan.GUI
         Segmenter segmenter = new Segmenter();
         Phonetizer phonetizer = new Phonetizer();
         MBROLATranslator translator = new MBROLATranslator();
-        Synthesizer<MBROLAElement> synth = new MBROLASynthesizer();
+        Synthesizer<MBROLAElement> synth =
+            PlatformFactory<MBROLASynthesizerBase>.Create(
+            typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
         AudioTarget target;
         FujisakiProcessor fujisaki;
 
@@ -339,7 +339,8 @@ namespace Qaryan.GUI
             translator.DoneProducing += OnDoneProducing;           
             if (MBROLA)
             {
-                synth = new MBROLASynthesizer();
+                synth = PlatformFactory<MBROLASynthesizerBase>.Create(
+            typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
 
             }
             else
@@ -411,8 +412,10 @@ namespace Qaryan.GUI
             if (textBox1.SelectionLength > 0)
                 text = textBox1.SelectedText;
 
-            target = new DSoundAudioTarget(this);
+            //target = new DSoundAudioTarget(this);
             //target = new PortAudioTarget(this);
+            target = new WaveOutAudioTarget();
+            target.LogLine += new LogLineHandler(target_LogLine);
             target.AudioFinished += OnDSoundAudioFinished;
 
             tokenizer.Run(text);
@@ -423,6 +426,11 @@ namespace Qaryan.GUI
             translator.Run(fujisaki);
             synth.Run(translator);
             target.Run(synth);
+        }
+
+        void target_LogLine(ILogSource sender, string message, LogLevel visibility)
+        {
+            Console.WriteLine("{0}: {1}", sender, message);
         }
 
         private void toolStripStatusLabel2_Click(object sender, EventArgs e)

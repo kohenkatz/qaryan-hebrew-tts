@@ -33,6 +33,14 @@ namespace Qaryan.Synths.MBROLA
     /// </summary>
     public class MBROLASynthesizer : MBROLASynthesizerBase
     {
+        public override bool PlatformSupported
+        {
+            get
+            {
+                return (Mbrola.Binding == MbrolaBinding.Library);
+            }
+        }
+
         public event StringEventHandler Error;
 
         StringBuilder pho;
