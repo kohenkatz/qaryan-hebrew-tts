@@ -10,6 +10,7 @@
     <RootNamespace>Qaryan.CLI</RootNamespace>
     <AssemblyName>QaryanCLI</AssemblyName>
     <StartupObject>Qaryan.CLI.Program</StartupObject>
+    <ApplicationIcon>Qaryan.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +47,15 @@
       <Project>{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}</Project>
       <Name>QaryanEngine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MBROLA.EXE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mbrola" />
+    <Content Include="Qaryan.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

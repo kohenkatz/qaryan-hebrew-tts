@@ -192,15 +192,6 @@ namespace Qaryan.CLI
                 voiceName = opts["mbrola-voice"].Value as string;
             tra.Voice.LoadFromXml(Path.Combine(FileBindings.VoicePath, voiceName + ".xml"));
 
-            Console.Error.WriteLine("{0}: Voice={1}", "Main", tra.Voice.DisplayName);
-
-            /* mbrola = new System.Diagnostics.Process();
-             mbrola.StartInfo.FileName = "C:\\downloads\\mbrola_cygwin.exe";
-             mbrola.StartInfo.Arguments = " ..\\..\\..\\Engine\\Voices\\hb2 - out3.wav";
-             mbrola.StartInfo.RedirectStandardInput = true;
-             mbrola.StartInfo.CreateNoWindow = true;
-             mbrola.StartInfo.UseShellExecute = false;
-             mbrola.Start();*/
             AudioTarget audio = null;
             if (opts["out"] != null)
             {
