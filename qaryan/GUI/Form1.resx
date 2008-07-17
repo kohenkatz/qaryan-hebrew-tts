@@ -142,9 +142,6 @@
   <data name="&gt;&gt;textBoxSynthesizer.Name" xml:space="preserve">
     <value>textBoxSynthesizer</value>
   </data>
-  <data name="toolStripStatusLabel8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
-  </data>
   <data name="&gt;&gt;toolStripStatusLabel3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -167,8 +164,9 @@
   <data name="&gt;&gt;tabPage4.Parent" xml:space="preserve">
     <value>tabControl1</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem3.Name" xml:space="preserve">
-    <value>toolStripMenuItem3</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStripSeparator4.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="menuStrip1.Text" xml:space="preserve">
     <value>menuStrip1</value>
@@ -220,10 +218,6 @@
   </data>
   <data name="toolStripStatusLabel8.Text" xml:space="preserve">
     <value>Audio Target</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="toolStripSeparator4.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="toolStripButton3.Text" xml:space="preserve">
     <value>תעתיק</value>
@@ -290,6 +284,9 @@
   </data>
   <data name="&gt;&gt;stopMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem3.Name" xml:space="preserve">
+    <value>toolStripMenuItem3</value>
   </data>
   <data name="textBoxSilpr.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -714,6 +711,9 @@
   <data name="textBoxSynthesizer.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
@@ -930,8 +930,8 @@
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 381</value>
   </data>
-  <data name="tabPage4.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="toolStripStatusLabel8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
   </data>
   <data name="tabPage8.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -944,9 +944,6 @@
   </data>
   <data name="tabPage5.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
   </data>
   <data name="milelMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 22</value>
@@ -1005,8 +1002,8 @@
   <data name="textBoxIPA.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="textBoxAnalyzer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>777, 364</value>
+  <data name="tabPage4.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="textBoxParser.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 14pt</value>
@@ -1157,6 +1154,9 @@
   <data name="textBoxSynthesizer.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;toolStripStatusLabel7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;saveWavDialog.Name" xml:space="preserve">
     <value>saveWavDialog</value>
   </data>
@@ -1218,17 +1218,14 @@
         owcOozlwZeto7ZXDuXvCfHV/+dGfqqrf44qgu28AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;tabPage8.Name" xml:space="preserve">
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;settingsMenuItem1.Name" xml:space="preserve">
     <value>settingsMenuItem1</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -1505,8 +1502,8 @@
   <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1680,6 +1677,9 @@
   </data>
   <data name="&gt;&gt;englishMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textBoxAnalyzer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>777, 364</value>
   </data>
   <data name="textBoxTokenizer.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>

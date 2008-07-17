@@ -127,7 +127,7 @@ namespace Qaryan.GUI
         Phonetizer phonetizer = new Phonetizer();
         MBROLATranslator translator = new MBROLATranslator();
         Synthesizer<MBROLAElement> synth =
-            PlatformFactory<MBROLASynthesizerBase>.Create(
+            PlatformInstantiator<MBROLASynthesizerBase>.Create(
             typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
         AudioTarget target;
         FujisakiProcessor fujisaki;
@@ -278,7 +278,7 @@ namespace Qaryan.GUI
             Close();
         }
 
-        private void éöéàäToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×™×¦×™××”ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -318,12 +318,7 @@ namespace Qaryan.GUI
 
         private void InitTTSObjects()
         {
-            InitTTSObjects(toolStripButton6.Checked);
-        }
-
-        private void InitTTSObjects(bool MBROLA)
-        {
-            toolStripStatusLabel1.BackColor = toolStripStatusLabel2.BackColor = toolStripStatusLabel3.BackColor = toolStripStatusLabel4.BackColor = toolStripStatusLabel5.BackColor = toolStripStatusLabel6.BackColor = toolStripStatusLabel7.BackColor = toolStripStatusLabel8.BackColor = Color.Green;
+            toolStripStatusLabel2.BackColor = toolStripStatusLabel3.BackColor = toolStripStatusLabel4.BackColor = toolStripStatusLabel5.BackColor = toolStripStatusLabel6.BackColor = toolStripStatusLabel7.BackColor = toolStripStatusLabel8.BackColor = Color.Green;
 
             tokenizer = new Tokenizer();
             tokenizer.DoneProducing += OnDoneProducing;
@@ -337,16 +332,10 @@ namespace Qaryan.GUI
             translator = new MBROLATranslator();
 
             translator.DoneProducing += OnDoneProducing;           
-            if (MBROLA)
-            {
-                synth = PlatformFactory<MBROLASynthesizerBase>.Create(
+
+                synth = PlatformInstantiator<MBROLASynthesizerBase>.Create(
             typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
 
-            }
-            else
-            {
-                synth = new NativeSynthesizer();
-            }
 
             synth.DoneProducing += OnDoneProducing;
             acmds = new PointPairList();
@@ -368,15 +357,7 @@ namespace Qaryan.GUI
             fujisaki.PitchPointComputed += OnPitchPoint;
             fujisaki.PhraseComponentComputed += OnPhraseComponent;
             fujisaki.NoMoreData += delegate { updateGraph(fujisakiForm.zedGraphControl1); };
-            if (MBROLA)
-                translator.Voice = (synth as MBROLASynthesizerBase).Voice = Voices[toolStripComboBox1.SelectedIndex];
-            else
-            {
-                translator.Voice = Voices[toolStripComboBox1.SelectedIndex];
-                NativeVoice nvoice = new NativeVoice();
-                nvoice.LoadFromXml(Path.Combine(FileBindings.EnginePath, "NativeVoices/" + translator.Voice.Name + "/db.xml"));
-                (synth as NativeSynthesizer).Voice = nvoice;
-            }
+            translator.Voice = (synth as MBROLASynthesizerBase).Voice = Voices[toolStripComboBox1.SelectedIndex];
 
             
             segmenter.RelaxAudibleSchwa = Settings.Default.RelaxAudibleSchwa;
@@ -405,7 +386,7 @@ namespace Qaryan.GUI
             translitForm.TranslitText = value;
         }
 
-        private void ãáøToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×“×‘×¨ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitTTSObjects();
             string text = textBox1.Text;
@@ -414,7 +395,8 @@ namespace Qaryan.GUI
 
             //target = new DSoundAudioTarget(this);
             //target = new PortAudioTarget(this);
-            target = new WaveOutAudioTarget();
+            //target = new WaveOutAudioTarget();
+            target=new LibaoAudioTarget();
             target.LogLine += new LogLineHandler(target_LogLine);
             target.AudioFinished += OnDSoundAudioFinished;
 
@@ -438,7 +420,7 @@ namespace Qaryan.GUI
 
         }
 
-        private void ãáøì÷åáõToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×“×‘×¨×œ×§×•×‘×¥ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveWavDialog.ShowDialog();
         }
@@ -472,18 +454,18 @@ namespace Qaryan.GUI
             target.Run(synth);
         }
 
-        private void ÷åìToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×§×•×œToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadVoices();
         }
 
-        private void äùú÷ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×”×©×ª×§ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (target != null)
                 target.Stop();
         }
 
-        private void âøóäğâğäToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×’×¨×£×”× ×’× ×”ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fujisakiForm.Show();
             fujisakiForm.Activate();
@@ -506,7 +488,7 @@ namespace Qaryan.GUI
             }
         }
 
-        private void úòúé÷ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×ª×¢×ª×™×§ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             translitForm.Show();
             translitForm.Activate();
@@ -518,7 +500,7 @@ namespace Qaryan.GUI
 
         private void textBox1_CtrlEnter(object sender, EventArgs e)
         {
-            ãáøToolStripMenuItem_Click(sender, e);
+            ×“×‘×¨ToolStripMenuItem_Click(sender, e);
         }
 
         private void mBROLAToolStripMenuItem_Click(object sender, EventArgs e)
@@ -541,7 +523,7 @@ namespace Qaryan.GUI
             setFileName(null);
         }
 
-        private void ùîéøäMenuItem_Click(object sender, EventArgs e)
+        private void ×©××™×¨×”MenuItem_Click(object sender, EventArgs e)
         {
             if (fileName == null)
                 toolStripMenuItem4.PerformClick();
@@ -573,7 +555,7 @@ namespace Qaryan.GUI
             openFileDialog1.ShowDialog();
         }
 
-        private void ôúéçä_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ×¤×ª×™×—×”_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             textBox1.Text = File.ReadAllText(openFileDialog1.FileName, System.Text.Encoding.UTF8);
             setFileName(openFileDialog1.FileName);
@@ -611,7 +593,7 @@ namespace Qaryan.GUI
             textBox1.Paste();
         }
 
-        private void àğâìéúToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×× ×’×œ×™×ªToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult res = DialogResult.No;
             if (textBox1.Modified)
@@ -625,7 +607,7 @@ namespace Qaryan.GUI
             Application.Restart();
         }
 
-        private void òáøéúToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×¢×‘×¨×™×ªToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult res = DialogResult.No;
             if (textBox1.Modified)
@@ -639,7 +621,7 @@ namespace Qaryan.GUI
             Application.Restart();
         }
 
-        private void ùôúîîù÷îùúîùToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×©×¤×ª×××©×§××©×ª××©ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
@@ -685,7 +667,7 @@ namespace Qaryan.GUI
             Settings.Default.Save();
         }
 
-        private void âåôïToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ×’×•×¤×ŸToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (fontDialog1.ShowDialog() == DialogResult.OK)
                 fontDialog1_Apply(fontDialog1, new EventArgs());
@@ -697,12 +679,12 @@ namespace Qaryan.GUI
                 Settings.Default.Form1Size = Size;
         }
 
-        private void àåãåúToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ××•×“×•×ªToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void ğé÷åãToolStripMenuItem_Click(object sender, EventArgs e)
+        private void × ×™×§×•×“ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             nikudHelp.Show();
         }

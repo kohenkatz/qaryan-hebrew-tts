@@ -156,7 +156,7 @@ namespace Qaryan.Audio
         {
             if (!(producer is AudioProvider))
             {
-                Log(LogLevel.Error, "Attempted run on non-AudioTarget ({0})", producer.GetType().FullName);
+                Log(LogLevel.Error, "Attempted run on non-AudioProvider ({0})", producer.GetType().FullName);
                 throw new ArgumentException("AudioTarget can only be run on an AudioProvider");
             }
             Provider = producer as AudioProvider;

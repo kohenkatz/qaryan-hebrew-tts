@@ -6,7 +6,7 @@ namespace Qaryan.Core
         bool PlatformSupported { get; }
     }
 
-    public sealed class PlatformFactory<T> where T : class, IPlatformSupported, new()
+    public sealed class PlatformInstantiator<T> where T : class, IPlatformSupported
     {
         public static T Create(params Type[] types)
         {

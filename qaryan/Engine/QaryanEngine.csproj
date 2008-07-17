@@ -6,6 +6,15 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <OutputPath>..\Dist\</OutputPath>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Qaryan</AssemblyName>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>Qaryan.Core</RootNamespace>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -28,19 +37,29 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Qaryan</AssemblyName>
+    <RootNamespace>Qaryan.Core</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
-    <Optimize>True</Optimize>
+    <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
-    <DebugSymbols>False</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Qaryan</AssemblyName>
+    <RootNamespace>Qaryan.Core</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <RegisterForComInterop>False</RegisterForComInterop>
@@ -51,11 +70,21 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\Dist\</OutputPath>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Qaryan</AssemblyName>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>Qaryan.Core</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="libao-sharp, Version=1.0.3120.23569, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectSound.dll</HintPath>
+      <HintPath>..\External\libao-sharp\libao-sharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -137,6 +166,7 @@
     <Content Include="Voices\la1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="LibaoAudioTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Voices\ar1.xml">
@@ -198,5 +228,7 @@
   <PropertyGroup>
     <PostBuildEvent>rem regedit /s "$(ProjectDir)voice_dirty.reg" &amp;&amp; "$(FrameworkDir)\regasm.exe" "$(TargetPath)" &amp;&amp; "$(FrameworkSDKDir)\bin\gacutil.exe" /i "$(TargetPath)"</PostBuildEvent>
     <PreBuildEvent>rem if exist  "$(TargetPath)". $(FrameworkDir)\regasm.exe /unregister "$(TargetPath)"</PreBuildEvent>
+    <ProjectGuid>{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}</ProjectGuid>
+    <RootNamespace>Qaryan.Core</RootNamespace>
   </PropertyGroup>
 </Project>

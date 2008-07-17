@@ -92,7 +92,7 @@ namespace Qaryan.Synths.MBROLA
 
 
             mbrola.StartInfo.Arguments =
-                string.Format("-e \"{0}\" -v {1} - -", Voice.FileName, Voice.VolumeRatio);
+                string.Format("-v {1} -e \"{0}\" - -", Voice.FileName, Voice.VolumeRatio);
             
             mbrola.StartInfo.RedirectStandardInput = true;
             mbrola.StartInfo.RedirectStandardOutput = true;
@@ -103,6 +103,7 @@ namespace Qaryan.Synths.MBROLA
 
             try
             {
+				Log("Starting MBROLA with arguments: {0}",mbrola.StartInfo.Arguments);
                 mbrola.Start();
 //                mbrola.BeginErrorReadLine();
             }
@@ -183,7 +184,7 @@ namespace Qaryan.Synths.MBROLA
             base.AfterConsumption();
 //            isDoneConsuming = true;
             Log("writing ^Z");
-            mbrola.StandardInput.BaseStream.WriteByte(26);  // ^Z
+            //mbrola.StandardInput.BaseStream.WriteByte(26);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(10);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(13);  // ^Z
             Log("Closing MBROLA stdin");

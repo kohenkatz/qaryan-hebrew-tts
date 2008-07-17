@@ -116,7 +116,6 @@ namespace Qaryan.GUI
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -848,8 +847,7 @@ namespace Qaryan.GUI
             this.toolStripButton5,
             this.toolStripSeparator3,
             this.toolStripLabel1,
-            this.toolStripComboBox1,
-            this.toolStripButton6});
+            this.toolStripComboBox1});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // newToolStripButton
@@ -1027,18 +1025,6 @@ namespace Qaryan.GUI
             resources.ApplyResources(this.toolStripComboBox1, "toolStripComboBox1");
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.AccessibleDescription = null;
-            this.toolStripButton6.AccessibleName = null;
-            resources.ApplyResources(this.toolStripButton6, "toolStripButton6");
-            this.toolStripButton6.BackgroundImage = null;
-            this.toolStripButton6.Checked = true;
-            this.toolStripButton6.CheckOnClick = true;
-            this.toolStripButton6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Name = "toolStripButton6";
             // 
             // panel1
             // 
@@ -1234,6 +1220,5 @@ namespace Qaryan.GUI
         private System.Windows.Forms.ToolStripMenuItem nikudMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
 	}
 }

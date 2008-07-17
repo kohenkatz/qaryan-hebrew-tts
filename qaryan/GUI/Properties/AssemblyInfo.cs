@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Qaryan Hebrew TTS")]
-[assembly: AssemblyCopyright("(c) 2007 Moti Zilberman")]
+[assembly: AssemblyCopyright("(c) 2007, 2008 Moti Zilberman")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
