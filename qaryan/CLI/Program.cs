@@ -192,6 +192,13 @@ namespace Qaryan.CLI
                 voiceName = opts["mbrola-voice"].Value as string;
             tra.Voice.LoadFromXml(Path.Combine(FileBindings.VoicePath, voiceName + ".xml"));
 
+            /* mbrola = new System.Diagnostics.Process();
+             mbrola.StartInfo.FileName = "C:\\downloads\\mbrola_cygwin.exe";
+             mbrola.StartInfo.Arguments = " ..\\..\\..\\Engine\\Voices\\hb2 - out3.wav";
+             mbrola.StartInfo.RedirectStandardInput = true;
+             mbrola.StartInfo.CreateNoWindow = true;
+             mbrola.StartInfo.UseShellExecute = false;
+             mbrola.Start();*/
             AudioTarget audio = null;
             if (opts["out"] != null)
             {
@@ -207,10 +214,18 @@ namespace Qaryan.CLI
                     (audio as WaveFileAudioTarget).Filename = opts["out"].Value as string;
                     (audio as WaveFileAudioTarget).WriteHeader = opts["raw"] == null;
                 }
+            }
+            else if (opts["pho"] == null)
+            {
+                audio = PlatformInstantiator<AudioTarget>.Create(typeof(LibaoAudioTarget), typeof(WaveOutAudioTarget));
+            }
+            if (audio != null)
+            {
                 mbr = new MBROLAProcessSynthesizer();
                 mbr.Voice = tra.Voice;
             }
-            if ((opts["pho"] != null) || (opts["out"] == null))
+            else
+            //            if ((opts["pho"] != null) || (opts["out"] == null))
             {
                 if ((opts["pho"] == null) ||
                     ((opts["pho"] != null) &&
@@ -269,7 +284,7 @@ namespace Qaryan.CLI
             //            Console.WriteLine("produced " + (int)e.Item);
         }
 
-        static void cons_ItemConsumed(ThreadedConsumer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
+        static void cons_ItemConsumed(Consumer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
         {
             Console.Write(e.Item);
         }
