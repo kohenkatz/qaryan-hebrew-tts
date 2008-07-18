@@ -20,6 +20,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>QaryanCLI</AssemblyName>
+    <RootNamespace>Qaryan.CLI</RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ApplicationIcon>Qaryan.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +34,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>QaryanCLI</AssemblyName>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>Qaryan.CLI</RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ApplicationIcon>Qaryan.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSharpOptParse, Version=1.0.1.0, Culture=neutral, PublicKeyToken=fc987de5fe9f6e83">
@@ -43,19 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\QaryanEngine.csproj">
-      <Project>{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}</Project>
-      <Name>QaryanEngine</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="MBROLA.EXE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="mbrola" />
-    <Content Include="Qaryan.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -65,4 +71,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\Engine\QaryanEngine.csproj">
+      <Project>{ACCB5F96-BC5D-4A71-BFE1-D7CFC8A08ABF}</Project>
+      <Name>QaryanEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
