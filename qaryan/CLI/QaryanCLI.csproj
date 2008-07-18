@@ -10,7 +10,8 @@
     <RootNamespace>Qaryan.CLI</RootNamespace>
     <AssemblyName>QaryanCLI</AssemblyName>
     <StartupObject>Qaryan.CLI.Program</StartupObject>
-    <ApplicationIcon>Qaryan.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
