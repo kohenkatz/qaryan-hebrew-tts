@@ -42,7 +42,7 @@ namespace Qaryan.Synths.MBROLA
                 TextUpdated(this, MbrolaText);
         }
 
-        void listenTo_ItemConsumed(ThreadedConsumer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
+        void listenTo_ItemConsumed(Consumer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
         {
             mbrolaText.Append(e.Item);
             if (TextUpdated != null)

@@ -49,7 +49,7 @@ namespace MotiZilberman
     }
 
     public delegate void ProduceEventHandler<T>(Producer<T> sender, ItemEventArgs<T> e);
-    public delegate void ConsumeEventHandler<T>(ThreadedConsumer<T> sender, ItemEventArgs<T> e);
+    public delegate void ConsumeEventHandler<T>(Consumer<T> sender, ItemEventArgs<T> e);
 
     /// <summary>
     /// Exposes a generic subprocess capable of producing objects of arbitrary type <typeparamref name="T"/>.
@@ -90,12 +90,20 @@ namespace MotiZilberman
         event EventHandler DoneProducing;
     }
 
+    public interface Consumer<T>
+    {
+        void Run(Producer<T> producer);
+        void Join();
+        event ConsumeEventHandler<T> ItemConsumed;
+        event EventHandler DoneConsuming;
+    }
+
     /// <summary>
     /// Exposes a generic subprocess capable of consuming objects of arbitrary type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of objects to be consumed.</typeparam>
     /// <seealso cref="Producer{T}"/>
-    public abstract class ThreadedConsumer<T>
+    public abstract class ThreadedConsumer<T>: Consumer<T>
     {
         protected delegate bool Condition();
 
@@ -276,6 +284,10 @@ namespace MotiZilberman
         }
     }
 
+    public interface IConsumerProducer<T1, T2> : Consumer<T1>, Producer<T2>
+    {
+    }
+
     /// <summary>
     /// Encapsulates a dual producer/consumer process, operating on consumed <typeparam name="T1"/>s to produce a stream of <typeparam name="T2"/>s.
     /// <para>This class implements common logging facilities for its subclasses.</para>
@@ -283,7 +295,7 @@ namespace MotiZilberman
     /// <typeparam name="T">The type of objects to be consumed.</typeparam>
     /// <seealso cref="ThreadedConsumer{T}"/>
     /// <seealso cref="Producer{T}"/>
-    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, Producer<T2>, ILogSource
+    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, IConsumerProducer<T1,T2>, ILogSource
     {
         Queue<T2> producedQueue;
         bool isRunning;
@@ -436,4 +448,79 @@ namespace MotiZilberman
     /// Provides a blank, parameterless delegate type for simple notifications.
     /// </summary>
     public delegate void SimpleNotify();
+
+    public abstract class Chain<Tin, Tout> : IConsumerProducer<Tin, Tout>
+    {
+        protected Consumer<Tin> ChainFirst;
+        protected Producer<Tout> ChainLast;
+
+        protected abstract void CreateChain(out Consumer<Tin> First, out Producer<Tout> Last);
+
+        protected Chain()
+        {
+            CreateChain(out ChainFirst, out ChainLast);
+            ChainFirst.ItemConsumed += new ConsumeEventHandler<Tin>(First_ItemConsumed);
+            ChainFirst.DoneConsuming += new EventHandler(First_DoneConsuming);
+            ChainLast.ItemProduced += new ProduceEventHandler<Tout>(Last_ItemProduced);
+            ChainLast.DoneProducing += new EventHandler(Last_DoneProducing);
+        }
+
+        void Last_DoneProducing(object sender, EventArgs e)
+        {
+            if (DoneProducing != null)
+                DoneProducing(this, e);
+        }
+
+        void Last_ItemProduced(Producer<Tout> sender, ItemEventArgs<Tout> e)
+        {
+            if (ItemProduced != null)
+                ItemProduced(this, e);
+        }
+
+        void First_DoneConsuming(object sender, EventArgs e)
+        {
+            if (DoneConsuming != null)
+                DoneConsuming(this, e);
+        }
+
+        void First_ItemConsumed(Consumer<Tin> sender, ItemEventArgs<Tin> e)
+        {
+            if (ItemConsumed != null)
+                ItemConsumed(this, e);
+        }
+
+        #region Consumer<Tin> Members
+
+        public abstract void Run(Producer<Tin> producer);
+
+        public void Join()
+        {
+            while (ChainLast.IsRunning)
+                System.Threading.Thread.Sleep(0);
+        }
+
+        public event ConsumeEventHandler<Tin> ItemConsumed;
+
+        public event EventHandler DoneConsuming;
+
+        #endregion
+
+        #region Producer<Tout> Members
+
+        public bool IsRunning
+        {
+            get { return ChainLast.IsRunning; }
+        }
+
+        public Queue<Tout> OutQueue
+        {
+            get { return ChainLast.OutQueue; }
+        }
+
+        public event ProduceEventHandler<Tout> ItemProduced;
+
+        public event EventHandler DoneProducing;
+
+        #endregion
+    }
 }

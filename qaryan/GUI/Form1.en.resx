@@ -245,19 +245,19 @@
     <value>Settings</value>
   </data>
   <data name="graphMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="graphMenuItem.Text" xml:space="preserve">
     <value>Fujisaki Graph</value>
   </data>
   <data name="translitMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="translitMenuItem.Text" xml:space="preserve">
     <value>Transliteration</value>
   </data>
   <data name="mbrolaMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="englishMenuItem.Text" xml:space="preserve">
     <value>English</value>
@@ -266,7 +266,7 @@
     <value>Hebrew</value>
   </data>
   <data name="langMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="langMenuItem.Text" xml:space="preserve">
     <value>UI Language</value>
@@ -278,7 +278,7 @@
     <value>View</value>
   </data>
   <data name="nikudMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>112, 22</value>
   </data>
   <data name="nikudMenuItem.Text" xml:space="preserve">
     <value>Nikud...</value>
@@ -694,9 +694,6 @@
         /wAAAAAD////AAAAAAP///8AAAAAA////wAAAAAD////AAAAAAP///8AAAAAA////wAAAAAD////AAAA
         AAP///+AAAAAB/////////////////////8=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
   </data>
   <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Inherit</value>

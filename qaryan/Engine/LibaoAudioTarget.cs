@@ -70,7 +70,8 @@ namespace Qaryan.Audio
 
 		public override void Join ()
 		{
-			
+            while (IsRunning)
+                System.Threading.Thread.Sleep(0);
 		}
 
         public override void Stop()
