@@ -26,7 +26,7 @@ namespace Qaryan.Core
     /// A specialized audio provider capable of synthesizing speech from objects of type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of objects to consume.</typeparam>
-    public abstract class Synthesizer<T> : LookaheadConsumerProducer<T,AudioBufferInfo>,AudioProvider,IPlatformSupported
+    public abstract class Synthesizer<T> : LookaheadConsumerProducer<T,AudioBufferInfo>,AudioProvider,IPlatformSupported,IHasVoice
     {
         WaveFormat fmt=new WaveFormat();
         public virtual WaveFormat AudioFormat
@@ -34,10 +34,6 @@ namespace Qaryan.Core
             get
             {
                 return fmt;
-            }
-            set
-            {
-                fmt = value;
             }
         }
 
@@ -61,6 +57,22 @@ namespace Qaryan.Core
         public virtual bool PlatformSupported
         {
             get { return true; }
+        }
+
+        #endregion
+        Voice _Voice;
+        #region IHasVoice Members
+
+        public virtual Voice Voice
+        {
+            get
+            {
+                return _Voice;
+            }
+            set
+            {
+                _Voice = value;
+            }
         }
 
         #endregion

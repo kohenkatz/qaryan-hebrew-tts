@@ -58,23 +58,19 @@ namespace Qaryan.Synths.MBROLA
             pho = new StringBuilder();
             IsDoneConsuming = false;
 //            Mbrola.Init("C:\\Documents and Settings\\Moti Z\\My Documents\\SharpDevelop Projects\\Qaryan.Core refactor\\Voices\\" + Voice.Name);
-            MbrPlay.SetDatabase(Voice.Name);
-            MbrPlay.SetVolumeRatio(Voice.VolumeRatio);
+            MbrPlay.SetDatabase((Voice.BackendVoice as MbrolaVoiceNew).Database);
+            MbrPlay.SetVolumeRatio((Voice.BackendVoice as MbrolaVoiceNew).VolumeRatio);
             myMbrThread = new MbrThread();
             myMbrThread.Error += delegate(object sender, string error)
             {
-                Error(this, error);
+                if (Error!=null)
+                    Error(this, error);
             };
             myMbrThread.Start(this);
         }
 
         protected override void AfterConsumption()
         {
-
-
-        
-
-
             myMbrThread.AddFragment(pho.ToString());
             myMbrThread.AddFragment("EOF");
 
@@ -178,7 +174,9 @@ namespace Qaryan.Synths.MBROLA
                             while (!Finished)
                                 Thread.Sleep(0);
                             Eof = true;
+                            Synth.Log("InvokeAudioFinished");
                             Synth.InvokeAudioFinished();
+                            t.Abort();
                             return;
                         }
                         else
@@ -201,8 +199,12 @@ namespace Qaryan.Synths.MBROLA
 
             public void Join()
             {
-                if (t != null)
-                    t.Join();
+                try
+                {
+                    if (t != null)
+                        t.Join();
+                }
+                catch { }
             }
 
             public void Stop()

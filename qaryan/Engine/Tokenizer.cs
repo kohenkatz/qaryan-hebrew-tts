@@ -354,6 +354,8 @@ namespace Qaryan.Core
 
         protected override void Consume(Queue<char> InQueue)
         {
+            if (InQueue.Count == 0)
+                return;
             char c = InQueue.Dequeue();
             _ItemConsumed(c);
             //			Console.WriteLine("Tokenizing input...");

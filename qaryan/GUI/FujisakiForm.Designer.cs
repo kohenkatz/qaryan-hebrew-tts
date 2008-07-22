@@ -57,17 +57,15 @@ namespace Qaryan.GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = null;
             this.Controls.Add(this.zedGraphControl1);
-            this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::Qaryan.GUI.Settings.Default, "FujisakiFormPos", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Font = null;
             this.Icon = null;
-            this.Location = global::Qaryan.GUI.Settings.Default.FujisakiFormPos;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FujisakiForm";
             this.ShowIcon = false;
-            this.Resize += new System.EventHandler(this.FujisakiForm_Resize);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FujisakiForm_FormClosing);
             this.Load += new System.EventHandler(this.FujisakiForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FujisakiForm_FormClosing);
+            this.Resize += new System.EventHandler(this.FujisakiForm_Resize);
             this.ResumeLayout(false);
 
         }

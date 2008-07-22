@@ -29,7 +29,7 @@ namespace Qaryan.GUI
         private void FujisakiForm_Resize(object sender, EventArgs e)
         {
             if (WindowState != FormWindowState.Maximized)
-                Size = Settings.Default.FujisakiFormSize;
+                Settings.Default.FujisakiFormSize= Size;
         }
     }
 }

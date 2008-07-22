@@ -25,23 +25,10 @@ namespace Qaryan.Synths.MBROLA
         }
         Process mbrola;
 
-        public override MBROLAVoice Voice
-        {
-            get
-            {
-                return base.Voice;
-            }
-            set
-            {
-                base.Voice = value;
-                Voice.MBROLAVoicePath = MBROLAVoicePath;
-            }
-        }
-
 //        bool isDoneConsuming = false;
         bool isDoneSynth = false;
 
-        string _MBROLAExecutable = "mbrola";
+        string _MBROLAExecutable = System.Environment.GetEnvironmentVariable("MBROLA") ?? "mbrola";
 
         public string MBROLAExecutable
         {
@@ -55,31 +42,15 @@ namespace Qaryan.Synths.MBROLA
             }
         }
 
-        string _MBROLAVoicePath = FileBindings.VoicePath;
-
-        public string MBROLAVoicePath
-        {
-            get
-            {
-                return _MBROLAVoicePath;
-            }
-            set
-            {
-                _MBROLAVoicePath = value;
-                if (Voice != null)
-                    Voice.MBROLAVoicePath = MBROLAVoicePath;
-            }
-        }
-      
         Thread t;
 
         protected override void BeforeConsumption()
         {
-            if (!File.Exists(Voice.FileName))
+            if (!File.Exists((Voice.BackendVoice as MbrolaVoiceNew).DatabaseFile))
             {
-                Log(LogLevel.Error, "The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set correctly.", Voice.Name);
+                Log(LogLevel.Error, "The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set correctly.", (Voice.BackendVoice as MbrolaVoiceNew).Database);
                 //                Thread.CurrentThread.Abort();
-                throw new FileNotFoundException(String.Format("The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set to a correct value.", Voice.Name), Voice.FileName);
+                throw new FileNotFoundException(String.Format("The MBROLA voice '{0}' could not be found. Make sure that MBROLA_DATABASE_DIR is set to a correct value.", (Voice.BackendVoice as MbrolaVoiceNew).Database), (Voice.BackendVoice as MbrolaVoiceNew).DatabaseFile);
             }
             Log(LogLevel.MajorInfo, "Started");
 
@@ -90,9 +61,8 @@ namespace Qaryan.Synths.MBROLA
             mbrola.EnableRaisingEvents = true;
             mbrola.StartInfo.FileName = MBROLAExecutable;
 
-
             mbrola.StartInfo.Arguments =
-                string.Format("-v {1} -e \"{0}\" - -", Voice.FileName, Voice.VolumeRatio);
+                string.Format("-v {1} -e \"{0}\" - -", (Voice.BackendVoice as MbrolaVoiceNew).DatabaseFile, (Voice.BackendVoice as MbrolaVoiceNew).VolumeRatio);
             
             mbrola.StartInfo.RedirectStandardInput = true;
             mbrola.StartInfo.RedirectStandardOutput = true;
@@ -149,11 +119,13 @@ namespace Qaryan.Synths.MBROLA
                         Log("reading timed out");
                         break;
                     }
-                    byte[] abuf = new byte[l];
-                    Buffer.BlockCopy(buf, ofs, abuf, 0, l);
-                    Log("Read {0} into buffer of {1}", l, buf.Length);
-                    if (abuf.Length > 0)
+                    if (l > 0)
+                    {
+                        byte[] abuf = new byte[l];
+                        Buffer.BlockCopy(buf, ofs, abuf, 0, l);
+                        Log("Read {0} into buffer of {1}", l, buf.Length);
                         BufferReady(abuf);
+                    }
                     else if (mbrola.HasExited)
                         break;
 
@@ -163,10 +135,15 @@ namespace Qaryan.Synths.MBROLA
                 }
                 if (!mbrola.HasExited)
                     mbrola.StandardOutput.ReadToEnd();
-                InvokeAudioFinished();
                 isDoneSynth = true;
                 if (mbrola.HasExited)
-                    Log("MBROLA has terminated");
+                    Log(LogLevel.MajorInfo, "MBROLA has terminated");
+                else
+                {
+                    mbrola.Kill();
+                    Log(LogLevel.MajorInfo, "MBROLA was terminated");
+                }
+                InvokeAudioFinished();
             }
             );
             t.Start();
@@ -183,12 +160,13 @@ namespace Qaryan.Synths.MBROLA
             Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();
 //            isDoneConsuming = true;
-            Log("writing ^Z");
-            //mbrola.StandardInput.BaseStream.WriteByte(26);  // ^Z
+//            Log("writing ^Z");
+            mbrola.StandardInput.BaseStream.WriteByte(26);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(10);  // ^Z
             mbrola.StandardInput.BaseStream.WriteByte(13);  // ^Z
             Log("Closing MBROLA stdin");
-            mbrola.StandardInput.Close();
+            //mbrola.StandardInput.Close();
+            mbrola.StandardInput.BaseStream.Close();
             //mbrola.WaitForExit();
 
         }

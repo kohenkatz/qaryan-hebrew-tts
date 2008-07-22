@@ -101,8 +101,14 @@ namespace Qaryan.Audio
 
         public void Flush()
         {
-            _binaryWriter.Flush();
-            _stream.Flush();
+            try
+            {
+                _binaryWriter.Flush();
+                _stream.Flush();
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
 	}
 }

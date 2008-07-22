@@ -162,7 +162,7 @@ namespace WaveLib
 					m_Finished = true;
 					if (m_WaveOut != IntPtr.Zero)
 						WaveNative.waveOutReset(m_WaveOut);
-					m_Thread.Join();
+                    m_Thread.Abort();
 					m_FillProc = null;
 					FreeBuffers();
 					if (m_WaveOut != IntPtr.Zero)

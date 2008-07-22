@@ -106,7 +106,14 @@ namespace Qaryan.Synths.Native
             set
             {
                 _Voice = value;
-                this.AudioFormat = _Voice.AudioFormat;
+            }
+        }
+
+        public override WaveFormat AudioFormat
+        {
+            get
+            {
+                return _Voice.AudioFormat;
             }
         }
 

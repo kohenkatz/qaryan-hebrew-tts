@@ -31,7 +31,7 @@ namespace Qaryan.SAPI
             Voice.LoadFromXml(voicePath);
 
             Synth = new MBROLASynthesizer();
-            Synth.Voice = Voice;
+            Synth.VoiceOld = Voice;
         }
 
         public override IntPtr GetOutputFormat(SpeakOutputFormat format, IntPtr targetWaveFormat)

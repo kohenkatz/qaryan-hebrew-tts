@@ -47,6 +47,9 @@
 	<Pattern Result="None" Anchor="End">
 		<Syllable Nucleus="KamatzIndeterminate" Start="lĕḳ" End="l" />
 	</Pattern>
+  <Pattern Result="None" Anchor="End">
+    <Syllable Nucleus="Segol" Start="š" End="l" />
+  </Pattern>
 	<Pattern Result="Milra">
 		<Syllable Nucleus="Any" Coda="Open" />
 		<Syllable Nucleus="Any" Coda="Closed" Onset="Compound" />

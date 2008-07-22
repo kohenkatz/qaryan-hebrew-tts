@@ -103,7 +103,7 @@ namespace MotiZilberman
     /// </summary>
     /// <typeparam name="T">The type of objects to be consumed.</typeparam>
     /// <seealso cref="Producer{T}"/>
-    public abstract class ThreadedConsumer<T>: Consumer<T>
+    public abstract class ThreadedConsumer<T> : Consumer<T>
     {
         protected delegate bool Condition();
 
@@ -154,26 +154,29 @@ namespace MotiZilberman
         /// <seealso cref="Consume"/>
         protected void Run(Producer<T> producer, Condition WaitCondition, Condition EndCondition/*, ConsumeDelegate<T> Consume*/)
         {
-            BeforeConsumption();
-            thread = new Thread(delegate()
+            lock (this)
             {
-                while (Thread.CurrentThread.IsAlive && (producer.IsRunning || !EndCondition()))
+                BeforeConsumption();
+
+                thread = new Thread(delegate()
                 {
+                    while (Thread.CurrentThread.IsAlive && (producer.IsRunning || !EndCondition()))
+                    {
 
-                    while ((producer.IsRunning) && WaitCondition())
-                        Thread.Sleep(0);
-                    if (Thread.CurrentThread.IsAlive)
-//                        lock (producer.OutQueue)
-                        {
-                            Consume(producer.OutQueue);
-                        }
-                }
-                AfterConsumption();
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Name = this.GetType().Name;
-            thread.Start();
-
+                        while ((producer.IsRunning) && WaitCondition())
+                            Thread.Sleep(0);
+                        if (Thread.CurrentThread.IsAlive)
+                            lock (producer.OutQueue)
+                            {
+                                Consume(producer.OutQueue);
+                            }
+                    }
+                    AfterConsumption();
+                });
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Name = this.GetType().Name;
+                thread.Start();
+            }
         }
 
         /// <summary>
@@ -295,7 +298,7 @@ namespace MotiZilberman
     /// <typeparam name="T">The type of objects to be consumed.</typeparam>
     /// <seealso cref="ThreadedConsumer{T}"/>
     /// <seealso cref="Producer{T}"/>
-    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, IConsumerProducer<T1,T2>, ILogSource
+    public abstract class ConsumerProducer<T1, T2> : ThreadedConsumer<T1>, IConsumerProducer<T1, T2>, ILogSource
     {
         Queue<T2> producedQueue;
         bool isRunning;
@@ -350,10 +353,10 @@ namespace MotiZilberman
         {
             if (ItemProduced != null)
                 ItemProduced(this, new ItemEventArgs<T2>(item));
-//            lock (OutQueue)
-            //{
+            lock (OutQueue)
+            {
                 OutQueue.Enqueue(item);
-            //}
+            }
         }
 
         protected override void Consume(Queue<T1> InQueue)

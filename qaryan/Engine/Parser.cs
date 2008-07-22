@@ -44,7 +44,7 @@ namespace Qaryan.Core
         bool isFirstWindow = true;
         bool isLastWindow = false;
         Vowel prevVowel = null;
-//        Consonant prevConsonant = null;
+        //        Consonant prevConsonant = null;
         SpeechElement prevElement = null;
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Qaryan.Core
             this.Emit(eElement);
             prevElement = eElement;
             prevVowel = prevElement as Vowel;
-//            prevConsonant = prevElement as Consonant;
+            //            prevConsonant = prevElement as Consonant;
         }
 
         protected override void BeforeConsumption()
@@ -83,21 +83,24 @@ namespace Qaryan.Core
             isFirstWindow = true;
             isLastWindow = false;
             prevVowel = null;
-//            prevConsonant = null;
+            //            prevConsonant = null;
             prevElement = null;
         }
 
         protected override void Consume(Queue<Token> InQueue)
         {
-            Token[] tokens = InQueue.ToArray();
-            //List<Token> tokens=new List<Token>(InQueue);
-            int tokensToConsume = tokens.Length;
+            Token[] tokens;
+
+            lock (InQueue)
+            {
+                tokens = InQueue.ToArray();
+                InQueue.Dequeue();
+            }
+            int tokensToConsume = 1;
             if (tokensToConsume > windowSize)
                 tokensToConsume -= windowSize;
             else
-                isLastWindow = true;
-            for (int z = 0; z < tokensToConsume; z++)
-                InQueue.Dequeue();
+                isLastWindow = !this.IsRunning;
             for (int i = 0; i < tokensToConsume; )
             {
                 newElement = null;
@@ -161,7 +164,7 @@ namespace Qaryan.Core
                     if (j < tokens.Length)
                     {
                         further = tokens[j] as LetterToken;
-//                        furtherIndex = j;
+                        //                        furtherIndex = j;
                     }
                     bool curIsWordEnd = (isLastWindow && (i == tokens.Length - 1)) ||
                         (next == null);
@@ -307,19 +310,6 @@ namespace Qaryan.Core
                             wordOrigin = lastTag.Tag & TagTypes.Origin;
                         }
 
-                        /*if ((i-1>=0)&&(tokens[i-1] is LetterToken))
-                            prev=(LetterToken)tokens[i-1];
-                        if ((i+1<tokensToConsume)&&(tokens[i+1] is LetterToken))
-                            next=(LetterToken)tokens[i+1];*/
-
-                        /*if ((parsed.Count>0) && (parsed[parsed.Count-1] is Vowel))
-                            prevVowel=(Vowel)(parsed[parsed.Count-1]);
-                        else if ((parsed.Count>0) && (parsed[parsed.Count-1] is Consonant))
-                            prevConsonant=(Consonant)(parsed[parsed.Count-1]);*/
-                        /*if (prev!=null) {
-                            prevVowel=parsed[parsed.Count-(i-prevIndex)] as Vowel;
-                            prevConsonant=parsed[parsed.Count-(i-prevIndex)] as Consonant;
-                        }*/
                         Consonant curConsonant = (Consonant)newElement;
                         if (l.HasDagesh)
                         {
@@ -523,6 +513,7 @@ namespace Qaryan.Core
                             newElement = null;
                             if (nextIsUnvoicedEhevi)
                             {
+                                Log("UNVOICED EHEVI FOR CRYING OUT LOUD>>>>>>>>>>>>>");
                                 for (int k = i; k < nextIndex; k++)
                                 {
 
@@ -531,14 +522,14 @@ namespace Qaryan.Core
                                     {
                                         newElement = new Cantillation((tk as CantillationToken).Value[0]);
                                         AddElement(newElement);
-                                        //								                                       		Log.Parser.WriteLine("Added element "+newElement.Latin+" ("+newElement.GetType().Name+") while skipping unvoiced ehevi");
+                                        Log("Added element " + newElement.Latin + " (" + newElement.GetType().Name + ") while skipping unvoiced ehevi");
                                         newElement = null;
                                     }
 
                                 }
-
-                                for (int z = 0; z < nextIndex + 1 - tokensToConsume; z++)
-                                    _ItemConsumed(InQueue.Dequeue());
+                                lock (InQueue)
+                                    for (int z = 0; z < nextIndex + 1 - tokensToConsume; z++)
+                                        _ItemConsumed(InQueue.Dequeue());
                                 i = nextIndex + 1;
                             }
                         }

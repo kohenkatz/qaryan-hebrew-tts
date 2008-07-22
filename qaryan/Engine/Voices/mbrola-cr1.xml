@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Voice xmlns="http://hebtts.sourceforge.net/qaryanvoice">
+<VoiceInfo>
+<DisplayName>Croatian 1</DisplayName>
+<Backend>MBROLA</Backend>
+</VoiceInfo>
+<BackendData For="MBROLA">
+<MbrolaInfo>
+<Database>cr1</Database>
+<SpeedRatio>1.0</SpeedRatio>
+</MbrolaInfo>
+<PhoneMap>
+<Phone Internal="_">_</Phone>
+<Phone Internal="’">?</Phone>
+<Phone Internal="b">b</Phone>
+<Phone Internal="v">v</Phone>
+<Phone Internal="g">g</Phone>
+<Phone Internal="ğ">dZ</Phone>
+<Phone Internal="d">d</Phone>
+<Phone Internal="h">x</Phone>
+<Phone Internal="w">v</Phone>
+<Phone Internal="W">u</Phone>
+<Phone Internal="z">s</Phone>
+<Phone Internal="ž">Z</Phone>
+<Phone Internal="ḥ">x</Phone>
+<Phone Internal="ṭ">t</Phone>
+<Phone Internal="y">j</Phone>
+<Phone Internal="ḳ">x</Phone>
+<Phone Internal="k">k</Phone>
+<Phone Internal="l">l</Phone>
+<Phone Internal="m">m</Phone>
+<Phone Internal="n">n</Phone>
+<Phone Internal="s">s</Phone>
+<Phone Internal="‘">?</Phone>
+<Phone Internal="p">p</Phone>
+<Phone Internal="f">f</Phone>
+<Phone Internal="č">tS</Phone>
+<Phone Internal="ẕ">ts</Phone>
+<Phone Internal="q">k</Phone>
+<Phone Internal="r">r</Phone>
+<Phone Internal="ś">s</Phone>
+<Phone Internal="š">S</Phone>
+<Phone Internal="t">t</Phone>
+<Phone Internal="a">a</Phone>
+<Phone Internal="e">e</Phone>
+<Phone Internal="i">i</Phone>
+<Phone Internal="o">o</Phone>
+<Phone Internal="u">u</Phone>
+<Phone Internal="ă">a</Phone>
+<Phone Internal="ĕ">e</Phone>
+<Phone Internal="ŏ">o</Phone>
+<Phone Internal="é">e</Phone>
+</PhoneMap>
+<RuleMap>
+<DiphoneRule Symbol1="_" Symbol2="?" Action="Merge" Op="Value">_</DiphoneRule>
+<DiphoneRule Symbol1="v" Symbol2="v" Action="Merge" Op="Value">v</DiphoneRule>
+<DiphoneRule Symbol1="a" Symbol2="a" Action="Merge" Op="Value">a</DiphoneRule>
+<DiphoneRule Symbol1="?" Symbol2="ALL" Action="Delete" Op="Symbol1"></DiphoneRule>
+<DiphoneRule Symbol1="e" Symbol2="e" Action="Merge" Op="Value">e</DiphoneRule>
+<DiphoneRule Symbol1="_" Symbol2="v" Action="Insert" Op="Value">u</DiphoneRule>
+</RuleMap>
+</BackendData>
+</Voice>

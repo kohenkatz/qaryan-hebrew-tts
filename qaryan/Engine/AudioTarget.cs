@@ -34,7 +34,6 @@ namespace Qaryan.Audio
         WaveFormat AudioFormat
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -126,19 +125,26 @@ namespace Qaryan.Audio
             }
         }
 
+        protected virtual void AudioProviderFinished()
+        {
+        }
+
         protected override void AfterConsumption()
         {
             Log(LogLevel.MajorInfo, "Finished buffering");
             base.AfterConsumption();
             isConsuming = false;
+            if (eof)
+                AudioProviderFinished();
         }
 
         protected void OnAudioFinished()
         {
             Log(LogLevel.Debug, "End of audio at source");
-
             _DoneConsuming();
             eof = true;
+            if (!isConsuming)
+                AudioProviderFinished();
         }
 
         /// <summary>
@@ -164,12 +170,36 @@ namespace Qaryan.Audio
             base.Run(producer);
         }
 
-        protected void _AudioFinished()
+        protected void _AudioPlaybackFinished()
         {
             Log(LogLevel.Info, "Audio playback finished");
-            Close();
             if (AudioFinished != null)
                 AudioFinished();
+            Close();
+        }
+    }
+
+    public class NullAudioTarget : AudioTarget
+    {
+        public override string Name
+        {
+            get
+            {
+                return base.Name + " (Null)";
+            }
+        }
+
+
+        protected override void Open(WaveFormat format)
+        {
+        }
+
+        protected override void PlayBuffer(AudioBufferInfo buffer)
+        {
+        }
+
+        protected override void Close()
+        {
         }
     }
 }

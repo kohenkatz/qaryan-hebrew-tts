@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Voice xmlns="http://hebtts.sourceforge.net/qaryanvoice">
+<VoiceInfo>
+<DisplayName>Spanish 1</DisplayName>
+<Backend>MBROLA</Backend>
+</VoiceInfo>
+<BackendData For="MBROLA">
+<MbrolaInfo>
+<Database>es1</Database>
+<SpeedRatio>1.0</SpeedRatio>
+</MbrolaInfo>
+<PhoneMap>
+<Phone Internal="_">_</Phone>
+<Phone Internal="’">?</Phone>
+<Phone Internal="b">b</Phone>
+<Phone Internal="v">b</Phone>
+<Phone Internal="g">g</Phone>
+<Phone Internal="ğ">tS</Phone>
+<Phone Internal="d">d</Phone>
+<Phone Internal="h">?</Phone>
+<Phone Internal="w">b</Phone>
+<Phone Internal="W">w</Phone>
+<Phone Internal="z">s</Phone>
+<Phone Internal="ž">tS</Phone>
+<Phone Internal="ḥ">x</Phone>
+<Phone Internal="ṭ">t</Phone>
+<Phone Internal="y">jj</Phone>
+<Phone Internal="ḳ">x</Phone>
+<Phone Internal="k">k</Phone>
+<Phone Internal="l">l</Phone>
+<Phone Internal="m">m</Phone>
+<Phone Internal="n">n</Phone>
+<Phone Internal="s">s</Phone>
+<Phone Internal="‘">?</Phone>
+<Phone Internal="p">p</Phone>
+<Phone Internal="f">f</Phone>
+<Phone Internal="č">tS</Phone>
+<Phone Internal="ẕ">t;s</Phone>
+<Phone Internal="q">k</Phone>
+<Phone Internal="r">r</Phone>
+<Phone Internal="ś">s</Phone>
+<Phone Internal="š">tS</Phone>
+<Phone Internal="t">t</Phone>
+<Phone Internal="a">a</Phone>
+<Phone Internal="e">e</Phone>
+<Phone Internal="i">i</Phone>
+<Phone Internal="o">o</Phone>
+<Phone Internal="u">u</Phone>
+<Phone Internal="ă">a</Phone>
+<Phone Internal="ĕ">e</Phone>
+<Phone Internal="ŏ">o</Phone>
+<Phone Internal="é">e</Phone>
+</PhoneMap>
+<RuleMap>
+<DiphoneRule Symbol1="_" Symbol2="?" Action="Merge" Op="Value">_</DiphoneRule>
+<DiphoneRule Symbol1="?" Symbol2="ALL" Action="Delete" Op="Symbol1"></DiphoneRule>
+</RuleMap>
+</BackendData>
+</Voice>

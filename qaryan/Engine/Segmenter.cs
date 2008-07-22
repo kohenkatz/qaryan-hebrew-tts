@@ -333,6 +333,8 @@ namespace Qaryan.Core
 
         protected override void Consume(Queue<SpeechElement> InQueue)
         {
+            if (InQueue.Count == 0)
+                return;
             SpeechElement curElement = InQueue.Dequeue();
             Log("Consuming {0} ({1})", curElement.GetType().Name, curElement.Latin);
             _ItemConsumed(curElement);

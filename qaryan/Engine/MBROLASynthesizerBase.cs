@@ -9,15 +9,15 @@ namespace Qaryan.Synths.MBROLA
 {
     public class MBROLASynthesizerBase : Synthesizer<MBROLAElement>
     {
-        MBROLAVoice voice;
+        MBROLAVoice voiceOld;
 
-        public virtual MBROLAVoice Voice
+        public virtual MBROLAVoice VoiceOld
         {
-            get { return voice; }
+            get { return voiceOld; }
             set
             {
-                voice = value;
-                voice.Activate();
+                voiceOld = value;
+                voiceOld.Activate();
             }
         }
 
@@ -25,21 +25,7 @@ namespace Qaryan.Synths.MBROLA
         {
             get
             {
-                WaveFormat format = base.AudioFormat;
-                format.Channels = 1;
-                if (voice != null)
-                    format.SamplesPerSecond = voice.SampleRate;
-                else
-                    format.SamplesPerSecond = 22050;
-                format.BitsPerSample = 16;
-                format.AverageBytesPerSecond = format.SamplesPerSecond * format.BitsPerSample / 8;
-                format.BlockAlign = (ushort)(format.Channels * (format.BitsPerSample / 8));
-                format.FormatTag = WaveFormatTag.Pcm;
-                return format;
-            }
-            set
-            {
-                base.AudioFormat = value;
+                return Voice.AudioFormat;
             }
         }
 

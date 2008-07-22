@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Voice xmlns="http://hebtts.sourceforge.net/qaryanvoice">
+<VoiceInfo>
+<DisplayName>Lithuanian 2</DisplayName>
+<Backend>MBROLA</Backend>
+</VoiceInfo>
+<BackendData For="MBROLA">
+<MbrolaInfo>
+<Database>lt2</Database>
+<VolumeRatio>1.00</VolumeRatio>
+<SpeedRatio>1.0</SpeedRatio>
+</MbrolaInfo>
+<PhoneMap>
+<Phone Internal="_">_</Phone>
+<Phone Internal="’">?</Phone>
+<Phone Internal="b">b</Phone>
+<Phone Internal="v">v</Phone>
+<Phone Internal="g">g</Phone>
+<Phone Internal="ğ">dZ</Phone>
+<Phone Internal="d">d</Phone>
+<Phone Internal="h">h</Phone>
+<Phone Internal="w">v</Phone>
+<Phone Internal="W">w</Phone>
+<Phone Internal="z">z</Phone>
+<Phone Internal="ž">Z</Phone>
+<Phone Internal="ḥ">x</Phone>
+<Phone Internal="ṭ">t</Phone>
+<Phone Internal="y">j</Phone>
+<Phone Internal="ḳ">x</Phone>
+<Phone Internal="k">k</Phone>
+<Phone Internal="l">l</Phone>
+<Phone Internal="m">m</Phone>
+<Phone Internal="n">n</Phone>
+<Phone Internal="s">s</Phone>
+<Phone Internal="‘">?</Phone>
+<Phone Internal="p">p</Phone>
+<Phone Internal="f">f</Phone>
+<Phone Internal="č">tS</Phone>
+<Phone Internal="ẕ">ts</Phone>
+<Phone Internal="q">k</Phone>
+<Phone Internal="r">R</Phone>
+<Phone Internal="ś">s</Phone>
+<Phone Internal="š">S</Phone>
+<Phone Internal="t">t</Phone>
+<Phone Internal="a">A</Phone>
+<Phone Internal="e">E</Phone>
+<Phone Internal="i">ee</Phone>
+<Phone Internal="o">o</Phone>
+<Phone Internal="u">U</Phone>
+<Phone Internal="ă">A</Phone>
+<Phone Internal="ĕ">E</Phone>
+<Phone Internal="ŏ">O</Phone>
+<Phone Internal="é">E</Phone>
+</PhoneMap>
+<RuleMap>
+<DiphoneRule Symbol1="t" Symbol2="t" Action="Merge" Op="Value">t</DiphoneRule>
+<DiphoneRule Symbol1="A" Symbol2="A" Action="Merge" Op="Value">A</DiphoneRule>
+<DiphoneRule Symbol1="ee" Symbol2="ee" Action="Merge" Op="Value">ee</DiphoneRule>
+<DiphoneRule Symbol1="E" Symbol2="E" Action="Merge" Op="Value">E</DiphoneRule>
+<DiphoneRule Symbol1="?" Symbol2="ALL" Action="Delete" Op="Symbol1"></DiphoneRule>
+<DiphoneRule Symbol1="o" Symbol2="o" Action="Merge" Op="Value">o</DiphoneRule>
+<DiphoneRule Symbol1="U" Symbol2="U" Action="Merge" Op="Value">U</DiphoneRule>
+<DiphoneRule Symbol1="O" Symbol2="U" Action="Merge" Op="Value">O</DiphoneRule>
+<DiphoneRule Symbol1="_" Symbol2="U" Action="Insert" Op="Value">?</DiphoneRule>
+<DiphoneRule Symbol1="o;O" Symbol2="U" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="j" Symbol2="ALL;!ee;!o;!O;!U;!E;!A" Action="Insert" Op="Value">ee</DiphoneRule>
+<DiphoneRule Symbol1="U" Symbol2="A" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="U" Symbol2="E" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="U" Symbol2="ee" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="U" Symbol2="O;o" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="o;O" Symbol2="A" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="ee" Symbol2="A" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="ee" Symbol2="E" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="ee" Symbol2="U" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="ee" Symbol2="o;O" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="e;E" Symbol2="a" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="w" Symbol2="ALL;!A;!E;!ee;!U;!O;!o" Action="Insert" Op="Value">U</DiphoneRule>
+<DiphoneRule Symbol1="ALL;!A;!E;!ee;!U;!O;!o;!w" Symbol2="w" Action="Insert" Op="Value">U</DiphoneRule>
+<DiphoneRule Symbol1="A;E" Symbol2="ee" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="E" Symbol2="U" Action="Insert" Op="Value">w</DiphoneRule>
+<DiphoneRule Symbol1="A" Symbol2="E" Action="Insert" Op="Value">j</DiphoneRule>
+<DiphoneRule Symbol1="o;O" Symbol2="E" Action="Insert" Op="Value">?</DiphoneRule>
+</RuleMap>
+</BackendData>
+</Voice>

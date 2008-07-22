@@ -24,6 +24,11 @@ namespace Qaryan.Core
 
     public class TranslitListener
     {
+        public void Clear()
+        {
+            translit.Length = 0;
+        }
+
         public event StringEventHandler TranslitUpdated;
 
         StringBuilder translit = new StringBuilder();

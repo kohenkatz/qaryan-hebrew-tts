@@ -28,83 +28,31 @@ using System.Reflection;
 
 namespace Qaryan.CLI
 {
-    public class TextReaderCharProducer : Producer<char>
-    {
-        Queue<char> queue;
-        public event ProduceEventHandler<char> ItemProduced;
-        public event EventHandler DoneProducing;
-        bool isRunning = false;
-
-        public TextReaderCharProducer()
-        {
-            queue = new Queue<char>();
-
-        }
-
-        public bool IsRunning
-        {
-            get
-            {
-                return isRunning;
-            }
-        }
-
-        public Queue<char> OutQueue
-        {
-            get
-            {
-                return queue;
-            }
-        }
-
-        public void Run(TextReader reader)
-        {
-            isRunning = true;
-            Thread t = new Thread(delegate()
-            {
-                try
-                {
-                    while (Thread.CurrentThread.IsAlive)
-                    {
-                        char c;
-                        OutQueue.Enqueue(c = (char)(reader.Read()));
-                        if (c == 65535)
-                            break;
-                        if (ItemProduced != null)
-                            ItemProduced(this, new ItemEventArgs<char>(c));
-                    }
-                }
-                catch (IOException)
-                {
-                }
-                isRunning = false;
-                if (DoneProducing != null)
-                    DoneProducing(this, new EventArgs());
-
-            });
-            t.Start();
-        }
-    }
-
     class Program
     {
         static LogLevel LogFilter;
 
         static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.Error.WriteLine("Type `QaryanCLI -h` for help");
+                Console.Error.WriteLine("If you meant input from stdin and output to soundcard, use `QaryanCLI -`");
+                return;
+            }
             OptionResultsDictionary opts = new OptionResultsDictionary();
             OptionDefinition[] optdefs = new OptionDefinition[] {
                 new OptionDefinition("help",OptValType.Flag,typeof(string),"General options","Show this help message",new char[]{'h','?'},new string[]{"help"}),
                 new OptionDefinition("verbose",OptValType.IncrementalFlag,typeof(IntPtr),"General options","Verbose output",new char[]{'v'},new string[]{"verbose"}),
-                new OptionDefinition("mbrola-voice",OptValType.ValueReq,typeof(string),"MBROLA configuration","Use the specified MBROLA \"voice\" (database) file",new char[]{'d'},new string[]{"mbrola-voice","mbrola-db"}),
+                new OptionDefinition("voice",OptValType.ValueReq,typeof(string),"Voice options","Use the specified voice",new char[]{'V'},new string[]{"voice"}),
+                new OptionDefinition("list-voices",OptValType.Flag,typeof(string),"Voice options","List the available voices",new char[]{'l'},new string[]{"list-voices"}),
                 new OptionDefinition("pho",OptValType.ValueOpt,typeof(string),"Output options","Write phonetic information to the specified file ('-' for stdout, the default)",new char[]{'P'},new string[]{"pho"}),
                 new OptionDefinition("out",OptValType.ValueOpt,typeof(string),"Output options","Write audio to the specified file ('-' for stdout, the default)",new char[]{'o'},new string[]{"out","audio"}),
                 new OptionDefinition("raw",OptValType.Flag,typeof(string),"Output options","Output raw audio data instead of WAV",new char[]{'R'},new string[]{"raw"})
             };
 
-
             CommandLine.OptParse.Parser optp = ParserFactory.BuildParser(optdefs, opts);
-            string[] arguments = optp.Parse(OptStyle.Unix, UnixShortOption.CollapseShort, DupOptHandleType.Allow, UnknownOptHandleType.NoAction, false, args);
+            string[] arguments = optp.Parse(OptStyle.Unix, UnixShortOption.CollapseShort, DupOptHandleType.Allow, UnknownOptHandleType.NoAction, true, args);
             if (opts["help"] != null)
             {
                 Assembly asm = Assembly.GetEntryAssembly();
@@ -128,7 +76,7 @@ namespace Qaryan.CLI
                 usage.EndSection();
 
                 usage.BeginSection("Environment Variables");
-                usage.AddParagraph("Setting the following optional variables may ease configuration of Qaryan on your machine.");
+                usage.AddParagraph("Setting the following variables is not required, but might help if the defaults don't work as expected.");
                 usage.BeginList(ListType.Unordered);
                 usage.AddListItem("MBROLA holds the path to the MBROLA executable.");
                 usage.AddListItem("MBROLA_DATABASE_DIR holds the path where MBROLA databases may be found.");
@@ -138,23 +86,32 @@ namespace Qaryan.CLI
                 usage.ToText(Console.Error, OptStyle.Unix, true);
                 return;
             }
-
             string qaryanpath = System.Environment.GetEnvironmentVariable("QARYAN_ROOT");
             if (qaryanpath != null)
                 FileBindings.EnginePath = qaryanpath;
+            if (opts["list-voices"] != null)
+            {
+                string dir = FileBindings.VoicePath;
+                Console.Error.WriteLine("Available voices:");
+                foreach (string file in Directory.GetFiles(dir + "/", "*.xml"))
+                {
+                    Voice voice = new Voice();
+                    voice.Load(file);
+                    if (voice.BackendSupported)
+                        Console.Error.WriteLine("{2} voice {0} ({1})",
+                            Path.GetFileNameWithoutExtension(file), voice.DisplayName, voice.BackendName);
+                    voice = null;
+
+                }
+                return;
+            }
+
 
             MBROLA.Mbrola.Binding = MBROLA.MbrolaBinding.Standalone;
             Console.InputEncoding = Encoding.UTF8;
             TextReaderCharProducer prod = new TextReaderCharProducer();
             prod.ItemProduced += new ProduceEventHandler<char>(prod_ItemProduced);
-            Tokenizer tok = new Tokenizer();
-            Qaryan.Core.Parser par = new Qaryan.Core.Parser();
-            Segmenter seg = new Segmenter();
-            Phonetizer pho = new Phonetizer();
-            FujisakiProcessor fuji = new FujisakiProcessor();
-            MBROLATranslator tra = new MBROLATranslator();
-            MBROLAProcessSynthesizer mbr = null;
-
+            QaryanEngine myEngine = new QaryanEngine();
 
             TextReader textSrc = Console.In;
             foreach (string argument in arguments)
@@ -180,103 +137,67 @@ namespace Qaryan.CLI
             }
             else
                 LogFilter = LogLevel.All ^ (LogLevel.Debug | LogLevel.Info | LogLevel.MajorInfo);
-            tok.LogLine += OnLogLine;
-            par.LogLine += OnLogLine;
-            seg.LogLine += OnLogLine;
-            pho.LogLine += OnLogLine;
-            fuji.LogLine += OnLogLine;
-            tra.LogLine += OnLogLine;
-            tra.Voice = new MBROLAVoice();
-            string voiceName = "hb2";
-            if (opts["mbrola-voice"] != null)
-                voiceName = opts["mbrola-voice"].Value as string;
-            tra.Voice.LoadFromXml(Path.Combine(FileBindings.VoicePath, voiceName + ".xml"));
+            myEngine.LogLine += OnLogLine;
+            string voiceName = "mbrola-hb2";
+            if (opts["voice"] != null)
+                voiceName = opts["voice"].Value as string;
 
-            /* mbrola = new System.Diagnostics.Process();
-             mbrola.StartInfo.FileName = "C:\\downloads\\mbrola_cygwin.exe";
-             mbrola.StartInfo.Arguments = " ..\\..\\..\\Engine\\Voices\\hb2 - out3.wav";
-             mbrola.StartInfo.RedirectStandardInput = true;
-             mbrola.StartInfo.CreateNoWindow = true;
-             mbrola.StartInfo.UseShellExecute = false;
-             mbrola.Start();*/
-            AudioTarget audio = null;
-            if (opts["out"] != null)
+            Voice myVoice;
+            myVoice = new Voice();
+            myVoice.Load(Path.Combine(FileBindings.VoicePath, voiceName + ".xml"));
+            myEngine.Voice = myVoice;
+            if (opts["pho"] != null)
             {
-                if ((opts["out"].Value as string == "-") || (opts["out"].Value == null))
-                {
-                    audio = new StreamAudioTarget();
-                    (audio as StreamAudioTarget).Stream = Console.OpenStandardOutput();
-                    (audio as StreamAudioTarget).WriteHeader = opts["raw"] == null;
-                }
-                else
-                {
-                    audio = new WaveFileAudioTarget();
-                    (audio as WaveFileAudioTarget).Filename = opts["out"].Value as string;
-                    (audio as WaveFileAudioTarget).WriteHeader = opts["raw"] == null;
-                }
-            }
-            else if (opts["pho"] == null)
-            {
-                audio = PlatformInstantiator<AudioTarget>.Create(typeof(LibaoAudioTarget), typeof(WaveOutAudioTarget));
-            }
-            if (audio != null)
-            {
-                mbr = new MBROLAProcessSynthesizer();
-                mbr.Voice = tra.Voice;
-            }
-            else
-            //            if ((opts["pho"] != null) || (opts["out"] == null))
-            {
-                if ((opts["pho"] == null) ||
-                    ((opts["pho"] != null) &&
-                    (opts["pho"].Value as string == "-") || (opts["pho"].Value == null)))
-                    tra.ItemProduced += delegate(Producer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
+                if ((opts["pho"].Value as string == "-") || (opts["pho"].Value == null))
+                    (myEngine.Backend as MbrolaBackend).Translator.ItemProduced += delegate(Producer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
                       {
                           Console.Write(e.Item);
                       };
                 else
                 {
                     StreamWriter sw = File.CreateText(opts["pho"].Value as string);
-                    tra.ItemProduced += delegate(Producer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
+                    (myEngine.Backend as MbrolaBackend).Translator.ItemProduced += delegate(Producer<MBROLAElement> sender, ItemEventArgs<MBROLAElement> e)
                     {
                         sw.Write(e.Item);
                     };
-                    tra.DoneProducing += delegate(object sender, EventArgs e)
+                    (myEngine.Backend as MbrolaBackend).Translator.DoneProducing += delegate(object sender, EventArgs e)
                     {
                         sw.Close();
                     };
                 }
             }
-            prod.Run(textSrc);
-            tok.Run(prod);
-            par.Run(tok);
-            seg.Run(par);
-            pho.Run(seg);
-            fuji.Run(pho);
-            tra.Run(fuji);
-            if ((mbr != null) && (audio != null))
+
+            if (opts["out"] != null)
             {
-                mbr.LogLine += OnLogLine;
-                string mbrpath = System.Environment.GetEnvironmentVariable("MBROLA");
-                if (mbrpath != null)
-                    mbr.MBROLAExecutable = mbrpath;
+                if ((opts["out"].Value as string == "-") || (opts["out"].Value == null))
+                {
+                    if (opts["raw"] == null)
+                        myEngine.SpeakToWavStream(textSrc, Console.OpenStandardOutput());
+                    else
+                        myEngine.SpeakToRawStream(textSrc, Console.OpenStandardOutput());
+
+                }
                 else
-                    mbr.MBROLAExecutable = "mbrola";
-                string dbpath = System.Environment.GetEnvironmentVariable("MBROLA_DATABASE_DIR");
-                if (dbpath != null)
-                    mbr.MBROLAVoicePath = dbpath;
-                mbr.Run(tra);
-                audio.Run(mbr);
-                audio.Join();
+                {
+                    if (opts["raw"] == null)
+                        myEngine.SpeakToWavFile(textSrc, opts["out"].Value as string);
+                    else
+                        myEngine.SpeakToRawFile(textSrc, opts["out"].Value as string);
+                }
             }
             else
-                tra.Join();
+                myEngine.Speak(textSrc);
+            /*}
+            else
+            {
+                myEngine.SpeakToNull(textSrc);
+            }*/
         }
 
         static void OnLogLine(ILogSource sender, string message, LogLevel visibility)
         {
             if ((visibility & LogFilter) == visibility)
-                Console.Error.WriteLine("{0}: {1}", sender.Name, message);
+                Console.Error.WriteLine("{0}> {1}", sender.Name, message);
         }
 
         static void prod_ItemProduced(Producer<char> sender, ItemEventArgs<char> e)

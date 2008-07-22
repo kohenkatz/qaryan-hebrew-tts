@@ -101,6 +101,7 @@ namespace Qaryan.Core
             MidQueue = new Queue<Phone>();
             UtteranceTime = 0;
             MidQueueDuration = 0;
+            Reset();
         }
 
         protected override void Consume(Queue<Phone> InQueue)
@@ -108,7 +109,8 @@ namespace Qaryan.Core
             if (InQueue.Count == 0)
                 return;
             Phone p = InQueue.Dequeue();
-
+            if (p == null)
+                return;
 
             if (p.Symbol == "_")
             {

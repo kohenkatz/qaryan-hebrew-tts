@@ -283,7 +283,7 @@ namespace Qaryan.Core
 
         protected override void AfterConsumption()
         {
-            Phone phn = new Phone("_", 1);
+            Phone phn = new Phone("_", 250);
             Emit(phn);
             Log(LogLevel.MajorInfo, "Finished");
             base.AfterConsumption();

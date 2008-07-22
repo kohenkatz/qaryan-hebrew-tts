@@ -63,13 +63,13 @@ namespace Qaryan.Audio
                 Log(LogLevel.Debug, "Not running and no buffers left");
                 Stop();
                 if (Eof)
-                    _AudioFinished();
+                    _AudioPlaybackFinished();
             }
             else
             {
                 if (Buffers.Count < 1)
                 {
-                    Log(LogLevel.Warning, "Buffer underrun, {0} bytes requested",size);
+                    Log(LogLevel.Debug, "Buffer underrun, {0} bytes requested",size);
                     return;
                 }
                 else
@@ -103,7 +103,7 @@ namespace Qaryan.Audio
             Log(LogLevel.Info, "Open {0}ch, {1} bits/sample, {2} Hz PCM output", format.Channels, format.BitsPerSample, format.SamplesPerSecond);
             bufPos = 0;
             Buffers = new Queue<byte[]>();
-            Player = new WaveOutPlayer(0, new WinWaveFormat(format),4096,2,PullAudio);
+            Player = new WaveOutPlayer(0, new WinWaveFormat(format),4096,3,PullAudio);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)

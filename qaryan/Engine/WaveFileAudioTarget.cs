@@ -56,5 +56,11 @@ namespace Qaryan.Audio
         {
             //            throw new Exception("The method or operation is not implemented.");
         }
+
+        protected override void AudioProviderFinished()
+        {
+            base.AudioProviderFinished();
+            _AudioPlaybackFinished();
+        }
     }
 }

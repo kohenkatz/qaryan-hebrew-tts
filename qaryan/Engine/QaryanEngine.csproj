@@ -99,8 +99,10 @@
     <Compile Include="AudioBufferInfo.cs" />
     <Compile Include="AudioTarget.cs" />
     <Compile Include="IPlatformSupported.cs" />
+    <Compile Include="MbrolaBackend.cs" />
     <Compile Include="MbrolaExtended.cs" />
     <Compile Include="MBROLASynthesizerBase.cs" />
+    <Compile Include="MbrolaTranslatorNew.cs" />
     <Compile Include="NativeSynth.cs" />
     <Compile Include="NewAPI.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -139,6 +141,7 @@
     <Compile Include="StressHeuristics.cs" />
     <Compile Include="StringCharProducer.cs" />
     <Compile Include="Synthesizer.cs" />
+    <Compile Include="TextReaderCharProducer.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="TranslitListener.cs" />
     <Compile Include="WaveFileAudioTarget.cs" />
@@ -152,30 +155,7 @@
     <Content Include="StressHeuristics.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Voices\ee1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\es1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\hb1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\hb2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\la1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="LibaoAudioTarget.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Voices\ar1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\ar2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="MbrolaVoice.xsd">
@@ -188,17 +168,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="Start.txt" />
-    <Content Include="Voices\cz1.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Voices\hb1_license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Voices\hb2_license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Voices\hebrew2.xml" />
-    <Content Include="Voices\ir1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\Settings.settings">
@@ -211,10 +184,46 @@
     <Content Include="Voices\hb2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Voices\lt2.xml">
+    <Content Include="Voices\mbrola-ar1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Voices\us2.xml">
+    <Content Include="Voices\mbrola-ar2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-cr1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-cz1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-ee1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-es1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-es2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-es4.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-hb1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-hb2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-ir1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-la1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-lt2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voices\mbrola-us2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Voices\voice.xml.template" />

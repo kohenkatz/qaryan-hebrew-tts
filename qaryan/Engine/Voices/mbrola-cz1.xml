@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Voice xmlns="http://hebtts.sourceforge.net/qaryanvoice">
+<VoiceInfo>
+<DisplayName>Czech 1</DisplayName>
+<Backend>MBROLA</Backend>
+</VoiceInfo>
+<BackendData For="MBROLA">
+<MbrolaInfo>
+<Database>cz1</Database>
+<SpeedRatio>1.0</SpeedRatio>
+</MbrolaInfo>
+<PhoneMap>
+<Phone Internal="_">_</Phone>
+<Phone Internal="’">?</Phone>
+<Phone Internal="b">b</Phone>
+<Phone Internal="v">v</Phone>
+<Phone Internal="g">g</Phone>
+<Phone Internal="ğ">D</Phone>
+<Phone Internal="d">d</Phone>
+<Phone Internal="h">h</Phone>
+<Phone Internal="w">v</Phone>
+<Phone Internal="W">u</Phone>
+<Phone Internal="z">s</Phone>
+<Phone Internal="ž">Z</Phone>
+<Phone Internal="ḥ">x</Phone>
+<Phone Internal="ṭ">t</Phone>
+<Phone Internal="y">j</Phone>
+<Phone Internal="ḳ">x</Phone>
+<Phone Internal="k">k</Phone>
+<Phone Internal="l">l</Phone>
+<Phone Internal="m">m</Phone>
+<Phone Internal="n">n</Phone>
+<Phone Internal="s">s</Phone>
+<Phone Internal="‘">?</Phone>
+<Phone Internal="p">p</Phone>
+<Phone Internal="f">f</Phone>
+<Phone Internal="č">T</Phone>
+<Phone Internal="ẕ">t;s</Phone>
+<Phone Internal="q">k</Phone>
+<Phone Internal="r">r</Phone>
+<Phone Internal="ś">s</Phone>
+<Phone Internal="š">S</Phone>
+<Phone Internal="t">t</Phone>
+<Phone Internal="a">a</Phone>
+<Phone Internal="e">e</Phone>
+<Phone Internal="i">i</Phone>
+<Phone Internal="o">o</Phone>
+<Phone Internal="u">u</Phone>
+<Phone Internal="ă">a</Phone>
+<Phone Internal="ĕ">e</Phone>
+<Phone Internal="ŏ">o</Phone>
+<Phone Internal="é">e</Phone>
+</PhoneMap>
+<RuleMap>
+</RuleMap>
+</BackendData>
+</Voice>

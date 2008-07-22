@@ -119,10 +119,19 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 408</value>
+    <value>0, 414</value>
   </data>
   <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 28</value>
+    <value>634, 22</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 24</value>
+  </data>
+  <data name="fileMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 20</value>
+  </data>
+  <data name="fileMenuItem.Text" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -175,11 +184,11 @@
   <data name="exitMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="fileMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 20</value>
+  <data name="settingsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 20</value>
   </data>
-  <data name="fileMenuItem.Text" xml:space="preserve">
-    <value>File</value>
+  <data name="settingsMenuItem.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="voiceMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
@@ -204,6 +213,12 @@
   </data>
   <data name="toolStripMenuItem5.Text" xml:space="preserve">
     <value>Intonation...</value>
+  </data>
+  <data name="settingsMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="settingsMenuItem1.Text" xml:space="preserve">
+    <value>Miscellaneous</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
@@ -232,17 +247,11 @@
   <data name="akanyeIkanyeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 22</value>
   </data>
-  <data name="settingsMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+  <data name="viewMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 20</value>
   </data>
-  <data name="settingsMenuItem1.Text" xml:space="preserve">
-    <value>Miscellaneous</value>
-  </data>
-  <data name="settingsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 20</value>
-  </data>
-  <data name="settingsMenuItem.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="viewMenuItem.Text" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="graphMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
@@ -259,29 +268,17 @@
   <data name="mbrolaMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
-  <data name="englishMenuItem.Text" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="hebrewMenuItem.Text" xml:space="preserve">
-    <value>Hebrew</value>
-  </data>
   <data name="langMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 22</value>
   </data>
   <data name="langMenuItem.Text" xml:space="preserve">
     <value>UI Language</value>
   </data>
-  <data name="viewMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 20</value>
+  <data name="englishMenuItem.Text" xml:space="preserve">
+    <value>English</value>
   </data>
-  <data name="viewMenuItem.Text" xml:space="preserve">
-    <value>View</value>
-  </data>
-  <data name="nikudMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 22</value>
-  </data>
-  <data name="nikudMenuItem.Text" xml:space="preserve">
-    <value>Nikud...</value>
+  <data name="hebrewMenuItem.Text" xml:space="preserve">
+    <value>Hebrew</value>
   </data>
   <data name="helpMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 20</value>
@@ -289,8 +286,14 @@
   <data name="helpMenuItem.Text" xml:space="preserve">
     <value>Help</value>
   </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 24</value>
+  <data name="nikudMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 22</value>
+  </data>
+  <data name="nikudMenuItem.Text" xml:space="preserve">
+    <value>Nikud...</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 25</value>
   </data>
   <data name="newToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -474,18 +477,8 @@
   <data name="toolStripLabel1.Text" xml:space="preserve">
     <value>Voice:</value>
   </data>
-  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 25</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="textBox1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>Yes</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 359</value>
-  </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 359</value>
+    <value>634, 365</value>
   </data>
   <data name="openFileDialog1.Filter" xml:space="preserve">
     <value>Text files|*.txt|All files|*.*</value>
@@ -531,6 +524,19 @@
         wf8HngMIA8IBGwHzAfQD/wSeBsIB8wH0B/8HwgHzAfQK/wTCAfMB9AH/B8ID8wP0Bv8DwgPzA/QK/wPz
         A/QN/wP0///F/wFCAU0BPgcAAT4DAAEoAwABQAMAASADAAEBAQABAQYAAQEWAAP//wACAAs=
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="textBox1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 365</value>
+  </data>
+  <data name="webSiteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 22</value>
+  </data>
+  <data name="webSiteToolStripMenuItem.Text" xml:space="preserve">
+    <value>To Qaryan website</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>634, 436</value>

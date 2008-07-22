@@ -27,17 +27,14 @@ namespace Qaryan.GUI
     /// </summary>
     public partial class Form1 : Form
     {
-        static Form1()
-        {
-
-        }
-
-        List<MBROLAVoice> Voices = new List<MBROLAVoice>();
+        List<Voice> Voices = new List<Voice>();
         FujisakiForm fujisakiForm;
         TranslitForm translitForm;
         MbrolaForm mbrolaForm;
         NikudHelp nikudHelp;
         string fileName = null;
+
+        QaryanEngine myEngine;
 
         void LoadVoices()
         {
@@ -47,13 +44,14 @@ namespace Qaryan.GUI
             string dir = FileBindings.VoicePath;
             foreach (string file in Directory.GetFiles(dir + "/", "*.xml"))
             {
-                MBROLAVoice voice = new MBROLAVoice();
-                voice.LoadFromXml(file);
-                if (voice.Activate())
+                Voice voice = new Voice();
+                voice.Load(file);
+                if (voice.BackendSupported)
                 {
                     toolStripComboBox1.Items.Add(voice.DisplayName);
                     Voices.Add(voice);
                 }
+
             }
             if (i < 0)
                 toolStripComboBox1.SelectedIndex = toolStripComboBox1.Items.IndexOf(Qaryan.GUI.Settings.Default.Voice);
@@ -64,14 +62,19 @@ namespace Qaryan.GUI
 
         public Form1()
         {
+            myEngine = new QaryanEngine();
+            myEngine.LogLine += new LogLineHandler(myEngine_LogLine);
+            
             try
             {
                 Resources.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(Settings.Default.Culture);
 
                 Application.CurrentInputLanguage = InputLanguage.FromCulture(System.Globalization.CultureInfo.GetCultureInfo("he-IL"));
-            } catch {
-                // Mono chokes on an exception here but otherwise runs nicely.
-                // This is the little hack to fix it.
+            }
+            catch
+            {
+                // HACK: Mono chokes on an exception here but otherwise runs nicely.
+                // Until the issue is resolved more elegantly, this catch{} block is what we have.
             }
 
             //
@@ -112,25 +115,12 @@ namespace Qaryan.GUI
 
             LoadVoices();
             Form1.CheckForIllegalCrossThreadCalls = false;
-            fujisaki = new FujisakiProcessor();
-
-            fujisaki.PhraseCommand += OnPhraseCommand;
-            fujisaki.AccentCommand += OnAccentCommand;
-            fujisaki.PitchPointComputed += OnPitchPoint;
-            fujisaki.PhraseComponentComputed += OnPhraseComponent;
-            fujisaki.NoMoreData += delegate { updateGraph(fujisakiForm.zedGraphControl1); };
         }
 
-        Tokenizer tokenizer = new Tokenizer();
-        Parser parser = new Parser();
-        Segmenter segmenter = new Segmenter();
-        Phonetizer phonetizer = new Phonetizer();
-        MBROLATranslator translator = new MBROLATranslator();
-        Synthesizer<MBROLAElement> synth =
-            PlatformInstantiator<MBROLASynthesizerBase>.Create(
-            typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
-        AudioTarget target;
-        FujisakiProcessor fujisaki;
+        void myEngine_LogLine(ILogSource sender, string message, LogLevel visibility)
+        {
+            System.Diagnostics.Debug.WriteLine(String.Format("{0}\t{1}", sender.Name, message)); 
+        }
 
         PointPairList pcmds, acmds, pitch, pcomp;
 
@@ -283,83 +273,55 @@ namespace Qaryan.GUI
             Close();
         }
 
-        private void OnDoneProducing(object sender, EventArgs e)
-        {
-            ToolStripStatusLabel sl = null;
+        bool initFlag = false;
 
-            if (sender == tokenizer)
-                sl = toolStripStatusLabel1;
-            else if (sender == parser)
-                sl = toolStripStatusLabel2;
-
-            else if (sender == segmenter)
-                sl = toolStripStatusLabel3;
-
-            else if (sender == translator)
-                sl = toolStripStatusLabel6;
-
-            else if (sender == synth)
-                sl = toolStripStatusLabel7;
-
-            else if (sender == phonetizer)
-                sl = toolStripStatusLabel4;
-
-            else if (sender == fujisaki)
-                sl = toolStripStatusLabel5;
-
-            if (sl != null)
-                sl.BackColor = Color.Red;
-        }
-
-        private void OnDSoundAudioFinished()
-        {
-            toolStripStatusLabel8.BackColor = Color.Red;
-        }
+        TranslitListener translit;
 
         private void InitTTSObjects()
         {
-            toolStripStatusLabel2.BackColor = toolStripStatusLabel3.BackColor = toolStripStatusLabel4.BackColor = toolStripStatusLabel5.BackColor = toolStripStatusLabel6.BackColor = toolStripStatusLabel7.BackColor = toolStripStatusLabel8.BackColor = Color.Green;
-
-            tokenizer = new Tokenizer();
-            tokenizer.DoneProducing += OnDoneProducing;
-            parser = new Parser();
-            parser.DoneProducing += OnDoneProducing;
-            segmenter = new Segmenter();
-            segmenter.DoneProducing += OnDoneProducing;
-            phonetizer = new Phonetizer();
-            phonetizer.DoneProducing += OnDoneProducing;
-
-            translator = new MBROLATranslator();
-
-            translator.DoneProducing += OnDoneProducing;           
-
-                synth = PlatformInstantiator<MBROLASynthesizerBase>.Create(
-            typeof(MBROLASynthesizer), typeof(MBROLAProcessSynthesizer));
-
-
-            synth.DoneProducing += OnDoneProducing;
+            if (initFlag)
+                return;
+            initFlag = true;
+            MBROLASynthesizerBase synth = (myEngine.Backend as MbrolaBackend).Synthesizer as MBROLASynthesizerBase;
             acmds = new PointPairList();
             pcmds = new PointPairList();
             pitch = new PointPairList();
             pcomp = new PointPairList();
 
-            //            fujisaki = new FujisakiProcessor();
-            fujisaki.Model.alpha = Settings.Default.FujisakiAlpha;
-            fujisaki.Model.beta = Settings.Default.FujisakiBeta;
-            fujisaki.Model.gamma = Settings.Default.FujisakiGamma;
-            fujisaki.Model.Fb = Settings.Default.FujisakiFb;
-            fujisaki.Reset();
-
-            fujisaki.DoneProducing += OnDoneProducing;
+            FujisakiProcessor fujisaki = (myEngine.Frontend as StandardFrontend).FujisakiProcessor;
+            Parser parser = (myEngine.Frontend as StandardFrontend).Parser;
 
             fujisaki.PhraseCommand += OnPhraseCommand;
             fujisaki.AccentCommand += OnAccentCommand;
             fujisaki.PitchPointComputed += OnPitchPoint;
             fujisaki.PhraseComponentComputed += OnPhraseComponent;
             fujisaki.NoMoreData += delegate { updateGraph(fujisakiForm.zedGraphControl1); };
-            translator.Voice = (synth as MBROLASynthesizerBase).Voice = Voices[toolStripComboBox1.SelectedIndex];
-
             
+            translit = new TranslitListener(parser);
+            translit.TranslitUpdated += new StringEventHandler(translit_TranslitUpdated);
+            MBROLAListener mbrolaListener = new MBROLAListener(synth);
+            mbrolaListener.TextUpdated += new StringEventHandler(mbrolaListener_TextUpdated);
+        }
+
+        private void UpdateTTSOptions()
+        {
+            translit.Clear();
+            mbrolaForm.MbrolaText = "";
+            acmds.Clear();
+            pcmds.Clear();
+            pitch.Clear();
+            pcomp.Clear();
+
+            FujisakiProcessor fujisaki = (myEngine.Frontend as StandardFrontend).FujisakiProcessor;
+            Segmenter segmenter = (myEngine.Frontend as StandardFrontend).Segmenter;
+            Phonetizer phonetizer = (myEngine.Frontend as  StandardFrontend).Phonetizer;
+            Parser parser = (myEngine.Frontend as  StandardFrontend).Parser;
+
+            fujisaki.Model.alpha = Settings.Default.FujisakiAlpha;
+            fujisaki.Model.beta = Settings.Default.FujisakiBeta;
+            fujisaki.Model.gamma = Settings.Default.FujisakiGamma;
+            fujisaki.Model.Fb = Settings.Default.FujisakiFb;
+           
             segmenter.RelaxAudibleSchwa = Settings.Default.RelaxAudibleSchwa;
             phonetizer.Options.DistinguishStrongDagesh = Settings.Default.DistinguishStrongDagesh;
             phonetizer.Options.Akanye = phonetizer.Options.Ikanye = Settings.Default.AkanyeIkanye;
@@ -370,10 +332,6 @@ namespace Qaryan.GUI
                 segmenter.DefaultStress = Word.Stress.Milel;
             else
                 segmenter.DefaultStress = Word.Stress.Milra;
-            TranslitListener translit = new TranslitListener(parser);
-            translit.TranslitUpdated += new StringEventHandler(translit_TranslitUpdated);
-            MBROLAListener mbrolaListener = new MBROLAListener(synth);
-            mbrolaListener.TextUpdated += new StringEventHandler(mbrolaListener_TextUpdated);
         }
 
         void mbrolaListener_TextUpdated(object sender, string value)
@@ -388,36 +346,14 @@ namespace Qaryan.GUI
 
         private void דברToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitTTSObjects();
             string text = textBox1.Text;
             if (textBox1.SelectionLength > 0)
                 text = textBox1.SelectedText;
-
-            //target = new DSoundAudioTarget(this);
-            //target = new PortAudioTarget(this);
-            //target = new WaveOutAudioTarget();
-            target=new LibaoAudioTarget();
-            target.LogLine += new LogLineHandler(target_LogLine);
-            target.AudioFinished += OnDSoundAudioFinished;
-
-            tokenizer.Run(text);
-            parser.Run(tokenizer);
-            segmenter.Run(parser);
-            phonetizer.Run(segmenter);
-            fujisaki.Run(phonetizer);
-            translator.Run(fujisaki);
-            synth.Run(translator);
-            target.Run(synth);
-        }
-
-        void target_LogLine(ILogSource sender, string message, LogLevel visibility)
-        {
-            Console.WriteLine("{0}: {1}", sender, message);
-        }
-
-        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
-        {
-
+            if (!myEngine.IsSpeaking)
+            {
+                UpdateTTSOptions();
+                myEngine.Speak(text);
+            }
         }
 
         private void דברלקובץToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,44 +361,21 @@ namespace Qaryan.GUI
             saveWavDialog.ShowDialog();
         }
 
-
-        private void OnFileAudioFinished()
-        {
-            OnDSoundAudioFinished();
-            System.Diagnostics.Process.Start(((WaveFileAudioTarget)target).Filename);
-        }
-
         private void saveWavDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            InitTTSObjects();
             string text = textBox1.Text;
             if (textBox1.SelectionLength > 0)
                 text = textBox1.SelectedText;
-
-            target = new WaveFileAudioTarget();
-
-            ((WaveFileAudioTarget)target).Filename = saveWavDialog.FileName;
-
-            target.AudioFinished += OnFileAudioFinished;
-            tokenizer.Run(text);
-            parser.Run(tokenizer);
-            segmenter.Run(parser);
-            phonetizer.Run(segmenter);
-            fujisaki.Run(phonetizer);
-            translator.Run(fujisaki);
-            synth.Run(translator);
-            target.Run(synth);
+            if (!myEngine.IsSpeaking)
+            {
+                UpdateTTSOptions();
+                myEngine.SpeakToWavFile(text, saveWavDialog.FileName);
+            }
         }
 
         private void קולToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadVoices();
-        }
-
-        private void השתקToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (target != null)
-                target.Stop();
         }
 
         private void גרףהנגנהToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,6 +386,7 @@ namespace Qaryan.GUI
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
+            FujisakiProcessor fujisaki = (myEngine.Frontend as StandardFrontend).FujisakiProcessor;
             FujisakiParams paramsWindow = new FujisakiParams();
             paramsWindow.Alpha = fujisaki.Model.alpha;
             paramsWindow.Beta = fujisaki.Model.beta;
@@ -621,11 +535,6 @@ namespace Qaryan.GUI
             Application.Restart();
         }
 
-        private void שפתממשקמשתמשToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Default.MbrolaFormVisible = mbrolaForm.Visible;
@@ -650,15 +559,20 @@ namespace Qaryan.GUI
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-         /*   if (toolStripComboBox1.SelectedIndex == toolStripComboBox1.Items.Count - 1)
-            {
-                System.Diagnostics.Process p = new System.Diagnostics.Process();
-                p.StartInfo.FileName = Resources.WikiBase + Resources.WikiVoicesPage;
-                p.Start();
-                toolStripComboBox1.SelectedIndex = lastSelectedIndex;
-            }
-            else*/
+               if ((toolStripComboBox1.Items.Count>0) && (toolStripComboBox1.SelectedIndex == toolStripComboBox1.Items.Count - 1))
+               {
+                   System.Diagnostics.Process p = new System.Diagnostics.Process();
+                   p.StartInfo.FileName = Resources.WikiBase + Resources.WikiVoicesPage;
+                   p.Start();
+                   toolStripComboBox1.SelectedIndex = lastSelectedIndex;
+               }
+               else
                 lastSelectedIndex = toolStripComboBox1.SelectedIndex;
+            if ((toolStripComboBox1.SelectedIndex < Voices.Count) && (toolStripComboBox1.SelectedIndex >= 0))
+            {
+                myEngine.Voice = Voices[toolStripComboBox1.SelectedIndex];
+                InitTTSObjects();
+            }
         }
 
         private void fontDialog1_Apply(object sender, EventArgs e)
@@ -677,11 +591,6 @@ namespace Qaryan.GUI
         {
             if (WindowState != FormWindowState.Maximized)
                 Settings.Default.Form1Size = Size;
-        }
-
-        private void אודותToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void ניקודToolStripMenuItem_Click(object sender, EventArgs e)
@@ -716,6 +625,18 @@ namespace Qaryan.GUI
                     break;
             }
             Settings.Default.Save();
+        }
+
+        static string MakeLangUrlParam()
+        {
+            return "lang=" + Settings.Default.Culture;
+        }
+
+        private void webSiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo.FileName = "http://hebtts.sf.net/?" +MakeLangUrlParam();
+            p.Start();
         }
     }
 }
