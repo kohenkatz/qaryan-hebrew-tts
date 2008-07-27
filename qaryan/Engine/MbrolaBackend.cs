@@ -172,7 +172,9 @@ namespace Qaryan.Synths.MBROLA
         {
             if (Mbrola.Binding == MbrolaBinding.Library)
             {
-                if (!MbrPlay.DatabaseExist(this.Database))
+                if (!MbrPlay.DatabaseExist(this.Database)
+                    ||
+                    !File.Exists(MbrPlay.RegGetDatabasePath(Database)))
                 {
                     string localPath = Path.Combine(FileBindings.VoicePath, this.Database);
                     if (File.Exists(localPath))
@@ -439,6 +441,7 @@ namespace Qaryan.Synths.MBROLA
                         result.BitsPerSample = 16;
                         result.Channels = 1;
                         result.SamplesPerSecond = (uint)MbrPlay.GetDefaultFreq();
+                        //result.SamplesPerSecond = 22050;
                         result.AverageBytesPerSecond = result.SamplesPerSecond * result.BitsPerSample / 8;
                         result.BlockAlign = (ushort)(result.Channels * (result.BitsPerSample / 8));
                     }

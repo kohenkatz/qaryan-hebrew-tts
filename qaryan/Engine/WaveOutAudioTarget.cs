@@ -103,7 +103,7 @@ namespace Qaryan.Audio
             Log(LogLevel.Info, "Open {0}ch, {1} bits/sample, {2} Hz PCM output", format.Channels, format.BitsPerSample, format.SamplesPerSecond);
             bufPos = 0;
             Buffers = new Queue<byte[]>();
-            Player = new WaveOutPlayer(0, new WinWaveFormat(format),4096,3,PullAudio);
+            Player = new WaveOutPlayer(0, new WinWaveFormat(format),1024*(format.BitsPerSample/8),2,PullAudio);
         }
 
         protected override void PlayBuffer(AudioBufferInfo buffer)

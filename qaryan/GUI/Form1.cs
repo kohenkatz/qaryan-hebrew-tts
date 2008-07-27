@@ -38,26 +38,29 @@ namespace Qaryan.GUI
 
         void LoadVoices()
         {
-            int i = toolStripComboBox1.SelectedIndex;
-            toolStripComboBox1.Items.Clear();
-            Voices.Clear();
-            string dir = FileBindings.VoicePath;
-            foreach (string file in Directory.GetFiles(dir + "/", "*.xml"))
+            lock (toolStripComboBox1)
             {
-                Voice voice = new Voice();
-                voice.Load(file);
-                if (voice.BackendSupported)
+                int i = toolStripComboBox1.SelectedIndex;
+                toolStripComboBox1.Items.Clear();
+                Voices.Clear();
+                string dir = FileBindings.VoicePath;
+                foreach (string file in Directory.GetFiles(dir + "/", "*.xml"))
                 {
-                    toolStripComboBox1.Items.Add(voice.DisplayName);
-                    Voices.Add(voice);
-                }
+                    Voice voice = new Voice();
+                    voice.Load(file);
+                    if (voice.BackendSupported)
+                    {
+                        toolStripComboBox1.Items.Add(voice.DisplayName);
+                        Voices.Add(voice);
+                    }
 
+                }
+                if (i < 0)
+                    toolStripComboBox1.SelectedIndex = toolStripComboBox1.Items.IndexOf(Qaryan.GUI.Settings.Default.Voice);
+                else
+                    toolStripComboBox1.SelectedIndex = i;
+                toolStripComboBox1.Items.Add(Resources.GetMoreVoices);
             }
-            if (i < 0)
-                toolStripComboBox1.SelectedIndex = toolStripComboBox1.Items.IndexOf(Qaryan.GUI.Settings.Default.Voice);
-            else
-                toolStripComboBox1.SelectedIndex = i;
-            toolStripComboBox1.Items.Add(Resources.GetMoreVoices);
         }
 
         public Form1()

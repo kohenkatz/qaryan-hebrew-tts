@@ -388,7 +388,6 @@ namespace Qaryan.Core
             _audioTarget = null;
         }
 
-        public Event
         public QaryanEngine()
         {
             Frontend = new StandardFrontend();
