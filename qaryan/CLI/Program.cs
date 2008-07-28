@@ -107,7 +107,7 @@ namespace Qaryan.CLI
             }
 
 
-            MBROLA.Mbrola.Binding = MBROLA.MbrolaBinding.Standalone;
+            //MBROLA.Mbrola.Binding = MBROLA.MbrolaBinding.Standalone;
             Console.InputEncoding = Encoding.UTF8;
             TextReaderCharProducer prod = new TextReaderCharProducer();
             prod.ItemProduced += new ProduceEventHandler<char>(prod_ItemProduced);
