@@ -565,7 +565,7 @@ namespace Qaryan.GUI
                if ((toolStripComboBox1.Items.Count>0) && (toolStripComboBox1.SelectedIndex == toolStripComboBox1.Items.Count - 1))
                {
                    System.Diagnostics.Process p = new System.Diagnostics.Process();
-                   p.StartInfo.FileName = Resources.WikiBase + Resources.WikiVoicesPage;
+                   p.StartInfo.FileName = "http://hebtts.sf.net/?" +MakeLangUrlParam() +"&page=voices";
                    p.Start();
                    toolStripComboBox1.SelectedIndex = lastSelectedIndex;
                }
