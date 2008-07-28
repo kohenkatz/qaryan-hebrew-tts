@@ -1234,7 +1234,7 @@
     <value>textBox1</value>
   </data>
   <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>Qaryan.GUI.NikudTextBox, QaryanGUI, Version=0.1.1.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Qaryan.GUI.NikudTextBox, QaryanGUI, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
     <value>panel1</value>
