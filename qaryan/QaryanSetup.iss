@@ -31,7 +31,7 @@ Source: I:\Projects\Qaryan\Dist\Voices\mbrola-ir1.xml; DestDir: {app}\Voices
 Source: I:\Projects\Qaryan\Dist\Voices\mbrola-la1.xml; DestDir: {app}\Voices
 Source: I:\Projects\Qaryan\Dist\Voices\mbrola-lt2.xml; DestDir: {app}\Voices
 Source: I:\Projects\Qaryan\Dist\Voices\mbrola-us2.xml; DestDir: {app}\Voices
-Source: ..\..\Downloads\System\unzip.exe; DestDir: {app}; Tasks: MBRVOICE_ar2
+Source: ..\..\Downloads\System\unzip.exe; DestDir: {app}; Tasks: MBRVOICE_ar2 MBRVOICE_hb1 MBRVOICE_hb2; Flags: deleteafterinstall
 Source: CLI\QaryanCLIEnv.bat; DestDir: {app}
 Source: Dist\he-IL\QaryanGUI.resources.dll; DestDir: {app}\he-IL
 Source: Dist\en\QaryanGUI.resources.dll; DestDir: {app}\en
