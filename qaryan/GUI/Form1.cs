@@ -279,6 +279,7 @@ namespace Qaryan.GUI
         bool initFlag = false;
 
         TranslitListener translit;
+        MBROLAListener mbrolaListener;
 
         private void InitTTSObjects()
         {
@@ -302,14 +303,14 @@ namespace Qaryan.GUI
             
             translit = new TranslitListener(parser);
             translit.TranslitUpdated += new StringEventHandler(translit_TranslitUpdated);
-            MBROLAListener mbrolaListener = new MBROLAListener(synth);
+            mbrolaListener = new MBROLAListener(synth);
             mbrolaListener.TextUpdated += new StringEventHandler(mbrolaListener_TextUpdated);
         }
 
         private void UpdateTTSOptions()
         {
             translit.Clear();
-            mbrolaForm.MbrolaText = "";
+            mbrolaListener.Clear();
             acmds.Clear();
             pcmds.Clear();
             pitch.Clear();

@@ -24,7 +24,7 @@
 <Phone Internal="ž">tS</Phone>
 <Phone Internal="ḥ">x</Phone>
 <Phone Internal="ṭ">t</Phone>
-<Phone Internal="y">jj</Phone>
+<Phone Internal="y">L</Phone>
 <Phone Internal="ḳ">x</Phone>
 <Phone Internal="k">k</Phone>
 <Phone Internal="l">l</Phone>
@@ -54,6 +54,10 @@
 <RuleMap>
 <DiphoneRule Symbol1="_" Symbol2="?" Action="Merge" Op="Value">_</DiphoneRule>
 <DiphoneRule Symbol1="?" Symbol2="ALL" Action="Delete" Op="Symbol1"></DiphoneRule>
+<DiphoneRule Symbol1="x" Symbol2="k" Action="Insert">e</DiphoneRule>
+<DiphoneRule Symbol1="L" Symbol2="ALL;!a;!e;!u;!i;!o" Action="Insert">i</DiphoneRule>
+<DiphoneRule Symbol1="tS" Symbol2="_;m" Action="Insert">s</DiphoneRule>
+
 </RuleMap>
 </BackendData>
 </Voice>

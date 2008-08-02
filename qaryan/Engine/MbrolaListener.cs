@@ -56,5 +56,12 @@ namespace Qaryan.Synths.MBROLA
                 return mbrolaText.ToString();
             }
         }
+
+        public void Clear()
+        {
+            mbrolaText.Length = 0;
+            if (TextUpdated != null)
+                TextUpdated(this, MbrolaText);
+        }
     }
 }
